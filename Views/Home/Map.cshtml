@@ -1,0 +1,29 @@
+@model List<HejCamping.Models.Campsite>
+
+@{
+    ViewData["Title"] = "Campsite Map";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div style="position: relative;">
+    <img src="~/images/campsite_map.png" alt="Campsite Map" style="width: 40%; height: auto; border-radius: 15px;"/>
+
+    @foreach (var campsite in Model)
+    {
+        var color = campsite.IsVacant ? "blue" : "red";
+        <div style="position: absolute; 
+                    top: @(campsite.PositionY)px; 
+                    left: @(campsite.PositionX)px; 
+                    width: 30px; height: 30px; 
+                    background-color: @color; 
+                    color: white; 
+                    display: flex; 
+                    justify-content: center; 
+                    align-items: center; 
+                    font-weight: bold;
+                    border-radius: 8px;">
+            @campsite.Number
+        </div>
+    }
+</div>

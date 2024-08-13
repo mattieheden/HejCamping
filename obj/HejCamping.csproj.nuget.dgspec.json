@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/gatreh/Programming/School_projects/hejcamping/HejCamping/HejCamping.csproj": {}
+    "/home/patrik/repos/HejCamping/HejCamping.csproj": {}
   },
   "projects": {
-    "/home/gatreh/Programming/School_projects/hejcamping/HejCamping/HejCamping.csproj": {
+    "/home/patrik/repos/HejCamping/HejCamping.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/gatreh/Programming/School_projects/hejcamping/HejCamping/HejCamping.csproj",
+        "projectUniqueName": "/home/patrik/repos/HejCamping/HejCamping.csproj",
         "projectName": "HejCamping",
-        "projectPath": "/home/gatreh/Programming/School_projects/hejcamping/HejCamping/HejCamping.csproj",
-        "packagesPath": "/home/gatreh/.nuget/packages/",
-        "outputPath": "/home/gatreh/Programming/School_projects/hejcamping/HejCamping/obj/",
+        "projectPath": "/home/patrik/repos/HejCamping/HejCamping.csproj",
+        "packagesPath": "/home/patrik/.nuget/packages/",
+        "outputPath": "/home/patrik/repos/HejCamping/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/gatreh/.nuget/NuGet/NuGet.Config"
+          "/home/patrik/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -56,7 +56,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.107/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
