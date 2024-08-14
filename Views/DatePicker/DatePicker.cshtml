@@ -1,0 +1,52 @@
+@model DatePickerModel
+@{
+    ViewBag.Title = "Date Picker";
+}
+
+<h2>Date Picker</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.FromDate)
+        <div class="input-group date" id="from-datepicker">
+            @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ToDate)
+        <div class="input-group date" id="to-datepicker">
+            @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+    </div>
+
+    <input type="submit" value="Submit" class="btn btn-primary" />
+}
+
+<script>
+    $(document).ready(function () {
+        $('#from-datepicker').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+
+        $('#to-datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            useCurrent: false
+        });
+
+        $('#from-datepicker').on('dp.change', function (e) {
+            $('#to-datepicker').data('DateTimePicker').minDate(e.date);
+        });
+
+        $('#to-datepicker').on('dp.change', function (e) {
+            $('#from-datepicker').data('DateTimePicker').maxDate(e.date);
+        });
+    });
+</script>
