@@ -20,3 +20,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+body {
+  background-color: #eef5e6;
+}
+
+.narrow-input {
+  max-width: 20%;
+}
