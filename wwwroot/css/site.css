@@ -24,3 +24,7 @@ body {
 body {
   background-color: #eef5e6;
 }
+
+.narrow-input {
+  max-width: 20%;
+}
