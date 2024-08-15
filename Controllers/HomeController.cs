@@ -13,16 +13,16 @@ namespace HejCamping.Controllers
             _logger = logger;
         }
 
-        public List<Campsite> GetCampsites()
+        public List<Cabin> GetCabins()
         {
             //replace mock response with database query? 
-            return new List<Campsite>
+            return new List<Cabin>
             {
-                new Campsite { Id = 1, Number = 1, IsVacant = true, PositionX = 100, PositionY = 230 },
-                new Campsite { Id = 2, Number = 2, IsVacant = true, PositionX = 150, PositionY = 270 },
-                new Campsite { Id = 3, Number = 3, IsVacant = true, PositionX = 200, PositionY = 290 },
-                new Campsite { Id = 4, Number = 4, IsVacant = false, PositionX = 250, PositionY = 310 },
-                new Campsite { Id = 5, Number = 5, IsVacant = true, PositionX = 300, PositionY = 320 },
+                new Cabin { Id = 1, Number = 1, IsVacant = true, PositionX = 100, PositionY = 230 },
+                new Cabin { Id = 2, Number = 2, IsVacant = true, PositionX = 150, PositionY = 270 },
+                new Cabin { Id = 3, Number = 3, IsVacant = true, PositionX = 200, PositionY = 290 },
+                new Cabin { Id = 4, Number = 4, IsVacant = false, PositionX = 250, PositionY = 310 },
+                new Cabin { Id = 5, Number = 5, IsVacant = true, PositionX = 300, PositionY = 320 },
             };
         }
 
@@ -34,8 +34,8 @@ namespace HejCamping.Controllers
                 ToDate = DateTime.Now.AddDays(1)
             };
 
-            var campsites = GetCampsites();
-            ViewBag.Campsites = campsites;
+            var cabins = GetCabins();
+            ViewBag.Cabins = cabins;
             return View(model);
         }
         [HttpPost]

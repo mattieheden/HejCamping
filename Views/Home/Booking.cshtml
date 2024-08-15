@@ -1,11 +1,11 @@
 @model HejCamping.Models.BookingModel
 
 @{
-    ViewData["Title"] = "Book a Campsite";
-    var campsites = ViewBag.Campsites as List<HejCamping.Models.Campsite>; 
+    ViewData["Title"] = "Book a Cabin";
+    var cabins = ViewBag.Cabins as List<HejCamping.Models.Cabin>; 
 }
 
-<h2 style="margin-top: 100px; text-align: center;">Choose your campsite and date</h2>
+<h2 style="margin-top: 100px; text-align: center;">Choose your cabin and date</h2>
 
 <div class="d-flex justify-content-between align-items-start mt-4" style="gap: 20px;">
     
@@ -21,16 +21,16 @@
         </div>
     </div>
 
-    <!-- Campsite Map -->
+    <!-- Cabin Map -->
     <div style="flex: 2; position: relative;">
-        <img src="~/images/campsite_map.png" alt="Campsite Map" style="width: 100%; max-width: 500px; border-radius: 15px;" id="campsiteMapImage"/>
-        @foreach (var campsite in campsites)
+        <img src="~/images/campsite_map.png" alt="cabin Map" style="width: 100%; max-width: 500px; border-radius: 15px;" id="cabinMapImage"/>
+        @foreach (var cabin in cabins)
         {
-            var color = campsite.IsVacant ? "blue" : "red";
-            <div id="campsite-@campsite.Id" 
+            var color = cabin.IsVacant ? "blue" : "red";
+            <div id="cabin-@cabin.Id" 
                 style="position: absolute; 
-                        top: @(campsite.PositionY)px; 
-                        left: @(campsite.PositionX)px; 
+                        top: @(cabin.PositionY)px; 
+                        left: @(cabin.PositionX)px; 
                         width: 30px; height: 30px; 
                         background-color: @color; 
                         color: white; 
@@ -40,8 +40,8 @@
                         font-weight: bold; 
                         cursor: pointer; 
                         border-radius: 8px;"  
-                onclick="selectCampsite(@campsite.Id, @campsite.IsVacant.ToString().ToLower())">
-                @campsite.Number
+                onclick="selectCabin(@cabin.Id, @cabin.IsVacant.ToString().ToLower())">
+                @cabin.Number
             </div>
         }
     </div>
@@ -49,7 +49,7 @@
 
 <!-- Booking Form -->
 <form id="bookingForm" asp-action="SubmitBooking" method="post" style="margin-top: 20px;">
-    <input type="hidden" id="selectedCampsiteId" name="CampsiteId" value="" />
+    <input type="hidden" id="selectedCabinId" name="CabinId" value="" />
     <input type="hidden" id="selectedFromDateInput" name="FromDate" value="" />
     <input type="hidden" id="selectedToDateInput" name="ToDate" value="" />
 
@@ -82,25 +82,25 @@
                 todayHighlight: true
             });
 
-            let selectedCampsiteId = null;
+            let selectedCabinId = null;
 
-            window.selectCampsite = function(campsiteId, isVacant) {
-                console.log("Campsite ID:", campsiteId, "Is Vacant:", isVacant);
+            window.selectCabin = function(cabinId, isVacant) {
+                console.log("Cabin ID:", cabinId, "Is Vacant:", isVacant);
 
-                if (selectedCampsiteId !== null) {
-                    // Reset the previously selected campsite color
-                    document.getElementById('campsite-' + selectedCampsiteId).style.backgroundColor = "blue";
+                if (selectedCabinId !== null) {
+                    // Reset the previously selected cabin color
+                    document.getElementById('cabin-' + selectedCabinId).style.backgroundColor = "blue";
                 }
 
-                // Only change the color if the campsite is vacant
+                // Only change the color if the cabin is vacant
                 if (isVacant) {
-                    document.getElementById('campsite-' + campsiteId).style.backgroundColor = "green";
-                    selectedCampsiteId = campsiteId;
+                    document.getElementById('cabin-' + cabinId).style.backgroundColor = "green";
+                    selectedCabinId = cabinId;
 
-                    // Store the selected campsite ID in the hidden form field
-                    document.getElementById('selectedCampsiteId').value = campsiteId;
+                    // Store the selected cabin ID in the hidden form field
+                    document.getElementById('selectedCabinId').value = cabinId;
                 } else {
-                    alert("This campsite is not available.");
+                    alert("This cabin is not available.");
                 }
             };
 
