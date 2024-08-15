@@ -26,4 +26,18 @@ public class DatePickerController : Controller
         // Do something with the selected date
         return View(model);
     }
+
+    [HttpPost]
+    public IActionResult FromDate(DatePickerModel model)
+    {
+        // Do something with the selected date
+        return View(model);
+    }
+
+    [HttpPost]
+    public IActionResult ToDate(DatePickerModel model)
+    {
+        // Do something with the selected date
+        return View(model);
+    }
 }
