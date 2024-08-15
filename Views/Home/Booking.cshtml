@@ -1,0 +1,116 @@
+@model HejCamping.Models.BookingModel
+
+@{
+    ViewData["Title"] = "Book a Cabin";
+    var cabins = ViewBag.Cabins as List<HejCamping.Models.Cabin>; 
+}
+
+<h2 style="margin-top: 100px; text-align: center;">Choose your cabin and date</h2>
+
+<div class="d-flex justify-content-between align-items-start mt-4" style="gap: 20px;">
+    
+    <!-- Date Picker -->
+    <div style="max-width: 300px;">
+        <div class="form-group">
+            <label for="dt1">From date</label>
+            <input type="text" id="dt1" class="form-control" value="@Model.FromDate.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="form-group mt-2">
+            <label for="dt2">To date</label>
+            <input type="text" id="dt2" class="form-control" value="@Model.ToDate.ToString("yyyy-MM-dd")" />
+        </div>
+    </div>
+
+    <!-- Cabin Map -->
+    <div style="flex: 2; position: relative;">
+        <img src="~/images/campsite_map.png" alt="cabin Map" style="width: 100%; max-width: 500px; border-radius: 15px;" id="cabinMapImage"/>
+        @foreach (var cabin in cabins)
+        {
+            var color = cabin.IsVacant ? "blue" : "red";
+            <div id="cabin-@cabin.Id" 
+                style="position: absolute; 
+                        top: @(cabin.PositionY)px; 
+                        left: @(cabin.PositionX)px; 
+                        width: 30px; height: 30px; 
+                        background-color: @color; 
+                        color: white; 
+                        display: flex; 
+                        justify-content: center; 
+                        align-items: center; 
+                        font-weight: bold; 
+                        cursor: pointer; 
+                        border-radius: 8px;"  
+                onclick="selectCabin(@cabin.Id, @cabin.IsVacant.ToString().ToLower())">
+                @cabin.Number
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Booking Form -->
+<form id="bookingForm" asp-action="SubmitBooking" method="post" style="margin-top: 20px;">
+    <input type="hidden" id="selectedCabinId" name="CabinId" value="" />
+    <input type="hidden" id="selectedFromDateInput" name="FromDate" value="" />
+    <input type="hidden" id="selectedToDateInput" name="ToDate" value="" />
+
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" class="form-control narrow-input" id="Name" name="Name" required />
+    </div>
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="email" class="form-control narrow-input" id="Email" name="Email" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Book</button>
+</form>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Initialize the date picker
+            $('#dt1').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            $('#dt2').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            let selectedCabinId = null;
+
+            window.selectCabin = function(cabinId, isVacant) {
+                console.log("Cabin ID:", cabinId, "Is Vacant:", isVacant);
+
+                if (selectedCabinId !== null) {
+                    // Reset the previously selected cabin color
+                    document.getElementById('cabin-' + selectedCabinId).style.backgroundColor = "blue";
+                }
+
+                // Only change the color if the cabin is vacant
+                if (isVacant) {
+                    document.getElementById('cabin-' + cabinId).style.backgroundColor = "green";
+                    selectedCabinId = cabinId;
+
+                    // Store the selected cabin ID in the hidden form field
+                    document.getElementById('selectedCabinId').value = cabinId;
+                } else {
+                    alert("This cabin is not available.");
+                }
+            };
+
+            document.getElementById('bookingForm').addEventListener('submit', function() {
+                // Capture the selected date and store it in the hidden input before submitting
+                var selectedFromDate = document.getElementById('dt1').value;
+                var selectedToDate = document.getElementById('dt2').value;
+                document.getElementById('selectedFromDateInput').value = selectedFromDate;
+                document.getElementById('selectedToDateInput').value = selectedToDate;
+            });
+        });
+    </script>
+}

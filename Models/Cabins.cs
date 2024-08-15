@@ -1,7 +1,7 @@
 namespace HejCamping.Models
 
 {
-    public class Campsite
+    public class Cabin
     {
         public int Id { get; set; }
         public int Number { get; set; }
