@@ -1,82 +1,29 @@
 @model List<HejCamping.Models.Campsite>
 
-
-
-
 @{
-    ViewData["Title"] = "Book a Campsite";
+    ViewData["Title"] = "Campsite Map";
 }
 
-<h2 style="margin-top: 100px; text-align: center;">Choose your campsite and date</h2>
+<h2>@ViewData["Title"]</h2>
 
-<div class="d-flex justify-content-between align-items-start mt-4" style="gap: 20px;">
-    
-    <div style="flex: 2; position: relative;">
-        <img src="~/images/campsite_map.png" alt="Campsite Map" style="width: 40%; border-radius: 15px;" id="campsiteMapImage"/>
-        @foreach (var campsite in Model)
-        {
-            var color = campsite.IsVacant ? "blue" : "red";
-            <div id="campsite-@campsite.Id" 
-                style="position: absolute; 
-                        top: @(campsite.PositionY)px; 
-                        left: @(campsite.PositionX)px; 
-                        width: 30px; height: 30px; 
-                        background-color: @color; 
-                        color: white; 
-                        display: flex; 
-                        justify-content: center; 
-                        align-items: center; 
-                        font-weight: bold; 
-                        cursor: pointer; 
-                        border-radius: 8px;"  
-                onclick="selectCampsite(@campsite.Id, @campsite.IsVacant.ToString().ToLower())">
-                @campsite.Number
-            </div>
-        }
-    </div>
-</div>
+<div style="position: relative;">
+    <img src="~/images/campsite_map.png" alt="Campsite Map" style="width: 40%; height: auto; border-radius: 15px;"/>
 
-
-<form id="bookingForm" asp-action="SubmitBooking" method="post" style="margin-top: 20px;">
-    <input type="hidden" id="selectedCampsiteId" name="CampsiteId" value="" />
-    <input type="hidden" id="selectedDateInput" name="SelectedDate" value="" />
-
-    <div class="form-group">
-        <label for="Name">Name</label>
-        <input type="text" class="form-control narrow-input" id="Name" name="Name" required />
-    </div>
-    <div class="form-group">
-        <label for="Email">Email</label>
-        <input type="email" class="form-control narrow-input" id="Email" name="Email" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Book</button>
-</form>
-<script>
-    let selectedCampsiteId = null;
-
-    function selectCampsite(campsiteId, isVacant) {
-        console.log("Campsite ID:", campsiteId, "Is Vacant:", isVacant);
-
-        if (selectedCampsiteId !== null) {
-            // Reset the previously selected campsite's color
-            document.getElementById('campsite-' + selectedCampsiteId).style.backgroundColor = "blue";
-        }
-
-        // Only change the color if the campsite is vacant
-        if (isVacant) {
-            document.getElementById('campsite-' + campsiteId).style.backgroundColor = "green";
-            selectedCampsiteId = campsiteId;
-
-            // Store the selected campsite ID in the hidden form field
-            document.getElementById('selectedCampsiteId').value = campsiteId;
-        } else {
-            alert("This campsite is not available.");
-        }
+    @foreach (var campsite in Model)
+    {
+        var color = campsite.IsVacant ? "blue" : "red";
+        <div style="position: absolute; 
+                    top: @(campsite.PositionY)px; 
+                    left: @(campsite.PositionX)px; 
+                    width: 30px; height: 30px; 
+                    background-color: @color; 
+                    color: white; 
+                    display: flex; 
+                    justify-content: center; 
+                    align-items: center; 
+                    font-weight: bold;
+                    border-radius: 8px;">
+            @campsite.Number
+        </div>
     }
-
-    document.getElementById('bookingForm').addEventListener('submit', function() {
-        // Capture the selected date and store it in the hidden input before submitting
-        var selectedDate = document.getElementById('selectedDate').value;
-        document.getElementById('selectedDateInput').value = selectedDate;
-    });
-</script>
+</div>
