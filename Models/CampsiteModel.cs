@@ -1,4 +1,5 @@
 namespace HejCamping.Models
+
 {
     public class Campsite
     {
