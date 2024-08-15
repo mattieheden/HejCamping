@@ -1,0 +1,58 @@
+@model HejCamping.Models.Booking
+
+<div class="container-fluid">
+  <div class="container-fluid">
+    <h1 class="h1 text-center p-5">Cabin successfully booked</h1>
+  </div>
+  
+  <!-- ul class="list-group">
+    <li class="list-group-item">Booking number: @Model.OrderNumber</li>
+    <li class="list-group-item">Booking date: @Model.OrderDate</li>
+    <li class="list-group-item">Name: @Model.Name</li>
+    <li class="list-group-item">Email: @Model.Email</li>
+    <li class="list-group-item">Cabin number: @Model.CabinNr</li>
+    <li class="list-group-item">Dates booked: @Model.DateStart - @Model.DateEnd</li>
+  </ul -->
+
+  <dl class="row">
+    <dt class="col-sm-3">Booking number</dt>
+    <dd class="col-sm-9">@Model.OrderNumber</dd>
+
+    <dt class="col-sm-3">Booking date</dt>
+    <dd class="col-sm-9">@Model.OrderDate</dd>
+
+    <dt class="col-sm-3">Name</dt>
+    <dd class="col-sm-9">@Model.Name</dd>
+
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Cabin number</dt>
+    <dd class="col-sm-9">@Model.CabinNr</dd>
+
+    <dt class="col-sm-3">Dates booked</dt>
+    <dd class="col-sm-9">@Model.DateStart - @Model.DateEnd</dd>
+  </dl>
+
+  <p class="text-center p-4 h6">The information above has been sent to this email @Model.Email </p>
+
+  <i class="fa-solid fa-arrow-left"></i>
+  
+  <button type="button" class="btn btn-info "><span class="material-icons">
+arrow_back
+</span>Return to booking</button>
+
+</div>
+
+
+
+<!--
+  public int Id { get; set; }
+    public string OrderNumber { get; set; }
+    public DateTime OrderDate { get; set; }
+    public string Email { get; set; }
+    public string Name { get; set; }
+    public DateTime DateStart { get; set; }
+    public DateTime DateEnd { get; set; }
+    public int CabinNr { get; set; }
+-->
