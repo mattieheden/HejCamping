@@ -1,4 +1,4 @@
-using System.Diagnostics;
+/*using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using HejCamping.Models;
 
@@ -8,7 +8,7 @@ public class SuccessController : Controller
 {
   public IActionResult BookedCabin()
   {
-    var booking = new Booking
+    var booking = new BookingModel
     {
       Id = 1,
       OrderNumber = "123456",
@@ -22,5 +22,5 @@ public class SuccessController : Controller
 
     return View(booking);
   }
-} 
+}*/ 
 

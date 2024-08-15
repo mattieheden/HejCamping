@@ -51,7 +51,7 @@ namespace HejCamping.Controllers
                 model.BookingId = new Random().Next(1000, 9999);
 
                 // Redirect to a confirmation view
-                return View("BookingConfirmation", model);
+                return View("BookedCabin", model);
             }
             else
             {

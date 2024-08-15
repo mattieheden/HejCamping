@@ -1,4 +1,4 @@
-@model HejCamping.Models.Booking
+@model HejCamping.Models.BookingModel
 
 <div class="container-fluid">
   <div class="container-fluid">
@@ -6,17 +6,17 @@
   </div>
   
   <!-- ul class="list-group">
-    <li class="list-group-item">Booking number: @Model.OrderNumber</li>
+    <li class="list-group-item">Booking number: @Model.BookingId</li>
     <li class="list-group-item">Booking date: @Model.OrderDate</li>
     <li class="list-group-item">Name: @Model.Name</li>
     <li class="list-group-item">Email: @Model.Email</li>
-    <li class="list-group-item">Cabin number: @Model.CabinNr</li>
-    <li class="list-group-item">Dates booked: @Model.DateStart - @Model.DateEnd</li>
+    <li class="list-group-item">Cabin number: @Model.CabinId</li>
+    <li class="list-group-item">Dates booked: @Model.FromDate - @Model.ToDate</li>
   </ul -->
 
   <dl class="row">
     <dt class="col-sm-3">Booking number</dt>
-    <dd class="col-sm-9">@Model.OrderNumber</dd>
+    <dd class="col-sm-9">@Model.BookingId</dd>
 
     <dt class="col-sm-3">Booking date</dt>
     <dd class="col-sm-9">@Model.OrderDate</dd>
@@ -28,16 +28,16 @@
     <dd class="col-sm-9">@Model.Email</dd>
 
     <dt class="col-sm-3">Cabin number</dt>
-    <dd class="col-sm-9">@Model.CabinNr</dd>
+    <dd class="col-sm-9">@Model.CabinId</dd>
 
     <dt class="col-sm-3">Dates booked</dt>
-    <dd class="col-sm-9">@Model.DateStart - @Model.DateEnd</dd>
+    <dd class="col-sm-9">@Model.FromDate - @Model.ToDate</dd>
   </dl>
 
   <p class="text-center p-4 h6">The information above has been sent to this email @Model.Email </p>
     
   <form method="post">
-    <button type="submit" class="btn btn-info " asp-controller="Home" asp-action="Map" >Return to booking</button>
+    <button type="submit" class="btn btn-info " asp-controller="Home" asp-action="Booking" >Return to booking</button>
   </form>
   
 </div>
