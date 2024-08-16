@@ -19,7 +19,7 @@
     <dd class="col-sm-9">@Model.BookingId</dd>
 
     <dt class="col-sm-3">Booking date</dt>
-    <dd class="col-sm-9">@Model.OrderDate</dd>
+    <dd class="col-sm-9">@Model.OrderDate.ToString("yyyy/MM/dd")</dd>
 
     <dt class="col-sm-3">Name</dt>
     <dd class="col-sm-9">@Model.Name</dd>
@@ -31,7 +31,10 @@
     <dd class="col-sm-9">@Model.CabinId</dd>
 
     <dt class="col-sm-3">Dates booked</dt>
-    <dd class="col-sm-9">@Model.FromDate - @Model.ToDate</dd>
+    <dd class="col-sm-9">
+        @Model.FromDate.ToString("yyyy/MM/dd"), Check-in time: <strong>15:00</strong> - 
+        @Model.ToDate.ToString("yyyy/MM/dd"), Check-out time: <strong>12:00</strong>
+    </dd>
   </dl>
 
   <p class="text-center p-4 h6">The information above has been sent to this email @Model.Email </p>
