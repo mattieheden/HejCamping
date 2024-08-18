@@ -42,6 +42,7 @@ namespace HejCamping.Controllers
             ViewBag.Cabins = cabins;
             return View(model);
         }
+
         [HttpPost]
         public IActionResult SubmitBooking(BookingModel model)
         {
@@ -59,6 +60,15 @@ namespace HejCamping.Controllers
                 // If the model state is invalid, return to the booking page with validation messages
                 return View("Booking", model);
             }
+        }
+
+        //[HttpPost]
+        public JsonResult DelayedRedirect()
+        {
+        // Your action logic here
+
+        // Return a JSON response
+        return Json(new { success = true, message = "Action triggered successfully!" });
         }
         
 
