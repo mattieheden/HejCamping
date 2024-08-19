@@ -2,20 +2,19 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using HejCamping.Models;
 using HejCamping.ApplicationServices;
-using HejCamping.Context;
 
 namespace HejCamping.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AppDbContext _context;
+        private readonly IBookingService _bookingService;
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext context)
+        public HomeController(ILogger<HomeController> logger, IBookingService bookingService)
         {
             _logger = logger;
-            _context = context;
-    }
+            _bookingService = bookingService;
+        }
 
         public List<Cabin> GetCabins()
         {
@@ -52,6 +51,19 @@ namespace HejCamping.Controllers
                 model.BookingId = new Random().Next(1000, 9999);
                 model.OrderDate = DateTime.Now;
 
+                // Send booking to database (Currently fake data)
+                _bookingService.AddBooking(new BookingDTO
+                {
+                    OrderNumber = model.BookingId.ToString(),
+                    IsCancelled = false,
+                    OrderDate = model.OrderDate,
+                    Email = model.Email,
+                    Name = model.Name,
+                    DateStart = model.FromDate,
+                    DateEnd = model.ToDate,
+                    CabinNr = model.CabinId,
+                    TotalPrice = 100
+                });
                 // Redirect to a confirmation view
                 return View("BookedCabin", model);
             }
@@ -106,13 +118,4 @@ namespace HejCamping.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-
-    //CRUD tester /Kim
-    // public IActionResult CreateBooking(String email, String name, DateTime dateStart, DateTime dateEnd, int cabinNr)
-    // {
-    //     var booking = new BookingDTO{OrderNumber = "123", IsCancelled = false, OrderDate = DateTime.Now, Email = email, Name = name, DateStart = dateStart, DateEnd = dateEnd, CabinNr = cabinNr};
-    //     _context.Bookings.Add(booking);
-    //     _context.SaveChanges();
-    //     return RedirectToAction();//Redirect to Order confirmation page
-    // }
 }

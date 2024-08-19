@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using HejCamping.Context;
 using HejCamping.ApplicationServices;
 using HejCamping.Domain;
 using HejCamping.Infrastructure;
@@ -9,8 +8,7 @@ var configuration = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=SQLite.db"));
+builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
     

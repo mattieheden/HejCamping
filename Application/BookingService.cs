@@ -12,7 +12,7 @@ namespace HejCamping.ApplicationServices
         }
         public BookingDTO GetBookingByOrderNr(string orderNumber)
         {
-            var booking = _bookingRepository.GetBookingByOrderNr("123");
+            var booking = _bookingRepository.GetBookingByOrderNr(orderNumber);
             return new BookingDTO{
                 OrderNumber = booking.OrderNumber,
                 IsCancelled = booking.IsCancelled,
@@ -24,6 +24,12 @@ namespace HejCamping.ApplicationServices
                 CabinNr = booking.CabinNr,
                 TotalPrice = booking.TotalPrice
             };
+            // return new BookingDTO();
+        }
+
+        public void AddBooking(BookingDTO booking)
+        {
+            _bookingRepository.AddBooking(new Booking(booking.OrderNumber, booking.IsCancelled, booking.OrderDate, booking.Email, booking.Name, booking.DateStart, booking.DateEnd, booking.CabinNr, booking.TotalPrice));
         }
     }
 }

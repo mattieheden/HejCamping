@@ -1,14 +1,33 @@
+using System.Linq;
 using HejCamping.Domain;
 
 namespace HejCamping.Infrastructure
 {
     public class BookingRepository : IBookingRepository
     {
+        private readonly AppDbContext _context;
+
+        public BookingRepository(AppDbContext context)
+        {
+            _context = context;
+        }
         public Booking GetBookingByOrderNr(string orderNumber)
         {
-            
-            return new Booking("123", false, System.DateTime.Now, "test@email.com",
-                "John Doe", System.DateTime.Now.AddDays(1), System.DateTime.Now.AddDays(4), 1, 50.0f);
+            try
+            {
+                Booking booking = _context.Bookings.FirstOrDefault(b => b.OrderNumber == orderNumber);
+                return booking;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public void AddBooking(Booking booking)
+        {
+            _context.Bookings.Add(booking);
+            _context.SaveChanges();
         }
     }
 }

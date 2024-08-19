@@ -2,7 +2,8 @@ namespace HejCamping.Domain
 {
     public interface IBookingRepository
     {
-        Booking GetBookingByOrderNr(string orderNumber);
+        public Booking GetBookingByOrderNr(string orderNumber);
+        public void AddBooking(Booking booking);
     }
 }
 
