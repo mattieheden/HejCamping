@@ -13,10 +13,10 @@
     <div style="max-width: 300px;">
         <h5>From Date</h5>
         <div id="datepicker1"></div>
-        <input type="hidden" id="dt1" name="dateFrom" class="form-control" />
+        <input type="hidden" id="datepicker1Input" name="FromDate" class="form-control" />
         <h5>To Date</h5>
         <div id="datepicker2"></div>
-        <input type="hidden" id="dt2" name="dateTo" class="form-control" />
+        <input type="hidden" id="datepicker2Input" name="ToDate" class="form-control" />
     </div>
 
     <!-- Cabin Map -->
@@ -48,8 +48,8 @@
 <!-- Booking Form -->
 <form id="bookingForm" asp-action="SubmitBooking" method="post" style="margin-top: 20px;">
     <input type="hidden" id="selectedCabinId" name="CabinId" value="" />
-    <input type="hidden" id="selectedFromDateInput" name="DateStart" value="" />
-    <input type="hidden" id="selectedToDateInput" name="DateEnd" value="" />
+    <input type="hidden" id="selectedFromDateInput" name="FromDate" value="" />
+    <input type="hidden" id="selectedToDateInput" name="ToDate" value="" />
 
     <div class="form-group">
         <label for="Name">Name</label>
@@ -78,9 +78,11 @@
                 todayHighlight: true
             }).on('changeDate', function (e) {
                 var fromDate = e.date;
-                $('#date1').val(fromDate.toLocaleDateString());
+                $('#datepicker1Input').val(fromDate.toISOString().substring(0, 10));
                 $('#datepicker2').datepicker('setStartDate', fromDate);
+                updateCabinColors(); // Update colors when date is selected
             });
+
             $('#datepicker2').datepicker({
                 format: 'mm/dd/yyyy',
                 autoclose: true,
@@ -88,34 +90,63 @@
                 inline: true
             }).on('changeDate', function (e) {
                 var toDate = e.date;
-                $('#date2').val(toDate.toLocaleDateString());
+                $('#datepicker2Input').val(toDate.toISOString().substring(0, 10));
+                updateCabinColors(); // Update colors when date is selected
             });
+
+            // Function to check availability and update cabin colors
+            function updateCabinColors() {
+                var selectedFromDate = $('#datepicker1Input').val();
+                var selectedToDate = $('#datepicker2Input').val();
+
+                if (!selectedFromDate || !selectedToDate) {
+                    @foreach (var cabin in cabins)
+                    {
+                        <text>
+                            $('#cabin-@cabin.Id').css('background-color', 'grey');
+                        </text>
+                    }
+                } else {
+                    @foreach (var cabin in cabins)
+                    {
+                        var color = @cabin.IsVacant ? "blue" : "red";
+                        <text>
+                            $('#cabin-@cabin.Id').css('background-color', '@color');
+                        </text>
+                    }
+                }
+            }
+
+            updateCabinColors();
+
             let selectedCabinId = null;
 
             window.selectCabin = function(cabinId, isVacant) {
-                console.log("Cabin ID:", cabinId, "Is Vacant:", isVacant);
+                var selectedFromDate = $('#datepicker1Input').val();
+                var selectedToDate = $('#datepicker2Input').val();
 
-                if (selectedCabinId !== null) {
-                    // Reset the previously selected cabin color
-                    document.getElementById('cabin-' + selectedCabinId).style.backgroundColor = "blue";
+                if (!selectedFromDate || !selectedToDate) {
+                    alert("Please select dates before choosing a cabin.");
+                    return;
                 }
 
-                // Only change the color if the cabin is vacant
-                if (isVacant) {
-                    document.getElementById('cabin-' + cabinId).style.backgroundColor = "green";
-                    selectedCabinId = cabinId;
+                if (selectedCabinId !== null) {
+                    var prevColor = isVacant ? "blue" : "red";
+                    $('#cabin-' + selectedCabinId).css('background-color', prevColor);
+                }
 
-                    // Store the selected cabin ID in the hidden form field
-                    document.getElementById('selectedCabinId').value = cabinId;
+                if (isVacant) {
+                    $('#cabin-' + cabinId).css('background-color', 'green');
+                    selectedCabinId = cabinId;
+                    $('#selectedCabinId').val(cabinId);
                 } else {
-                    alert("This cabin is not available.");
+                    alert("This cabin is not available on the chosen dates.");
                 }
             };
 
             document.getElementById('bookingForm').addEventListener('submit', function() {
-                // Capture the selected date and store it in the hidden input before submitting
-                var selectedFromDate = document.getElementById('dt1').value;
-                var selectedToDate = document.getElementById('dt2').value;
+                var selectedFromDate = $('#datepicker1Input').val();
+                var selectedToDate = $('#datepicker2Input').val();
                 document.getElementById('selectedFromDateInput').value = selectedFromDate;
                 document.getElementById('selectedToDateInput').value = selectedToDate;
             });
