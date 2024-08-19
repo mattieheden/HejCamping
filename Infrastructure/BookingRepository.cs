@@ -13,21 +13,23 @@ namespace HejCamping.Infrastructure
         }
         public Booking GetBookingByOrderNr(string orderNumber)
         {
-            try
-            {
                 Booking booking = _context.Bookings.FirstOrDefault(b => b.OrderNumber == orderNumber);
                 return booking;
-            }
-            catch
-            {
-                return null;
-            }
         }
 
         public void AddBooking(Booking booking)
         {
             _context.Bookings.Add(booking);
             _context.SaveChanges();
+        }
+
+        public void CancelBooking(string orderNumber)
+        {
+            Booking booking = GetBookingByOrderNr(orderNumber);
+            if (booking != null)  {
+                booking.IsCancelled = true;
+                _context.SaveChanges();
+            }
         }
     }
 }

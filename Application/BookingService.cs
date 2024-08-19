@@ -31,5 +31,10 @@ namespace HejCamping.ApplicationServices
         {
             _bookingRepository.AddBooking(new Booking(booking.OrderNumber, booking.IsCancelled, booking.OrderDate, booking.Email, booking.Name, booking.DateStart, booking.DateEnd, booking.CabinNr, booking.TotalPrice));
         }
+
+        public void CancelBooking(string orderNumber)
+        {
+            _bookingRepository.CancelBooking(orderNumber);
+        }
     }
 }

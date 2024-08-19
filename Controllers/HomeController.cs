@@ -64,6 +64,10 @@ namespace HejCamping.Controllers
                     CabinNr = model.CabinId,
                     TotalPrice = 100
                 });
+
+                // Cancel a booking
+                _bookingService.CancelBooking(model.BookingId.ToString());
+                
                 // Redirect to a confirmation view
                 return View("BookedCabin", model);
             }
