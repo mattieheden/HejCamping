@@ -94,20 +94,20 @@
                 updateCabinColors(); // Update colors when date is selected
             });
 
-            // Function to check availability and update cabin colors
+            
             function updateCabinColors() {
                 var selectedFromDate = $('#datepicker1Input').val();
                 var selectedToDate = $('#datepicker2Input').val();
 
                 if (!selectedFromDate || !selectedToDate) {
-                    @foreach (var cabin in cabins)
+                    @foreach (var cabin in ViewBag.Cabins) 
                     {
                         <text>
                             $('#cabin-@cabin.Id').css('background-color', 'grey');
                         </text>
                     }
                 } else {
-                    @foreach (var cabin in cabins)
+                    @foreach (var cabin in ViewBag.Cabins) 
                     {
                         var color = @cabin.IsVacant ? "blue" : "red";
                         <text>
@@ -144,11 +144,26 @@
                 }
             };
 
-            document.getElementById('bookingForm').addEventListener('submit', function() {
+            function validateBookingForm() {
                 var selectedFromDate = $('#datepicker1Input').val();
                 var selectedToDate = $('#datepicker2Input').val();
-                document.getElementById('selectedFromDateInput').value = selectedFromDate;
-                document.getElementById('selectedToDateInput').value = selectedToDate;
+                var selectedCabinId = $('#selectedCabinId').val();
+                var name = $('#Name').val();
+                var email = $('#Email').val();
+
+                if (!selectedCabinId) {
+                    alert("Please select a cabin.");
+                    return false;
+                }
+
+                return true;
+
+            };
+            document.getElementById('bookingForm').addEventListener('submit', function(e) {
+                // Prevent form submission if validation fails
+                if (!validateBookingForm()) {
+                    e.preventDefault();
+                }
             });
         });
     </script>
