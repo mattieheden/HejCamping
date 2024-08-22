@@ -1,5 +1,6 @@
 using System.Linq;
 using HejCamping.Domain;
+using HejCamping.Models;
 
 namespace HejCamping.Infrastructure
 {

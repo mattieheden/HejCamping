@@ -1,3 +1,4 @@
+using HejCamping.Models;
 namespace HejCamping.ApplicationServices
 {
     public interface IBookingService
@@ -6,5 +7,6 @@ namespace HejCamping.ApplicationServices
         void AddBooking(BookingDTO booking);
         void CancelBooking(string orderNumber);
         Dictionary<int, bool> GetCabinAvailability(DateTime dateStart, DateTime dateEnd);
+        List<Cabin> GetCabins();
     }
 }

@@ -10,6 +10,8 @@ namespace HejCamping.ApplicationServices
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }
         public int CabinNr { get; set; }
-        public float TotalPrice { get; set; }
+        public float PricePerNight { get; set; }  
+        public float TotalPrice { get; set; }     
+        public int NumberOfNights { get; set; }
     }
 }
