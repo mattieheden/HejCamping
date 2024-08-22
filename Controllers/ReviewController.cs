@@ -7,9 +7,16 @@ namespace HejCamping.Controllers
     // private readonly IReviewService _reviewService;
 public class ReviewController : Controller
 {
-    // GET: ReviewController
+    private readonly IReviewService _reviewService;
+
+    public ReviewController(IReviewService reviewService)
+    {
+        _reviewService = reviewService;
+    }
     public IActionResult Index()
     {
+        //             var reviews = _reviewService.GetReviews();
+        //             return View(reviews); ??
         return View();
     }
 }
