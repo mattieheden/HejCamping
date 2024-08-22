@@ -54,6 +54,19 @@ namespace HejCamping.Infrastructure
 
             return cabinAvailability;
         }
+        public List<Cabin> GetCabins()
+        {
+            
+            return new List<Cabin>
+            {
+                new Cabin { Id = 1, Number = 1, IsVacant = true, PositionX = 100, PositionY = 230 },
+                new Cabin { Id = 2, Number = 2, IsVacant = true, PositionX = 150, PositionY = 270 },
+                new Cabin { Id = 3, Number = 3, IsVacant = true, PositionX = 200, PositionY = 290 },
+                new Cabin { Id = 4, Number = 4, IsVacant = false, PositionX = 250, PositionY = 310 },
+                new Cabin { Id = 5, Number = 5, IsVacant = true, PositionX = 300, PositionY = 320 },
+            };
+        }
             
     }
+    
 }
