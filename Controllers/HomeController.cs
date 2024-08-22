@@ -46,7 +46,6 @@ namespace HejCamping.Controllers
         [HttpGet]
         public IActionResult GetAvailableCabins(string fromDate, string toDate)
         {
-            Console.WriteLine("From date: " + fromDate + " To date: " + toDate);
             DateTime parsedFromDate;
             DateTime parsedToDate;
 
@@ -54,8 +53,6 @@ namespace HejCamping.Controllers
             {
                 return BadRequest("Invalid date format");
             }
-
-            Console.WriteLine("From date: " + parsedFromDate + " To date: " + parsedToDate);
 
             var cabinAvailability = _bookingService.GetCabinAvailability(parsedFromDate, parsedToDate);
             return Json(cabinAvailability);
