@@ -36,5 +36,10 @@ namespace HejCamping.ApplicationServices
         {
             _bookingRepository.CancelBooking(orderNumber);
         }
+
+        public Dictionary<int, bool> GetCabinAvailability(DateTime dateStart, DateTime dateEnd)
+        {
+            return _bookingRepository.GetCabinAvailability(dateStart, dateEnd);
+        }
     }
 }

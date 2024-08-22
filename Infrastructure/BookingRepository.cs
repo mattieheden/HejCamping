@@ -6,6 +6,7 @@ namespace HejCamping.Infrastructure
     public class BookingRepository : IBookingRepository
     {
         private readonly AppDbContext _context;
+        private readonly int cabinAmount = 5;
 
         public BookingRepository(AppDbContext context)
         {
@@ -31,5 +32,27 @@ namespace HejCamping.Infrastructure
                 _context.SaveChanges();
             }
         }
+
+        public Dictionary<int, bool> GetCabinAvailability(DateTime dateStart, DateTime dateEnd)
+        {
+            // Find all bookings that overlap with the given date range that aren't cancelled.
+            var bookings = _context.Bookings.Where(b => b.DateStart < dateEnd && b.DateEnd > dateStart && !b.IsCancelled).ToList();
+
+            // Create a dictionary with all cabins and set them to available.
+            Dictionary<int, bool> cabinAvailability = new Dictionary<int, bool>();
+            for (int i = 1; i <= cabinAmount; i++)
+            {
+                cabinAvailability.Add(i, true);
+            }
+
+            // Set cabins that are booked in the given date range to unavailable based on cabin number.
+            foreach (var booking in bookings)
+            {
+                cabinAvailability[booking.CabinNr] = false;
+            }
+
+            return cabinAvailability;
+        }
+            
     }
 }
