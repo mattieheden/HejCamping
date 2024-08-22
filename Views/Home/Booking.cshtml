@@ -23,7 +23,7 @@
     <!-- Cabin Map -->
     <div style="flex: 2; position: relative;">
         <img src="~/images/campsite_map.png" alt="cabin Map" style="width: 100%; max-width: 500px; border-radius: 15px;" id="cabinMapImage"/>
-        @foreach (var cabin in cabins)
+        @foreach (var cabin in ViewBag.Cabins as List<HejCamping.Models.Cabin>)
         {
             var isAvailable = cabinAvailability.ContainsKey(cabin.Id) ? cabinAvailability[cabin.Id] : false;
             var color = cabin.IsVacant ? "blue" : "red";
@@ -71,6 +71,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script>
         $(document).ready(function () {
+
+            var cabinAvailability = @Html.Raw(Json.Serialize(ViewBag.CabinAvailability));
+
             $('#datepicker1').datepicker({
                 format: 'mm/dd/yyyy',
                 autoclose: true,
@@ -81,6 +84,7 @@
             }).on('changeDate', function (e) {
                 var fromDate = e.date;
                 $('#datepicker1Input').val(fromDate.toISOString().substring(0, 10));
+                $('#selectedFromDateInput').val(fromDate.toISOString().substring(0, 10)); // Ensure this hidden input is also set
                 $('#datepicker2').datepicker('setStartDate', fromDate);
                 updateCabinColors(); // Update colors when date is selected
             });
@@ -93,6 +97,7 @@
             }).on('changeDate', function (e) {
                 var toDate = e.date;
                 $('#datepicker2Input').val(toDate.toISOString().substring(0, 10));
+                $('#selectedToDateInput').val(toDate.toISOString().substring(0, 10));
                 updateCabinColors(); // Update colors when date is selected
             });
 
@@ -109,8 +114,6 @@
                         </text>
                     }
                 } else {
-                    var cabinAvailability = @Html.Raw(Json.Serialize(ViewBag.CabinAvailability));
-
                     @foreach (var cabin in ViewBag.Cabins) 
                     {
                         var color = cabinAvailability[@cabin.Id] ? "blue" : "red";
@@ -134,12 +137,17 @@
                     return;
                 }
 
+                if (!cabinAvailability[cabinId]) {
+                    alert("This cabin is not available on the chosen dates.");
+                    return;
+                }
+
                 if (selectedCabinId !== null) {
                     var prevColor = isVacant ? "blue" : "red";
                     $('#cabin-' + selectedCabinId).css('background-color', prevColor);
                 }
 
-                if (isVacant) {
+                if (isVacant && cabinAvailability[cabinId]) {
                     $('#cabin-' + cabinId).css('background-color', 'green');
                     selectedCabinId = cabinId;
                     $('#selectedCabinId').val(cabinId);
