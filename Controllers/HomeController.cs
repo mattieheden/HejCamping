@@ -16,7 +16,7 @@ namespace HejCamping.Controllers
             _bookingService = bookingService;
         }
 
-        public List<Cabin> GetCabins()
+        /*public List<Cabin> GetCabins()
         {
             //replace mock response with database query? 
             return new List<Cabin>
@@ -27,7 +27,7 @@ namespace HejCamping.Controllers
                 new Cabin { Id = 4, Number = 4, IsVacant = false, PositionX = 250, PositionY = 310 },
                 new Cabin { Id = 5, Number = 5, IsVacant = true, PositionX = 300, PositionY = 320 },
             };
-        }
+        }*/
 
         public IActionResult Booking()
         {
@@ -37,8 +37,12 @@ namespace HejCamping.Controllers
                 ToDate = DateTime.Now.AddDays(1)
             };
 
-            var cabins = GetCabins();
+            var cabins = _bookingService.GetCabins();
             ViewBag.Cabins = cabins;
+        
+            var cabinAvailability = _bookingService.GetCabinAvailability(model.FromDate, model.ToDate);
+            ViewBag.CabinAvailability = cabinAvailability;
+
             return View(model);
         }
 

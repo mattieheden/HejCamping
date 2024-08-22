@@ -1,10 +1,14 @@
+using HejCamping.Models;
 namespace HejCamping.Domain
 {
     public interface IBookingRepository
     {
-        public Booking GetBookingByOrderNr(string orderNumber);
-        public void AddBooking(Booking booking);
-        public void CancelBooking(string orderNumber);
+        Booking GetBookingByOrderNr(string orderNumber);
+        void AddBooking(Booking booking);
+        void CancelBooking(string orderNumber);
+        Dictionary<int, bool> GetCabinAvailability(DateTime dateStart, DateTime dateEnd);
+        List<Cabin> GetCabins();
+
     }
 }
 

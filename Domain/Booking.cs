@@ -28,6 +28,7 @@ namespace HejCamping.Domain
             CabinNr = cabinNr;
             TotalPrice = totalPrice;
         }
+
     }
 }
 

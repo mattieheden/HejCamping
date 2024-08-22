@@ -1,4 +1,5 @@
 using HejCamping.Domain;
+using HejCamping.Models;
 
 namespace HejCamping.ApplicationServices
 {
@@ -35,6 +36,16 @@ namespace HejCamping.ApplicationServices
         public void CancelBooking(string orderNumber)
         {
             _bookingRepository.CancelBooking(orderNumber);
+        }
+
+        public Dictionary<int, bool> GetCabinAvailability(DateTime dateStart, DateTime dateEnd)
+        {
+            return _bookingRepository.GetCabinAvailability(dateStart, dateEnd);
+        }
+
+        public List<Cabin> GetCabins()
+        {
+            return _bookingRepository.GetCabins();
         }
     }
 }

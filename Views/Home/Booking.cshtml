@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Book a Cabin";
     var cabins = ViewBag.Cabins as List<HejCamping.Models.Cabin>; 
+    var cabinAvailability = ViewBag.CabinAvailability as Dictionary<int, bool>; 
 }
 
 <h2 style="margin-top: 100px; text-align: center;">Choose your cabin and date</h2>
@@ -24,6 +25,7 @@
         <img src="~/images/campsite_map.png" alt="cabin Map" style="width: 100%; max-width: 500px; border-radius: 15px;" id="cabinMapImage"/>
         @foreach (var cabin in cabins)
         {
+            var isAvailable = cabinAvailability.ContainsKey(cabin.Id) ? cabinAvailability[cabin.Id] : false;
             var color = cabin.IsVacant ? "blue" : "red";
             <div id="cabin-@cabin.Id" 
                 style="position: absolute; 
@@ -107,9 +109,11 @@
                         </text>
                     }
                 } else {
+                    var cabinAvailability = @Html.Raw(Json.Serialize(ViewBag.CabinAvailability));
+
                     @foreach (var cabin in ViewBag.Cabins) 
                     {
-                        var color = @cabin.IsVacant ? "blue" : "red";
+                        var color = cabinAvailability[@cabin.Id] ? "blue" : "red";
                         <text>
                             $('#cabin-@cabin.Id').css('background-color', '@color');
                         </text>
