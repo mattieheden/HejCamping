@@ -37,8 +37,11 @@ namespace HejCamping.Infrastructure
         public Dictionary<int, bool> GetCabinAvailability(DateTime dateStart, DateTime dateEnd)
         {
             // Find all bookings that overlap with the given date range that aren't cancelled.
-            var bookings = _context.Bookings.Where(b => b.DateStart < dateEnd && b.DateEnd > dateStart && !b.IsCancelled).ToList();
-
+            var bookings = _context.Bookings
+                .Where(b => b.DateStart != DateTime.MinValue && b.DateEnd != DateTime.MinValue)
+                .Where(b => b.DateStart <= dateEnd && b.DateEnd >= dateStart && !b.IsCancelled)
+                .ToList();
+            
             // Create a dictionary with all cabins and set them to available.
             Dictionary<int, bool> cabinAvailability = new Dictionary<int, bool>();
             for (int i = 1; i <= cabinAmount; i++)
@@ -47,13 +50,17 @@ namespace HejCamping.Infrastructure
             }
 
             // Set cabins that are booked in the given date range to unavailable based on cabin number.
+            // Console.WriteLine("Test initiation time: " + DateTime.Now);
+            // Console.WriteLine("Date start: " + dateStart + " Date end: " + dateEnd + "Bookings: " + bookings.Count);
             foreach (var booking in bookings)
             {
+                // Console.WriteLine("Cabin: " + booking.CabinNr + " Dates: " + booking.DateStart + " - " + booking.DateEnd);
                 cabinAvailability[booking.CabinNr] = false;
             }
 
             return cabinAvailability;
         }
+
         public List<Cabin> GetCabins()
         {
             

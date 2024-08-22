@@ -41,7 +41,7 @@
                         cursor: pointer; 
                         border-radius: 8px;"  
                 onclick="selectCabin(@cabin.Id, @cabin.IsVacant.ToString().ToLower())">
-                @cabin.Number
+                @cabin.Id
             </div>
         }
     </div>
@@ -83,8 +83,8 @@
                 todayHighlight: true
             }).on('changeDate', function (e) {
                 var fromDate = e.date;
-                $('#datepicker1Input').val(fromDate.toISOString().substring(0, 10));
-                $('#selectedFromDateInput').val(fromDate.toISOString().substring(0, 10)); // Ensure this hidden input is also set
+                $('#datepicker1Input').val(fromDate.toLocaleString().substring(0, 10));
+                $('#selectedFromDateInput').val(fromDate.toLocaleString().substring(0, 10)); // Ensure this hidden input is also set
                 $('#datepicker2').datepicker('setStartDate', fromDate);
                 updateCabinColors(); // Update colors when date is selected
             });
@@ -96,8 +96,8 @@
                 inline: true
             }).on('changeDate', function (e) {
                 var toDate = e.date;
-                $('#datepicker2Input').val(toDate.toISOString().substring(0, 10));
-                $('#selectedToDateInput').val(toDate.toISOString().substring(0, 10));
+                $('#datepicker2Input').val(toDate.toLocaleString().substring(0, 10));
+                $('#selectedToDateInput').val(toDate.toLocaleString().substring(0, 10));
                 updateCabinColors(); // Update colors when date is selected
             });
 
@@ -114,13 +114,31 @@
                         </text>
                     }
                 } else {
-                    @foreach (var cabin in ViewBag.Cabins) 
-                    {
-                        var color = cabinAvailability[@cabin.Id] ? "blue" : "red";
-                        <text>
-                            $('#cabin-@cabin.Id').css('background-color', '@color');
-                        </text>
-                    }
+                    console.log(selectedFromDate + " - " + selectedToDate);
+                    $.ajax({
+                        url: '/Home/GetAvailableCabins',
+                        type: 'GET',
+                        data: { fromDate: selectedFromDate, toDate: selectedToDate },
+                        dataType: 'json',
+                        success: function (data) {
+                                $.each(data, function(cabinId, isAvailable) {
+                                    var color = isAvailable ? "blue" : "red";
+                                    var $cabinElement = $('#cabin-' + cabinId);
+                                    $cabinElement.css('background-color', color).data('isAvailable', isAvailable);
+
+                                    if (isAvailable) {
+                                        $cabinElement.css('cursor', 'pointer').on('click', function() {
+                                            selectCabin(cabinId, isAvailable);
+                                    });
+                                    } else {
+                                        $cabinElement.css('cursor', 'pointer').off('click');
+                                    }
+                                });
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
                 }
             }
 
@@ -128,7 +146,8 @@
 
             let selectedCabinId = null;
 
-            window.selectCabin = function(cabinId, isVacant) {
+            window.selectCabin = function(cabinId) {
+                var isAvailable = $('#cabin-' + cabinId).data('isAvailable');
                 var selectedFromDate = $('#datepicker1Input').val();
                 var selectedToDate = $('#datepicker2Input').val();
 
@@ -137,17 +156,17 @@
                     return;
                 }
 
-                if (!cabinAvailability[cabinId]) {
+                if (!isAvailable) {
                     alert("This cabin is not available on the chosen dates.");
                     return;
                 }
 
                 if (selectedCabinId !== null) {
-                    var prevColor = isVacant ? "blue" : "red";
+                    var prevColor = $('#cabin-' + selectedCabinId).data('isAvailable') ? "blue" : "red";
                     $('#cabin-' + selectedCabinId).css('background-color', prevColor);
                 }
 
-                if (isVacant && cabinAvailability[cabinId]) {
+                if (isAvailable) {
                     $('#cabin-' + cabinId).css('background-color', 'green');
                     selectedCabinId = cabinId;
                     $('#selectedCabinId').val(cabinId);
@@ -171,6 +190,7 @@
                 return true;
 
             };
+
             document.getElementById('bookingForm').addEventListener('submit', function(e) {
                 // Prevent form submission if validation fails
                 if (!validateBookingForm()) {

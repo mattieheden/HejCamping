@@ -31,19 +31,34 @@ namespace HejCamping.Controllers
 
         public IActionResult Booking()
         {
-            var model = new BookingModel
-            {
-                FromDate = DateTime.Now,
-                ToDate = DateTime.Now.AddDays(1)
-            };
-
             var cabins = _bookingService.GetCabins();
             ViewBag.Cabins = cabins;
-        
-            var cabinAvailability = _bookingService.GetCabinAvailability(model.FromDate, model.ToDate);
+            var cabinAvailability = _bookingService.GetCabinAvailability(DateTime.Today, DateTime.Today.AddDays(1));
+            foreach (var cabin in cabins)
+            {
+                cabin.IsVacant = cabinAvailability[cabin.Id];
+            }
             ViewBag.CabinAvailability = cabinAvailability;
 
-            return View(model);
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetAvailableCabins(string fromDate, string toDate)
+        {
+            Console.WriteLine("From date: " + fromDate + " To date: " + toDate);
+            DateTime parsedFromDate;
+            DateTime parsedToDate;
+
+            if (!DateTime.TryParse(fromDate, out parsedFromDate) || !DateTime.TryParse(toDate, out parsedToDate))
+            {
+                return BadRequest("Invalid date format");
+            }
+
+            Console.WriteLine("From date: " + parsedFromDate + " To date: " + parsedToDate);
+
+            var cabinAvailability = _bookingService.GetCabinAvailability(parsedFromDate, parsedToDate);
+            return Json(cabinAvailability);
         }
 
         [HttpPost]
@@ -74,7 +89,7 @@ namespace HejCamping.Controllers
                 });
 
                 // Cancel a booking
-                _bookingService.CancelBooking(model.OrderNumber.ToString());
+                //_bookingService.CancelBooking(model.OrderNumber.ToString());
                 
                 // Redirect to a confirmation view
                 return View("BookedCabin", model);
