@@ -8,6 +8,7 @@ namespace HejCamping.Infrastructure;
 public class AppDbContext : DbContext
 {
     public DbSet<Booking> Bookings { get; set; }
+    public DbSet<Review> Reviews { get; set; }
 
     public AppDbContext()
     {
@@ -24,5 +25,6 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Booking>().HasKey(b => b.OrderNumber);
+        modelBuilder.Entity<Review>().HasKey(r => r.OrderNumber);
     }
 }
