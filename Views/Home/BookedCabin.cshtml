@@ -68,8 +68,8 @@
   var modal = document.getElementById("modal");
 
   // Delay in milliseconds (e.g., 3000ms = 3 seconds)
-  var delay1 = 3000;
-  var delay2 = 6000;
+  var redirectMessageDelay = 57000;
+  var redirectDelay = 60000;
 
   // Function to fetch the delayed redirect message
   function delayedRedirectMessage() {
@@ -82,7 +82,7 @@
       if (data.success == true) {
         setTimeout(function() {
           modal.style.display = "block";
-        }, delay1);
+        }, redirectMessageDelay);
         
       } else {
         console.log('Error:', data.message);
@@ -98,7 +98,7 @@
   // Close the modal after the delay
   setTimeout(function() {
     window.location.href = "/Home/Booking";
-  }, delay2);
+  }, redirectDelay);
 
   
     
