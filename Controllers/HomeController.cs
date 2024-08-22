@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using HejCamping.Models;
 using HejCamping.ApplicationServices;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HejCamping.Controllers
 {
@@ -113,6 +114,12 @@ namespace HejCamping.Controllers
         {
             // Process the selected date
             return View(model);
+        }
+            
+        [Authorize]
+        public IActionResult AdminPortal()
+        {
+            return View();
         }
 
         // Error action

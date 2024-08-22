@@ -30,9 +30,21 @@
                         <li class="nav-item">
                             <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Home" asp-action="Booking">Book</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AdminPortal">Admin Portal</a>
+                            </li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Authentication" asp-action="Login">Admin Portal</a>
+                            </li>
+                            <!-- a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a -->
+                        }
+                       
                     </ul>
                 </div>
             </div>
