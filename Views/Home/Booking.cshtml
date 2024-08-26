@@ -89,6 +89,7 @@
                 var tomorrow = new Date(fromDate);
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 $('#datepicker2').datepicker('setStartDate', tomorrow);
+                resetCabinAndDates(); // Reset selected cabin and toDate
                 updateCabinColors(); // Update colors when date is selected
             });
 
@@ -108,7 +109,14 @@
                     } else {
                         updateCabinColors(); // Update colors when date is selected
                     } 
-    });
+            });
+            
+            function resetCabinAndDates() {
+            selectedCabinId = null; // Reset selected cabin
+            $('#datepicker2').datepicker('toDate', null); // Reset toDate
+            $('#datepicker2Input').val(''); // Reset toDate input field
+            $('#selectedToDateInput').val(''); // Reset hidden toDate input field
+            }
 
             
             function updateCabinColors() {
