@@ -73,6 +73,7 @@
         $(document).ready(function () {
 
             var cabinAvailability = @Html.Raw(Json.Serialize(ViewBag.CabinAvailability));
+            let selectedCabinId = null;
 
             $('#datepicker1').datepicker({
                 format: 'mm/dd/yyyy',
@@ -152,7 +153,7 @@
 
             updateCabinColors();
 
-            let selectedCabinId = null;
+            // let selectedCabinId = null; testa flytta upp denna!
 
             window.selectCabin = function(cabinId) {
                 var isAvailable = $('#cabin-' + cabinId).data('isAvailable');
