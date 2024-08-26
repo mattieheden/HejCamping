@@ -80,26 +80,34 @@
                 startDate: new Date(),
                 endDate: '+1y',
                 inline: true,
-                todayHighlight: true
+                todayHighlight: true,
             }).on('changeDate', function (e) {
                 var fromDate = e.date;
                 $('#datepicker1Input').val(fromDate.toLocaleString().substring(0, 10));
                 $('#selectedFromDateInput').val(fromDate.toLocaleString().substring(0, 10)); // Ensure this hidden input is also set
-                $('#datepicker2').datepicker('setStartDate', fromDate);
+                var tomorrow = new Date(fromDate);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                $('#datepicker2').datepicker('setStartDate', tomorrow);
                 updateCabinColors(); // Update colors when date is selected
             });
 
             $('#datepicker2').datepicker({
                 format: 'mm/dd/yyyy',
                 autoclose: true,
-                startDate: new Date(),
+                startDate: new Date(+1),
                 inline: true
             }).on('changeDate', function (e) {
                 var toDate = e.date;
-                $('#datepicker2Input').val(toDate.toLocaleString().substring(0, 10));
-                $('#selectedToDateInput').val(toDate.toLocaleString().substring(0, 10));
-                updateCabinColors(); // Update colors when date is selected
-            });
+                   $('#datepicker2Input').val(toDate.toLocaleString().substring(0, 10));
+                    $('#selectedToDateInput').val(toDate.toLocaleString().substring(0, 10));
+                    if (toDate <= $('#datepicker1').datepicker('getDate')) {
+                        alert('To date should be greater than From date');
+                        $('#datepicker2Input').val('');
+                        $('#selectedToDateInput').val('');
+                    } else {
+                        updateCabinColors(); // Update colors when date is selected
+                    } 
+    });
 
             
             function updateCabinColors() {
