@@ -92,7 +92,6 @@
                 $('#datepicker2').datepicker('setStartDate', tomorrow);
                 resetCabinAndDates(); // Reset selected cabin and toDate
                 updateCabinColors(); // Update colors when date is selected
-                console.log(selectedCabinId);
             });
 
             $('#datepicker2').datepicker({
@@ -216,7 +215,6 @@
 
             document.getElementById('bookingForm').addEventListener('submit', function(e) {
                 // Prevent form submission if validation fails
-                console.log(validateBookingForm());
                 if (!validateBookingForm()) {
                     e.preventDefault();
                 }
