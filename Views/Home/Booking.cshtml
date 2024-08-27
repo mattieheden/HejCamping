@@ -84,6 +84,7 @@
                 todayHighlight: true,
             }).on('changeDate', function (e) {
                 var fromDate = e.date;
+                selectedCabinId = null; // Reset selected cabin
                 $('#datepicker1Input').val(fromDate.toLocaleString().substring(0, 10));
                 $('#selectedFromDateInput').val(fromDate.toLocaleString().substring(0, 10)); // Ensure this hidden input is also set
                 var tomorrow = new Date(fromDate);
@@ -91,6 +92,7 @@
                 $('#datepicker2').datepicker('setStartDate', tomorrow);
                 resetCabinAndDates(); // Reset selected cabin and toDate
                 updateCabinColors(); // Update colors when date is selected
+                console.log(selectedCabinId);
             });
 
             $('#datepicker2').datepicker({
@@ -100,6 +102,7 @@
                 inline: true
             }).on('changeDate', function (e) {
                 var toDate = e.date;
+                selectedCabinId = null; // Reset selected cabin
                    $('#datepicker2Input').val(toDate.toLocaleString().substring(0, 10));
                     $('#selectedToDateInput').val(toDate.toLocaleString().substring(0, 10));
                     if (toDate <= $('#datepicker1').datepicker('getDate')) {
@@ -112,12 +115,10 @@
             });
             
             function resetCabinAndDates() {
-            selectedCabinId = null; // Reset selected cabin
-            $('#datepicker2').datepicker('toDate', null); // Reset toDate
+
+            $('#datepicker2').datepicker('toDate', ''); // Reset toDate
             $('#datepicker2Input').val(''); // Reset toDate input field
             $('#selectedToDateInput').val(''); // Reset hidden toDate input field
-            // Make all cabins grey
-            // Make booking button disabled?
             }
 
             
@@ -197,21 +198,25 @@
             function validateBookingForm() {
                 var selectedFromDate = $('#datepicker1Input').val();
                 var selectedToDate = $('#datepicker2Input').val();
-                var selectedCabinId = $('#selectedCabinId').val();
                 var name = $('#Name').val();
                 var email = $('#Email').val();
-
+                if (!selectedFromDate || !selectedToDate) {
+                    alert("Please select both From and To dates.");
+                    return false;
+                }      
                 if (!selectedCabinId) {
                     alert("Please select a cabin.");
                     return false;
                 }
 
                 return true;
+                
 
             };
 
             document.getElementById('bookingForm').addEventListener('submit', function(e) {
                 // Prevent form submission if validation fails
+                console.log(validateBookingForm());
                 if (!validateBookingForm()) {
                     e.preventDefault();
                 }
