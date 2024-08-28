@@ -2,7 +2,7 @@ namespace HejCamping.Models
 {
     public class BookingModel
     {
-        public int OrderNumber { get; set; }
+        public string? OrderNumber { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public DateTime OrderDate { get; set; }
