@@ -11,6 +11,11 @@ namespace HejCamping.Infrastructure
             _context = context;
         }
 
+        public List<Review> GetReviews()
+        {
+            return _context.Reviews.ToList();
+        }
+
         public Review GetReviewByOrderNr(string orderNumber)
         {
             return _context.Reviews.FirstOrDefault(r => r.OrderNumber == orderNumber);

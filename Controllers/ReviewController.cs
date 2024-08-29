@@ -15,27 +15,8 @@ public class ReviewController : Controller
     }
     public IActionResult Index()
     {
-        //             var reviews = _reviewService.GetReviews();
-        //             return View(reviews); ??
-        // Mock data
-        var reviews = new List<ReviewDTO>
-        {
-            new ReviewDTO
-            {
-                OrderNumber = "123",
-                Name = "Kalle",
-                ReviewText = "Bra",
-                ReviewDate = DateTime.Now
-            },
-            new ReviewDTO
-            {
-                OrderNumber = "124",
-                Name = "Pelle",
-                ReviewText = "Dåligt",
-                ReviewDate = DateTime.Now
-            }
-        };
-        return View();
+        var reviews = _reviewService.GetReviews();
+        return View(reviews);
     }
 }
 

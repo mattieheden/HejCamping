@@ -12,6 +12,30 @@ namespace HejCamping.ApplicationServices
             _reviewRepository = reviewRepository;
         }
 
+    /*    public List<ReviewDTO> GetReviews()
+        {
+            var reviews = _reviewRepository.GetReviews();
+            return reviews.Select(r => new ReviewDTO
+            {
+                OrderNumber = r.OrderNumber,
+                Name = r.Name,
+                ReviewText = r.ReviewText,
+                ReviewDate = r.ReviewDate
+            }).ToList();
+        }*/
+        public List<ReviewDTO> GetReviews()
+        {
+            // Create a list of ReviewDTO objects
+            var reviews = new List<ReviewDTO>
+            {
+                new ReviewDTO { OrderNumber = "1234", Name = "John Doe", ReviewText = "Great camping experience!", ReviewDate = DateTime.Now },
+                new ReviewDTO { OrderNumber = "5678", Name = "Jane Smith", ReviewText = "Beautiful scenery!", ReviewDate = DateTime.Now.AddDays(-1) },
+                new ReviewDTO { OrderNumber = "9012", Name = "Bob Johnson", ReviewText = "Friendly staff!", ReviewDate = DateTime.Now.AddDays(-2) }
+            };
+
+            return reviews;
+        }
+
         public void AddReview(ReviewDTO review)
         {
             _reviewRepository.AddReview(new Review(review.OrderNumber, review.Name, review.ReviewText, review.ReviewDate));
