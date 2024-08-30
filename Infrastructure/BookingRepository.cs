@@ -73,6 +73,11 @@ namespace HejCamping.Infrastructure
                 new Cabin { Id = 5, Number = 5, IsVacant = true, PositionX = 300, PositionY = 320, PricePerNight = 179 },
             };
         }
+
+        public int GetCabinPrice(int cabinId)
+        {
+            return GetCabins().FirstOrDefault(c => c.Id == cabinId).PricePerNight;
+        }
             
     }
     

@@ -64,7 +64,7 @@ namespace HejCamping.Controllers
         {
             if (ModelState.IsValid)
             {
-                model.PricePerNight = 179;
+                model.PricePerNight = _bookingService.GetCabinPrice(model.CabinId);
                 model.NumberOfNights = (int)(model.ToDate - model.FromDate).TotalDays;
                 model.TotalPrice = model.PricePerNight * model.NumberOfNights;
                 model.OrderDate = DateTime.UtcNow;

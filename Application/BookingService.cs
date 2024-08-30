@@ -88,5 +88,10 @@ namespace HejCamping.ApplicationServices
             await _emailService.SendEmailAsync(booking.Email, subject, htmlBody);
         }
 
+        public int GetCabinPrice(int cabinNr)
+        {
+            return _bookingRepository.GetCabinPrice(cabinNr);
+        }
+
     }
 }

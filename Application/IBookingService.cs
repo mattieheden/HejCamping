@@ -13,5 +13,6 @@ namespace HejCamping.ApplicationServices
         List<Cabin> GetCabins();
         Task BookingConfirmationEmail(BookingDTO booking);
         Task CancelBookingConfirmationEmail(string orderNumber);
+        int GetCabinPrice(int cabinNr);
     }
 }
