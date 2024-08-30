@@ -12,5 +12,6 @@ namespace HejCamping.ApplicationServices
         // JsonResult GetCabinAvailability(DateTime dateStart, DateTime dateEnd);
         List<Cabin> GetCabins();
         Task BookingConfirmationEmail(BookingDTO booking);
+        Task CancelBookingConfirmationEmail(string orderNumber);
     }
 }
