@@ -40,6 +40,7 @@
                         font-weight: bold; 
                         cursor: pointer; 
                         border-radius: 8px;"
+                data-price="@cabin.PricePerNight" 
                 data-toggle="tooltip" title=""  
                 onclick="selectCabin(@cabin.Id, @cabin.IsVacant.ToString().ToLower())">
                 @cabin.Id
@@ -157,6 +158,8 @@
                                     var $cabinElement = $('#cabin-' + cabinId);
                                     $cabinElement.css('background-color', color).data('isAvailable', isAvailable);
 
+                                    var pricePerNight = $cabinElement.data('price');
+
                                     if (isAvailable) {
                                         $cabinElement.attr('title', 'Price: 179 EUR/night');
                                         $cabinElement.css('cursor', 'pointer').on('click', function() {
@@ -239,7 +242,8 @@
                 const fromDate = new Date(selectedFromDate);
                 const toDate = new Date(selectedToDate);
                 const diffDays = Math.ceil((toDate - fromDate) / (1000 * 60 * 60 * 24)); // Calculate the number of days
-                const totalPrice = diffDays * fixedPricePerNight; // Calculate total price using fixed price
+                const pricePerNight = $('#cabin-' + selectedCabinId).data('price'); // Get price per night dynamically
+                const totalPrice = diffDays * pricePerNight; 
 
                 $('#totalPrice').text(totalPrice);
             }

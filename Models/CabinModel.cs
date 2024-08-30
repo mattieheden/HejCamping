@@ -8,5 +8,6 @@ namespace HejCamping.Models
         public bool IsVacant { get; set; }
         public int PositionX { get; set; } 
         public int PositionY { get; set; } 
+        public int PricePerNight { get; set; }
     }
 }
