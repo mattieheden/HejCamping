@@ -74,8 +74,8 @@ namespace HejCamping.Controllers
                                                 .Select(s => s[new Random().Next(s.Length)]).ToArray());
                 model.OrderNumber = $"{randomLetters}{timestampPart}";
 
-                // Send booking to database (Currently fake data)
-                _bookingService.AddBooking(new BookingDTO
+                // Set up BookingDTO object
+                BookingDTO booking = new BookingDTO
                 {
                     OrderNumber = model.OrderNumber,
                     IsCancelled = false,
@@ -86,10 +86,27 @@ namespace HejCamping.Controllers
                     DateEnd = model.ToDate,
                     CabinNr = model.CabinId,
                     TotalPrice = model.TotalPrice,
-                });
+                };
 
-                // Cancel a booking
-                //_bookingService.CancelBooking(model.OrderNumber.ToString());
+                // Send booking to database
+                _bookingService.AddBooking(booking);
+
+                // Send booking confirmation email
+                _bookingService.BookingConfirmationEmail(booking);
+
+                // Send booking to database (Currently fake data)
+                // _bookingService.AddBooking(new BookingDTO
+                // {
+                //     OrderNumber = model.OrderNumber,
+                //     IsCancelled = false,
+                //     OrderDate = model.OrderDate,
+                //     Email = model.Email,
+                //     Name = model.Name,
+                //     DateStart = model.FromDate,
+                //     DateEnd = model.ToDate,
+                //     CabinNr = model.CabinId,
+                //     TotalPrice = model.TotalPrice,
+                // });
                 
                 // Redirect to a confirmation view
                 return View("BookedCabin", model);
