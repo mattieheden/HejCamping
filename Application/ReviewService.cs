@@ -25,15 +25,22 @@ namespace HejCamping.ApplicationServices
         }*/
         public List<ReviewDTO> GetReviews()
         {
-            // Create a list of ReviewDTO objects
-            var reviews = new List<ReviewDTO>
+            Console.WriteLine("Getting reviews from repository");
+            var reviews = _reviewRepository.GetReviews();
+            var  reviewDTOs = new List<ReviewDTO>();
+            foreach (var review in reviews)
             {
-                new ReviewDTO { OrderNumber = "1234", Name = "John Doe", ReviewText = "Great camping experience!", ReviewDate = DateTime.Now },
-                new ReviewDTO { OrderNumber = "5678", Name = "Jane Smith", ReviewText = "Beautiful scenery!", ReviewDate = DateTime.Now.AddDays(-1) },
-                new ReviewDTO { OrderNumber = "9012", Name = "Bob Johnson", ReviewText = "Friendly staff!", ReviewDate = DateTime.Now.AddDays(-2) }
-            };
+                Console.WriteLine("Handling review: " + review.OrderNumber);
+                reviewDTOs.Add(new ReviewDTO
+                {
+                    OrderNumber = review.OrderNumber,
+                    Name = review.Name,
+                    ReviewText = review.ReviewText,
+                    ReviewDate = review.ReviewDate
+                });
+            }
+            return reviewDTOs;
 
-            return reviews;
         }
 
         public void AddReview(ReviewDTO review)

@@ -40,24 +40,7 @@
 <container>
 <div class="row">
     <h2>What our guests say</h2>
-    @if (Model != null)
-    {
-        foreach (var review in Model)
-        {
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@review?.ReviewText</h5>
-                        <p class="card-text">- @review?.Name</p>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        <p>No reviews available.</p>
-    }
+    @Html.Partial("_ReviewList", Model)
 </div>
 </container>
 

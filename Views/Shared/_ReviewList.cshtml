@@ -1,0 +1,11 @@
+@model List<HejCamping.ApplicationServices.ReviewDTO>
+
+<ul>
+    @foreach (var review in Model)
+    {
+        <li>
+            <strong>@review.Name</strong><br/>
+            @review.ReviewText
+        </li>
+    }
+</ul>
