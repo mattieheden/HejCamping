@@ -43,8 +43,8 @@ public class AuthenticationController : Controller
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
             //return RedirectToAction("Index", "Home"); // Redirect to a secure area of your application.
-            return RedirectToAction("AdminPortal", "Home"); // Redirect to a secure area of your application.
-        
+            return RedirectToAction("DashBoard", "AdminPortal"); // Redirect to a secure area of your application.
+            
         }
 
         ModelState.AddModelError(string.Empty, "Invalid login attempt."); // Generic error message for security reasons.
