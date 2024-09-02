@@ -13,7 +13,6 @@ namespace HejCamping.Domain
         Name = name;
         ReviewText = reviewText;
         ReviewDate = reviewDate;
-
     }
 }
 }
