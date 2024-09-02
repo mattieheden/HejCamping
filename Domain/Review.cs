@@ -2,7 +2,7 @@ namespace HejCamping.Domain
 {
     public class Review
     {
-        public string OrderNumber { get; set; }
+        public string? OrderNumber { get; set; }
         public string? Name { get; set; }
         public string? ReviewText { get; set; }
         public DateTime ReviewDate { get; set; }

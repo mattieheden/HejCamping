@@ -16,6 +16,11 @@ public class ReviewController : Controller
     public IActionResult Index()
     {
         var reviews = _reviewService.GetReviews();
+        if (reviews == null)
+        {
+            reviews = new List<ApplicationServices.ReviewDTO>();
+        }
+        // Breakpoint här för att se att reviews innehåller data
         return View(reviews);
     }
 }
