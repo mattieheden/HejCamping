@@ -76,7 +76,9 @@ namespace HejCamping.Infrastructure
 
         public int GetCabinPrice(int cabinId)
         {
-            return GetCabins().FirstOrDefault(c => c.Id == cabinId).PricePerNight;
+            var cabin = GetCabins().FirstOrDefault(c => c.Id == cabinId);
+            var price = cabin?.PricePerNight ?? 0;
+            return price;
         }
             
     }
