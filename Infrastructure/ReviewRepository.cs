@@ -13,6 +13,7 @@ namespace HejCamping.Infrastructure
 
         public List<Review> GetReviews()
         {
+            // Mocked data
             var reviews = new List<Review>{};
             var review1 = new Review ( "1234", "John Doe", "Great camping experience!", DateTime.Now );
             var review2 = new Review("5678","Jane Doe","Not so great place!",DateTime.Now);
