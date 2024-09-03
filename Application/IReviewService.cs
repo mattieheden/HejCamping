@@ -5,7 +5,9 @@ namespace HejCamping.ApplicationServices
 {
     public interface IReviewService
     {
-        ReviewDTO GetReviewByOrderNr(string orderNumber);
         void AddReview(ReviewDTO review);
+        ReviewDTO GetReviewByOrderNr(string orderNumber);
+        void UpdateReview(ReviewDTO review);
+        List<ReviewDTO> GetReviews();
     }
 }

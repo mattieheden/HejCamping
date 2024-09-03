@@ -10,25 +10,14 @@ namespace HejCamping.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IBookingService _bookingService;
+        private readonly IReviewService _reviewService;
 
-        public HomeController(ILogger<HomeController> logger, IBookingService bookingService)
+        public HomeController(ILogger<HomeController> logger, IBookingService bookingService, IReviewService reviewService)
         {
             _logger = logger;
             _bookingService = bookingService;
+            _reviewService = reviewService;
         }
-
-        /*public List<Cabin> GetCabins()
-        {
-            //replace mock response with database query? 
-            return new List<Cabin>
-            {
-                new Cabin { Id = 1, Number = 1, IsVacant = true, PositionX = 100, PositionY = 230 },
-                new Cabin { Id = 2, Number = 2, IsVacant = true, PositionX = 150, PositionY = 270 },
-                new Cabin { Id = 3, Number = 3, IsVacant = true, PositionX = 200, PositionY = 290 },
-                new Cabin { Id = 4, Number = 4, IsVacant = false, PositionX = 250, PositionY = 310 },
-                new Cabin { Id = 5, Number = 5, IsVacant = true, PositionX = 300, PositionY = 320 },
-            };
-        }*/
 
         public IActionResult Booking()
         {
@@ -131,7 +120,13 @@ namespace HejCamping.Controllers
         // Index action
         public IActionResult Index()
         {
-            return View();
+            Console.WriteLine("Fetching reviews");
+            var reviews = _reviewService.GetReviews();
+            foreach (var review in reviews)
+            {
+                Console.WriteLine(review.OrderNumber);
+            }
+            return View(reviews);
         }
 
         // Privacy action
