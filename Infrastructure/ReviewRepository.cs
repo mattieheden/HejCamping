@@ -41,6 +41,7 @@ namespace HejCamping.Infrastructure
         {
             await _context.Reviews.AddAsync(review);
             await _context.SaveChangesAsync();
+            Console.WriteLine("Review repository added");
         }
 
         public async Task UpdateReview(Review review)

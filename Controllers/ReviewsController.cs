@@ -42,6 +42,7 @@ namespace HejCamping.ReviewsController
 
             var review = new Review(orderNumber, name, reviewText, DateTime.Now);
             _reviewRepository.AddReview(review);
+            Console.WriteLine("Hej ReviewController added");
             return RedirectToAction("Index");
         }
 
