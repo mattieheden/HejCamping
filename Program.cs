@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 using HejCamping.ApplicationServices;
 using HejCamping.Domain;
 using HejCamping.Infrastructure;
 using HejCamping.Infrastructure.Options;
-using Microsoft.AspNetCore.Authentication.Cookies;
+
+using HejCamping.Application.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -14,6 +17,7 @@ builder.Services.Configure<AzureEmailSettings>(configuration.GetSection("AzureEm
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>();
+builder.Services.AddApplicationServices();
 builder.Services.AddScoped<IEmailService, AzureEmailService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
