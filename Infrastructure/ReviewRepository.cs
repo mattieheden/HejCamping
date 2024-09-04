@@ -1,4 +1,5 @@
 using HejCamping.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace HejCamping.Infrastructure
 {

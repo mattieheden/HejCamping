@@ -1,3 +1,4 @@
+using HejCamping.ApplicationServices;
 using HejCamping.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,87 +16,44 @@ namespace HejCamping.ReviewsController
         public IActionResult Index()
         {
             var reviews = _reviewRepository.GetReviews();
-            var viewModel = reviews.Select(r => new ReviewViewModel
-            {
-                CustomerName = r.CustomerName,
-                ReviewText = r.ReviewText,
-                ReviewDate = r.ReviewDate
-
-                return View(viewModel);
-            });
+            return View(reviews);
         }
 
-        public IActionResult Create()
+        public IActionResult CreateReview()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ReviewDTO reviewDTO)
+        public IActionResult MakeReview(ReviewDTO reviewDTO)
         {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var reviewDto = new ReviewDTO
-                    {
-                        CustomerName = reviewDTO.CustomerName,
-                        ReviewText = reviewDTO.ReviewText,
-                        ReviewDate = DateTime.Now
-                    };
-                    await _reviewRepository.AddReview(reviewDto);
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (UserCreationFailedException ex)
-                {
-                    var causeMessage = ex.InnerException?.Message ?? "There was an issue creating the review. Please try again.";
-                    ModelState.AddModelError(string.Empty, causeMessage);
-                }
-            }
-            return View(reviewDTO);
+            var review = new Review(reviewDTO.OrderNumber, reviewDTO.Name, reviewDTO.ReviewText, reviewDTO.ReviewDate);
+            _reviewRepository.AddReview(review);
+            return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Edit(string orderNumber)
+        public IActionResult EditReview()
         {
-            var review = await _reviewRepository.GetReviewByOrderNr(orderNumber);
-            if (review == null)
-            {
-                return NotFound();
-            }
-            var viewModel = new ReviewViewModel
-            {
-                CustomerName = review.CustomerName,
-                ReviewText = review.ReviewText,
-                ReviewDate = review.ReviewDate
-            };
-            return View(viewModel);
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string orderNumber)
+        public async Task<IActionResult> UpdateReview(ReviewDTO reviewDTO)
         {
-            if (ModelState.IsValid)
+            var existingReview = _reviewRepository.GetReviewByOrderNr(reviewDTO.OrderNumber);
+            if (existingReview != null)
             {
-                try
-                {
-                    var review = await _reviewRepository.GetReviewByOrderNr(orderNumber);
-                    if (review == null)
-                    {
-                        return NotFound();
-                    }
-                    review.CustomerName = review.CustomerName;
-                    review.ReviewText = review.ReviewText;
-                    review.ReviewDate = DateTime.Now;
-                    await _reviewRepository.UpdateReview(review);
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (UserUpdateFailedException ex)
-                {
-                    var causeMessage = ex.InnerException?.Message ?? "There was an issue updating the review. Please try again.";
-                    ModelState.AddModelError(string.Empty, causeMessage);
-                }
+            existingReview.Name = reviewDTO.Name;
+            existingReview.ReviewText = reviewDTO.ReviewText;
+            existingReview.ReviewDate = reviewDTO.ReviewDate;
+
+            await _reviewRepository.UpdateReview(existingReview);
+            return RedirectToAction("Index");
             }
-            return View(review);
+            else
+            {
+                return NotFound("Review not found");
+            }
         }
     }
 }
