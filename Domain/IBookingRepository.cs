@@ -8,6 +8,7 @@ namespace HejCamping.Domain
         void CancelBooking(string orderNumber);
         Dictionary<int, bool> GetCabinAvailability(DateTime dateStart, DateTime dateEnd);
         List<Cabin> GetCabins();
+        int GetCabinPrice(int cabinNr);
 
     }
 }

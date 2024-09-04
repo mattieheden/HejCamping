@@ -1,0 +1,36 @@
+@model HejCamping.Web.Models.ContactFormModel
+
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<form asp-action="Index" method="post">
+    <div class="form-group">
+        <label asp-for=FromEmail>Email</label>
+        <input asp-for=FromEmail class="form-control" placeholder="(required)" />
+        <span asp-validation-for=FromEmail class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for=Subject>Subject</label>
+        <input asp-for=Subject class="form-control" />
+        <span asp-validation-for=Subject class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for=Message>Message</label>
+        <textarea asp-for=Message class="form-control" placeholder="Your message here (required)" rows=5></textarea>
+        <span asp-validation-for=Message class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="OrderNumber">Order Number</label>
+        <input asp-for="OrderNumber" class="form-control" />
+        <span asp-validation-for="OrderNumber" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Send</button>
+</form>
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewData["Message"]
+    </div>
+}

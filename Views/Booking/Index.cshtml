@@ -1,8 +1,8 @@
-@model HejCamping.Models.BookingModel
+@model HejCamping.Web.Models.BookingViewModel
 
 @{
     ViewData["Title"] = "Book a Cabin";
-    var cabins = ViewBag.Cabins as List<HejCamping.Models.Cabin>; 
+    var cabins = ViewBag.Cabins as List<HejCamping.Web.Models.CabinViewModel>; 
     var cabinAvailability = ViewBag.CabinAvailability as Dictionary<int, bool>; 
 }
 
@@ -23,7 +23,7 @@
     <!-- Cabin Map -->
     <div style="flex: 2; position: relative;">
         <img src="~/images/campsite_map.png" alt="cabin Map" style="width: 100%; max-width: 500px; border-radius: 15px;" id="cabinMapImage"/>
-        @foreach (var cabin in ViewBag.Cabins as List<HejCamping.Models.Cabin>)
+        @foreach (var cabin in ViewBag.Cabins as List<HejCamping.Web.Models.CabinViewModel>)
         {
             var isAvailable = cabinAvailability.ContainsKey(cabin.Id) ? cabinAvailability[cabin.Id] : false;
             var color = cabin.IsVacant ? "blue" : "red";
