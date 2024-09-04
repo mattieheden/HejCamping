@@ -16,7 +16,19 @@ namespace HejCamping.ReviewsController
         public IActionResult Index()
         {
             var reviews = _reviewRepository.GetReviews();
-            return View(reviews);
+            List<ReviewDTO> model = new List<ReviewDTO>();
+            foreach (var review in reviews)
+            {
+                model.Add(new ReviewDTO
+                {
+                    OrderNumber = review.OrderNumber,
+                    Name = review.Name,
+                    ReviewText = review.ReviewText,
+                    ReviewDate = review.ReviewDate
+                });
+            }
+
+            return View(model);
         }
 
         public IActionResult CreateReview()
@@ -25,9 +37,10 @@ namespace HejCamping.ReviewsController
         }
 
         [HttpPost]
-        public IActionResult MakeReview(ReviewDTO reviewDTO)
+        public IActionResult MakeReview(string orderNumber, string name, string reviewText)
         {
-            var review = new Review(reviewDTO.OrderNumber, reviewDTO.Name, reviewDTO.ReviewText, reviewDTO.ReviewDate);
+
+            var review = new Review(orderNumber, name, reviewText, DateTime.Now);
             _reviewRepository.AddReview(review);
             return RedirectToAction("Index");
         }
@@ -38,14 +51,12 @@ namespace HejCamping.ReviewsController
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateReview(ReviewDTO reviewDTO)
+        public async Task<IActionResult> UpdateReview(string orderNumber, string reviewText)
         {
-            var existingReview = _reviewRepository.GetReviewByOrderNr(reviewDTO.OrderNumber);
+            var existingReview = _reviewRepository.GetReviewByOrderNr(orderNumber);
             if (existingReview != null)
             {
-            existingReview.Name = reviewDTO.Name;
-            existingReview.ReviewText = reviewDTO.ReviewText;
-            existingReview.ReviewDate = reviewDTO.ReviewDate;
+            existingReview.ReviewText = reviewText;
 
             await _reviewRepository.UpdateReview(existingReview);
             return RedirectToAction("Index");

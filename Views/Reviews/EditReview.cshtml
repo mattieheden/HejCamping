@@ -17,25 +17,18 @@
 
 <form asp-action="EditReview" method="post">
     <div class="form-group">
-        <label asp-for="ReviewText"></label>
-        <input asp-for="ReviewText" class="form-control" />
+        <label asp-for="ReviewText" class="mr-2">Review Text</label>
+        <textarea asp-for="ReviewText" class="form-control form-control-sm" rows="5"></textarea>
     </div>
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="OrderNumber"></label>
-        <input asp-for="OrderNumber" class="form-control" />
+    <div class="form-inline">
+        <label asp-for="Name" class="mr-2"></label>
+        <input asp-for="Name" class="form-control form-control-sm" />
     </div>
     <div>
-        <input type="submit" value="Edit" class="btn btn-primary" />
+        <input type="submit" value="Edit" class="btn btn-primary btn-sm" />
     </div>
 </form>
 
-<p>
-    <a asp-action="Index">Back to List</a>
-</p>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
