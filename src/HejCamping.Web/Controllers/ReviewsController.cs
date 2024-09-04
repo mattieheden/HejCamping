@@ -1,6 +1,7 @@
 using HejCamping.ApplicationServices;
 using HejCamping.Domain;
 using Microsoft.AspNetCore.Mvc;
+using HejCamping.Web.Models;
 
 namespace HejCamping.ReviewsController
 {
@@ -37,10 +38,9 @@ namespace HejCamping.ReviewsController
         }
 
         [HttpPost]
-        public IActionResult MakeReview(string orderNumber, string name, string reviewText)
+        public IActionResult MakeReview(ReviewViewModel model)
         {
-
-            var review = new Review(orderNumber, name, reviewText, DateTime.Now);
+            var review = new Review(model.OrderNumber, model.Name, model.ReviewText, DateTime.Now);
             _reviewRepository.AddReview(review);
             Console.WriteLine("Hej ReviewController added");
             return RedirectToAction("Index");
@@ -52,12 +52,12 @@ namespace HejCamping.ReviewsController
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateReview(string orderNumber, string reviewText)
+        public async Task<IActionResult> UpdateReview(ReviewViewModel model)
         {
-            var existingReview = _reviewRepository.GetReviewByOrderNr(orderNumber);
+            var existingReview = _reviewRepository.GetReviewByOrderNr(model.OrderNumber);
             if (existingReview != null)
             {
-            existingReview.ReviewText = reviewText;
+            existingReview.ReviewText = model.ReviewText;
 
             await _reviewRepository.UpdateReview(existingReview);
             return RedirectToAction("Index");
