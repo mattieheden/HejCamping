@@ -5,7 +5,8 @@ namespace HejCamping.Domain
     {
         List<Review> GetReviews();
         Review GetReviewByOrderNr(string orderNumber);
-        void AddReview(Review review);
-        void UpdateReview(Review review);
+        Task <IEnumerable<Review>> GetAllReviews();
+        Task AddReview(Review review);
+        Task UpdateReview(Review review);
     }
 }

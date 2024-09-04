@@ -31,16 +31,21 @@ namespace HejCamping.Infrastructure
             return _context.Reviews.FirstOrDefault(r => r.OrderNumber == orderNumber);
         }
 
-        public void AddReview(Review review)
+        public async Task<IEnumerable<Review>> GetAllReviews()
         {
-            _context.Reviews.Add(review);
-            _context.SaveChanges();
+            return await _context.Reviews.ToListAsync();
         }
 
-        public void UpdateReview(Review review)
+        public async Task AddReview(Review review)
+        {
+            await _context.Reviews.AddAsync(review);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateReview(Review review)
         {
             _context.Reviews.Update(review);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

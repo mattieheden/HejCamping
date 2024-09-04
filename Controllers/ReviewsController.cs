@@ -12,38 +12,90 @@ namespace HejCamping.ReviewsController
             _reviewRepository = reviewRepository;
         }
 
-        // GET: Reviews
         public IActionResult Index()
         {
-            /*var reviews = _reviewService.GetReviews();
-            foreach (var review in reviews)
-            {
-                Console.WriteLine(review.OrderNumber);
-            }
-            return View(reviews);  Denna som körs på mockade i homecontroller nu!  */
             var reviews = _reviewRepository.GetReviews();
-            return View(reviews);
+            var viewModel = reviews.Select(r => new ReviewViewModel
+            {
+                CustomerName = r.CustomerName,
+                ReviewText = r.ReviewText,
+                ReviewDate = r.ReviewDate
+
+                return View(viewModel);
+            });
         }
 
-        // Get: Reviews/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // Post: Reviews/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("OrderNumber,Name,ReviewText,ReviewDate")] Review review)
+        public async Task<IActionResult> Create(ReviewDTO reviewDTO)
         {
             if (ModelState.IsValid)
             {
-                _reviewRepository.AddReview(review);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    var reviewDto = new ReviewDTO
+                    {
+                        CustomerName = reviewDTO.CustomerName,
+                        ReviewText = reviewDTO.ReviewText,
+                        ReviewDate = DateTime.Now
+                    };
+                    await _reviewRepository.AddReview(reviewDto);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (UserCreationFailedException ex)
+                {
+                    var causeMessage = ex.InnerException?.Message ?? "There was an issue creating the review. Please try again.";
+                    ModelState.AddModelError(string.Empty, causeMessage);
+                }
+            }
+            return View(reviewDTO);
+        }
+
+        public async Task<IActionResult> Edit(string orderNumber)
+        {
+            var review = await _reviewRepository.GetReviewByOrderNr(orderNumber);
+            if (review == null)
+            {
+                return NotFound();
+            }
+            var viewModel = new ReviewViewModel
+            {
+                CustomerName = review.CustomerName,
+                ReviewText = review.ReviewText,
+                ReviewDate = review.ReviewDate
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string orderNumber)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var review = await _reviewRepository.GetReviewByOrderNr(orderNumber);
+                    if (review == null)
+                    {
+                        return NotFound();
+                    }
+                    review.CustomerName = review.CustomerName;
+                    review.ReviewText = review.ReviewText;
+                    review.ReviewDate = DateTime.Now;
+                    await _reviewRepository.UpdateReview(review);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (UserUpdateFailedException ex)
+                {
+                    var causeMessage = ex.InnerException?.Message ?? "There was an issue updating the review. Please try again.";
+                    ModelState.AddModelError(string.Empty, causeMessage);
+                }
             }
             return View(review);
         }
-
-
     }
 }
