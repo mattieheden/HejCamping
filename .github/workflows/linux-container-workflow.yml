@@ -43,7 +43,7 @@ jobs:
           az containerapp update --name hej-camping-app2 \
             --resource-group ${{ secrets.RESOURCE_GROUP }} \
             --image ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:latest
-            --image-pull-policy Always
+            
             
       - name: 'Force Update Azure Container App'
         run: |
