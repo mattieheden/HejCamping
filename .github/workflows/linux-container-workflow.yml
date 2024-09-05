@@ -39,13 +39,13 @@ jobs:
           file: ./Dockerfile
           
       - name: 'Deploy to Azure Container Apps'
-        uses: azure/azure-actions-containerapps-deploy@v0.1
-        with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          environment: ${{ secrets.ENVIRONMENT_NAME }} # The name of your Azure Container Apps environment
-          app-name: hej-camping-app3  # The name of your Azure Container App
-          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:latest # The image from your ACR
-          registry-server: ${{ secrets.REGISTRY_LOGIN_SERVER }} # Your Azure Container Registry login server
-          registry-username: ${{ secrets.REGISTRY_USERNAME }} # Your Azure Container Registry username
-          registry-password: ${{ secrets.REGISTRY_PASSWORD }} # Your Azure Container Registry password
-          location: 'westus' # The Azure location where your Container App environment
+        run: |
+          # Update or create the Azure Container App
+          az containerapp update --name hej-camping-app3 \
+            --resource-group ${{ secrets.RESOURCE_GROUP }} \
+            --image ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:latest \
+            --environment ${{ secrets.ENVIRONMENT_NAME }} \
+            --registry-server ${{ secrets.REGISTRY_LOGIN_SERVER }} \
+            --registry-username ${{ secrets.REGISTRY_USERNAME }} \
+            --registry-password ${{ secrets.REGISTRY_PASSWORD }} \
+            --location 'sweden central'
