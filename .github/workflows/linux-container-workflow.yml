@@ -42,7 +42,7 @@ jobs:
         run: |
           az containerapp update --name hej-camping-app2 \
             --resource-group ${{ secrets.RESOURCE_GROUP }} \
-            --image ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:latest
+            --image hejcampingregistry.azurecr.io/hej-camping-app2:${{ github.sha }}
             
             
       - name: 'Force Update Azure Container App'
