@@ -40,16 +40,14 @@ namespace HejCamping.Infrastructure
 
         public void AddReview(Review review)
         {
-            Console.WriteLine(review.ReviewText);
-            Console.WriteLine(review.Name);
-            _context.Reviews.AddAsync(review);
-            _context.SaveChangesAsync();
+            _context.Reviews.Add(review);
+            _context.SaveChanges();
         }
 
         public void UpdateReview(Review review)
         {
             _context.Reviews.Update(review);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public void DeleteReview(string orderNumber)
@@ -58,7 +56,7 @@ namespace HejCamping.Infrastructure
             if (review != null)
             {
                 _context.Reviews.Remove(review);
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
         }
     }
