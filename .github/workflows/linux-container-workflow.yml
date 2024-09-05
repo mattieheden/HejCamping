@@ -45,11 +45,4 @@ jobs:
             --image hejcampingregistry.azurecr.io/hej-camping-app2:${{ github.sha }}
             
             
-      - name: 'Force Update Azure Container App'
-        run: |
-          az containerapp revision list --name hej-camping-app3 \
-            --resource-group ${{ secrets.RESOURCE_GROUP }} --output json \
-            | jq -r '.[0].name' \
-            | xargs -I {} az containerapp revision set-mode --name hej-camping-app3 \
-            --resource-group ${{ secrets.RESOURCE_GROUP }} --mode single \
-            --revision {}
+  
