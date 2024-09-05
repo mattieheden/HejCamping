@@ -8,29 +8,18 @@ namespace HejCamping.ReviewsController
 {
     public class ReviewsController : Controller
     {
-        private readonly IReviewRepository _reviewRepository;
+        private readonly IReviewService _reviewService;
 
-        public ReviewsController(IReviewRepository reviewRepository)
+        public ReviewsController(IReviewService reviewService)
         {
-            _reviewRepository = reviewRepository;
+            _reviewService = reviewService;
         }
 
         public IActionResult Index()
         {
-            var reviews = _reviewRepository.GetReviews();
-            List<ReviewDTO> model = new List<ReviewDTO>();
-            foreach (var review in reviews)
-            {
-                model.Add(new ReviewDTO
-                {
-                    OrderNumber = review.OrderNumber,
-                    Name = review.Name,
-                    ReviewText = review.ReviewText,
-                    ReviewDate = review.ReviewDate
-                });
-            }
-
-            return View(model);
+            var reviews = _reviewService.GetReviews();
+            ViewBag.Reviews = reviews;
+            return View();
         }
 
         public IActionResult CreateReview()
@@ -41,31 +30,48 @@ namespace HejCamping.ReviewsController
         [HttpPost]
         public IActionResult MakeReview(ReviewViewModel model)
         {
-            var review = new Review(model.OrderNumber, model.Name, model.ReviewText, DateTime.Now);
-            _reviewRepository.AddReview(review);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var reviewDTO = new ReviewDTO
+                    {
+                        OrderNumber = model.OrderNumber,
+                        Name = model.Name,
+                        ReviewText = model.ReviewText,
+                        ReviewDate = DateTime.UtcNow
+                    };
+                    _reviewService.AddReview(reviewDTO);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return View("Index");
         }
 
-        public IActionResult EditReview()
+        public IActionResult UpdateReview(ReviewViewModel model)
         {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> UpdateReview(ReviewViewModel model)
-        {
-            var existingReview = _reviewRepository.GetReviewByOrderNr(model.OrderNumber);
-            if (existingReview != null)
+            if (ModelState.IsValid)
             {
-            existingReview.ReviewText = model.ReviewText;
-
-            _reviewRepository.UpdateReview(existingReview);
-            return RedirectToAction("Index");
+                try
+                {
+                    var reviewDTO = new ReviewDTO
+                    {
+                        OrderNumber = model.OrderNumber,
+                        Name = model.Name,
+                        ReviewText = model.ReviewText,
+                        ReviewDate = DateTime.UtcNow
+                    };
+                    _reviewService.UpdateReview(reviewDTO);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
             }
-            else
-            {
-                return NotFound("Review not found");
-            }
+            return View("Index");
         }
     }
 }
