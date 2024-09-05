@@ -40,12 +40,9 @@ jobs:
           
       - name: 'Deploy to Azure Container Apps'
         run: |
-          # Update or create the Azure Container App
-          az containerapp update --name hej-camping-app3 \
+          az containerapp update --name hej-camping-app2 \
             --resource-group ${{ secrets.RESOURCE_GROUP }} \
             --image ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:latest \
-            --environment ${{ secrets.ENVIRONMENT_NAME }} \
             --registry-server ${{ secrets.REGISTRY_LOGIN_SERVER }} \
             --registry-username ${{ secrets.REGISTRY_USERNAME }} \
-            --registry-password ${{ secrets.REGISTRY_PASSWORD }} \
-            --location 'sweden central'
+            --registry-password ${{ secrets.REGISTRY_PASSWORD }}
