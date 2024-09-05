@@ -36,10 +36,11 @@ namespace HejCamping.ReviewsController
                 {
                     var reviewDTO = new ReviewDTO
                     {
-                        OrderNumber = model.OrderNumber,
+                        OrderNumber = "C123", // Mock order number..
                         Name = model.Name,
                         ReviewText = model.ReviewText,
                         ReviewDate = DateTime.UtcNow
+                        
                     };
                     _reviewService.AddReview(reviewDTO);
                 }
