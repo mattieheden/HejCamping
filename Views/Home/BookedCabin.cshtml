@@ -16,15 +16,6 @@
     </div>
   </div>
 
-  <!-- ul class="list-group">
-    <li class="list-group-item">Booking number: @Model.OrderNumber</li>
-    <li class="list-group-item">Booking date: @Model.OrderDate</li>
-    <li class="list-group-item">Name: @Model.Name</li>
-    <li class="list-group-item">Email: @Model.Email</li>
-    <li class="list-group-item">Cabin number: @Model.CabinId</li>
-    <li class="list-group-item">Dates booked: @Model.FromDate - @Model.ToDate</li>
-  </ul -->
-
   <dl class="row">
     <dt class="col-sm-3">Booking number</dt>
     <dd class="col-sm-9">@Model.OrderNumber</dd>
@@ -61,67 +52,47 @@
 </div>
 
 @section Scripts {
- 
- <script>
-  document.addEventListener("DOMContentLoaded", function() {
-  
-  // Function call to show the modal after the delay.
-  delayedRedirectMessage();
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    
+    // Function call to show the modal after the delay.
+    delayedRedirectMessage();
 
-  // Get the modal
-  var modal = document.getElementById("modal");
+    // Get the modal
+    var modal = document.getElementById("modal");
 
-  // Delay in milliseconds (e.g., 3000ms = 3 seconds)
-  var redirectMessageDelay = 57000;
-  var redirectDelay = 60000;
+    // Delay in milliseconds (e.g., 3000ms = 3 seconds)
+    var redirectMessageDelay = 57000;
+    var redirectDelay = 60000;
 
-  // Function to fetch the delayed redirect message
-  function delayedRedirectMessage() {
-   
-    fetch('/Home/DelayedRedirect')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
+    // Function to fetch the delayed redirect message
+    function delayedRedirectMessage() {
+    
+        fetch('/Home/DelayedRedirect')
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
 
-      if (data.success == true) {
-        setTimeout(function() {
-          modal.style.display = "block";
-        }, redirectMessageDelay);
-        
-      } else {
-        console.log('Error:', data.message);
+          if (data.success == true) {
+            setTimeout(function() {
+              modal.style.display = "block";
+            }, redirectMessageDelay);
+            
+          } else {
+            console.log('Error:', data.message);
+          }
+
+        })
+        .catch(error => {
+          console.log('Error:', error);
+        }); 
+    
       }
 
-    })
-    .catch(error => {
-      console.log('Error:', error);
-    }); 
- 
-  }
-
-  // Close the modal after the delay
-  setTimeout(function() {
-    window.location.href = "/Home/Booking";
-  }, redirectDelay);
-
-  
-    
-});
-
-
- </script>
-  
-
+      // Close the modal after the delay
+      setTimeout(function() {
+        window.location.href = "/Home/Booking";
+      }, redirectDelay);
+  });
+  </script>
 }
-
-
-<!--
-  public int Id { get; set; }
-    public string OrderNumber { get; set; }
-    public DateTime OrderDate { get; set; }
-    public string Email { get; set; }
-    public string Name { get; set; }
-    public DateTime DateStart { get; set; }
-    public DateTime DateEnd { get; set; }
-    public int CabinNr { get; set; }
--->
