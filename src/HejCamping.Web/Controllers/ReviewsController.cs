@@ -1,5 +1,6 @@
 using HejCamping.ApplicationServices;
-using HejCamping.Domain;
+using HejCamping.Domain.Entities;
+using HejCamping.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using HejCamping.Web.Models;
 
@@ -42,7 +43,6 @@ namespace HejCamping.ReviewsController
         {
             var review = new Review(model.OrderNumber, model.Name, model.ReviewText, DateTime.Now);
             _reviewRepository.AddReview(review);
-            Console.WriteLine("Hej ReviewController added");
             return RedirectToAction("Index");
         }
 
@@ -59,7 +59,7 @@ namespace HejCamping.ReviewsController
             {
             existingReview.ReviewText = model.ReviewText;
 
-            await _reviewRepository.UpdateReview(existingReview);
+            _reviewRepository.UpdateReview(existingReview);
             return RedirectToAction("Index");
             }
             else

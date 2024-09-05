@@ -2,11 +2,12 @@ using System.Threading.Tasks;
 
 using HejCamping.Application.DTOs;
 using HejCamping.Application.Interfaces;
-//using HejCamping.Domain.Entities;
+using HejCamping.Domain.Entities;
 using HejCamping.Web.Models;
 
 //Temporary usings, will be moved when the code is refactored
 using HejCamping.Domain;
+using HejCamping.Domain.Interfaces;
 
 namespace HejCamping.Application.Services
 {
@@ -57,7 +58,7 @@ namespace HejCamping.Application.Services
         public List<CabinViewModel> GetCabins()
         {
             //Temporary conversation from Cabin to CabinViewModel, Might keep Cabin as an entity in the domain layer
-            List<HejCamping.Models.Cabin> cabins = _bookingRepository.GetCabins();
+            List<HejCamping.Domain.Entities.Cabin> cabins = _bookingRepository.GetCabins();
             List<CabinViewModel> cabinmodel = new List<CabinViewModel>();
             foreach (var cabin in cabins)
             {

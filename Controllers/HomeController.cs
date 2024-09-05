@@ -120,12 +120,7 @@ namespace HejCamping.Controllers
         // Index action
         public IActionResult Index()
         {
-            Console.WriteLine("Fetching reviews");
             var reviews = _reviewService.GetReviews();
-            foreach (var review in reviews)
-            {
-                Console.WriteLine(review.OrderNumber);
-            }
             return View(reviews);
         }
 

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace HejCamping.Domain
+namespace HejCamping.Domain.Entities
 {
     public class Review
     {

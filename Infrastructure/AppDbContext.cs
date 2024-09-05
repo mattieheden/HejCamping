@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using HejCamping.Domain;
+﻿using HejCamping.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HejCamping.Infrastructure;

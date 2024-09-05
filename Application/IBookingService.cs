@@ -1,4 +1,6 @@
-using HejCamping.Models;
+using HejCamping.Domain;
+using HejCamping.Domain.Entities;
+using HejCamping.Domain.Interfaces;
 
 namespace HejCamping.ApplicationServices
 {

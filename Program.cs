@@ -7,6 +7,8 @@ using HejCamping.Infrastructure;
 using HejCamping.Infrastructure.Options;
 
 using HejCamping.Application.Configuration;
+using HejCamping.Domain.Interfaces;
+using HejCamping.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -48,5 +50,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

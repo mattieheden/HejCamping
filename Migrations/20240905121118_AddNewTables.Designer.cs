@@ -3,6 +3,7 @@ using System;
 using HejCamping.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,14 +11,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HejCamping.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240905121118_AddNewTables")]
+    partial class AddNewTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
-            modelBuilder.Entity("HejCamping.Domain.Entities.Booking", b =>
+            modelBuilder.Entity("HejCamping.Domain.Booking", b =>
                 {
                     b.Property<string>("OrderNumber")
                         .HasColumnType("TEXT");
@@ -51,7 +54,7 @@ namespace HejCamping.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("HejCamping.Domain.Entities.Review", b =>
+            modelBuilder.Entity("HejCamping.Domain.Review", b =>
                 {
                     b.Property<string>("OrderNumber")
                         .HasColumnType("TEXT");

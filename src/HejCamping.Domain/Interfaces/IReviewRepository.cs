@@ -1,4 +1,7 @@
-namespace HejCamping.Domain
+using HejCamping.Domain.Entities;
+
+namespace HejCamping.Domain.Interfaces
+
 
 {
     public interface IReviewRepository
@@ -6,7 +9,7 @@ namespace HejCamping.Domain
         List<Review> GetReviews();
         Review GetReviewByOrderNr(string orderNumber);
         Task <IEnumerable<Review>> GetAllReviews();
-        Task AddReview(Review review);
-        Task UpdateReview(Review review);
+        void AddReview(Review review);
+        void UpdateReview(Review review);
     }
 }
