@@ -40,4 +40,4 @@ jobs:
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
           registry-password: ${{ secrets.REGISTRY_PASSWORD }}
           name: aci-sampleapp
-          location: 'northeurope'  # Changed location to North Europe
+          location: 'Sweden Central'  
