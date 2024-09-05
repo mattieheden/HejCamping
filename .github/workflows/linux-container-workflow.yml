@@ -34,6 +34,6 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ env.ACR_LOGIN_SERVER }}/hej-camping-app2:latest
-            ${{ env.ACR_LOGIN_SERVER }}/hej-camping-app2:${{ github.sha }}
+            hejcampingregistry.azurecr.io/hej-camping-app2:latest
+            hejcampingregistry.azurecr.io/hej-camping-app2:${{ github.sha }}
           file: ./Dockerfile
