@@ -29,7 +29,11 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
       
       # Build and push the Docker image to Azure Container Registry
-      - name: 'Build and Push Docker Image'
-        run: |
-          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:latest
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:${{ github.sha }}
+      - name: Build and push Docker image to ACR
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: |
+            ${{ env.ACR_LOGIN_SERVER }}/hej-camping-app2:latest
+            ${{ env.ACR_LOGIN_SERVER }}/hej-camping-app2:${{ github.sha }}
+          file: ./Dockerfile
