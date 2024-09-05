@@ -31,5 +31,5 @@ jobs:
       # Build and push the Docker image to Azure Container Registry
       - name: 'Build and Push Docker Image'
         run: |
-          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:${{ github.sha }}
+          docker build . -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:${{ github.sha }}
