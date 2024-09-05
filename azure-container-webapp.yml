@@ -1,0 +1,37 @@
+name: Build and push image to Azure Container Registry
+
+env:
+  ACR_NAME: HejCampingRegistry  # Set this to the name of your Azure Container Registry
+  ACR_LOGIN_SERVER: hejcampingregistry.azurecr.io  # The ACR login server (e.g., hejcampingregistry.azurecr.io)
+  
+on:
+  push:
+    branches: [ "CAM-35-Try-running-app-in-Azure-Container-Apps" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Azure Container Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and push Docker image to ACR
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ${{ env.ACR_LOGIN_SERVER }}/hej-camping1:${{ github.sha }}
+          file: ./Dockerfile
