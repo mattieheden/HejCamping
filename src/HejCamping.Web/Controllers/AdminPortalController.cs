@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
-using HejCamping.Models;
-using Newtonsoft.Json;  // Include this if using Newtonsoft.Json
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System;
-
 using Microsoft.AspNetCore.Authorization;
-namespace HejCamping.ApplicationServices;
+using HejCamping.Application.Interfaces;
+using HejCamping.Application.DTOs;
+using HejCamping.Web.Models;
+using HejCamping.Models;
+
+//using Newtonsoft.Json;  // Include this if using Newtonsoft.Json
+//using System.Text.Json;
+//using System.Text.Json.Serialization;
+//using System;
+
+
+
+
+namespace HejCamping.Controllers;
+
 
 using HejCamping.Controllers;
 
@@ -32,6 +40,7 @@ public class AdminPortalController : Controller
 
   }
 
+/*
   public JsonResult GetAllBookings()
   {
     //var bookings = _bookingService.GetAllBookings();
@@ -58,5 +67,5 @@ public class AdminPortalController : Controller
         return Json( new { message = "An error occurred while loading bookings."});
     }
   }
-
+*/
 }

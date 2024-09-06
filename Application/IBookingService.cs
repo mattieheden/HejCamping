@@ -4,6 +4,7 @@ namespace HejCamping.ApplicationServices
 {
     public interface IBookingService
     {
+        List<BookingDTO> GetAllBookings();
         BookingDTO GetBookingByOrderNr(string orderNumber);
         void AddBooking(BookingDTO booking);
         void CancelBooking(string orderNumber);

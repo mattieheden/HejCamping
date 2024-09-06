@@ -1,4 +1,4 @@
- @model HejCamping.Models.BookingModel 
+ @model HejCamping.Web.Models.BookingViewModel 
 @* @model IEnumerable<HejCamping.Models.BookingModel> *@
 
 
@@ -10,8 +10,6 @@
 }
 
 <h1>@ViewData["Title"]</h1>
-
-
 
 @foreach (var booking in ViewBag.Bookings)
 {

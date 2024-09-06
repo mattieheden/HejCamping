@@ -13,6 +13,23 @@ namespace HejCamping.ApplicationServices
             _bookingRepository = bookingRepository;
             _emailService = emailService;
         }
+
+        public List<BookingDTO> GetAllBookings()
+        {
+            var bookings = _bookingRepository.GetAllBookings();
+            return bookings.Select(booking => new BookingDTO{
+                OrderNumber = booking.OrderNumber,
+                IsCancelled = booking.IsCancelled,
+                OrderDate = booking.OrderDate,
+                Email = booking.Email,
+                Name = booking.Name,
+                DateStart = booking.DateStart,
+                DateEnd = booking.DateEnd,
+                CabinNr = booking.CabinNr,
+                TotalPrice = booking.TotalPrice
+            }).ToList();
+        }
+
         public BookingDTO GetBookingByOrderNr(string orderNumber)
         {
             var booking = _bookingRepository.GetBookingByOrderNr(orderNumber);

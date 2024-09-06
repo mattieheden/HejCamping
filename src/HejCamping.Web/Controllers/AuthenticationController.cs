@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using HejCamping.Models;
-
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+
+using HejCamping.Application.Interfaces;
+using HejCamping.Application.DTOs;
+using HejCamping.Web.Models;
+using HejCamping.Models;
 
 namespace HejCamping.Controllers;
 
