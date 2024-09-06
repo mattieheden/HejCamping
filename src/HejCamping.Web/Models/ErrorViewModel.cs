@@ -1,4 +1,4 @@
-namespace HejCamping.Models;
+namespace HejCamping.Web.Models;
 
 public class ErrorViewModel
 {
