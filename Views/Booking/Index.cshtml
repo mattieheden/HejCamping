@@ -148,7 +148,7 @@
                 } else {
                     console.log(selectedFromDate + " - " + selectedToDate);
                     $.ajax({
-                        url: '/Home/GetAvailableCabins',
+                        url: '/Booking/GetAvailableCabins',
                         type: 'GET',
                         data: { fromDate: selectedFromDate, toDate: selectedToDate },
                         dataType: 'json',

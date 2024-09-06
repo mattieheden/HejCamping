@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using HejCamping.ApplicationServices;
+using HejCamping.Application.Interfaces;
 using HejCamping.Web.Models;
 
 namespace HejCamping.Web.Controllers
