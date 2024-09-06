@@ -18,10 +18,6 @@ namespace HejCamping.Infrastructure.Persistence
             : base(options)
         {
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlite("Data Source=SQLite.db");
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Booking>().HasKey(b => b.OrderNumber);
