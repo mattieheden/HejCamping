@@ -122,6 +122,7 @@ namespace HejCamping.Web.Controllers
             var model = new BookingViewModel
             {
                 OrderNumber = booking.OrderNumber,
+                IsCancelled = booking.IsCancelled,
                 OrderDate = booking.OrderDate,
                 Email = booking.Email,
                 Name = booking.Name,
@@ -138,7 +139,7 @@ namespace HejCamping.Web.Controllers
         public IActionResult CancelBooking(string orderNumber)
         {
             _bookingService.CancelBooking(orderNumber);
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewBooking", new { orderNumber });
         }
 
         public JsonResult DelayedRedirect()
