@@ -5,8 +5,10 @@ namespace HejCamping.Domain.Entities
 {
     public class Booking
     {
-
-        public string? OrderNumber { get; set; }
+        [Key]
+        [Column(TypeName = "nvarchar(100)")]
+        public string OrderNumber { get; set; }
+        
         public bool IsCancelled { get; set; }
         public DateTime OrderDate { get; set; }
         public string? Email { get; set; }
