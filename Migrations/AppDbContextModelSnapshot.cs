@@ -62,23 +62,13 @@ namespace HejCamping.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-<<<<<<< HEAD
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-=======
                         .HasColumnType("nvarchar(max)");
->>>>>>> a868fb50ef6a55ba74280cfb24c752d5943c4951
 
                     b.Property<DateTime>("ReviewDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ReviewText")
-<<<<<<< HEAD
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-=======
                         .HasColumnType("nvarchar(max)");
->>>>>>> a868fb50ef6a55ba74280cfb24c752d5943c4951
 
                     b.HasKey("OrderNumber");
 

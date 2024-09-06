@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using HejCamping.Domain;
 using HejCamping.Infrastructure;
 using HejCamping.Infrastructure.Options;
+using HejCamping.Infrastructure.Persistence;
 
 using HejCamping.Application.Configuration;
 using HejCamping.Infrastructure.Configuration;
