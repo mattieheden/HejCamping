@@ -5,11 +5,11 @@ using Microsoft.Extensions.Options;
 
 using HejCamping.Domain.Repositories;
 using HejCamping.Domain.Services;
-
 using HejCamping.Infrastructure.Options;
 using HejCamping.Infrastructure.Persistence;
 using HejCamping.Infrastructure.Repositories;
 using HejCamping.Infrastructure.Services;
+
 
 namespace HejCamping.Infrastructure.Configuration
 {
@@ -35,6 +35,7 @@ namespace HejCamping.Infrastructure.Configuration
             // Add services to the container
             services.AddScoped<IEmailService, AzureEmailService>();
             services.AddScoped<IBookingRepository, BookingRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
         }
     }
 }

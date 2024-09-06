@@ -3,6 +3,7 @@ namespace HejCamping.Web.Models
     public class BookingViewModel
     {
         public string? OrderNumber { get; set; }
+        public bool isCancelled { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public DateTime OrderDate { get; set; }
@@ -12,5 +13,7 @@ namespace HejCamping.Web.Models
         public float PricePerNight { get; set; }  
         public int NumberOfNights { get; set; }     
         public float TotalPrice { get; set; } 
+        public bool HasReview { get; set; }
+        public string? ReviewText { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 using HejCamping.Domain.Entities;
 
-namespace HejCamping.Domain.Interfaces
+namespace HejCamping.Domain.Repositories
 
 
 {

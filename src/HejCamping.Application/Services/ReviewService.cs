@@ -1,8 +1,9 @@
 using HejCamping.Domain.Entities;
-using HejCamping.Domain.Interfaces;
-using HejCamping.Infrastructure;
+using HejCamping.Domain.Repositories;
+using HejCamping.Application.Interfaces;
+using HejCamping.Application.DTOs;
 
-namespace HejCamping.ApplicationServices
+namespace HejCamping.Application.Services
 {
     public class ReviewService : IReviewService
     {
@@ -13,25 +14,13 @@ namespace HejCamping.ApplicationServices
             _reviewRepository = reviewRepository;
         }
 
-    /*    public List<ReviewDTO> GetReviews()
-        {
-            var reviews = _reviewRepository.GetReviews();
-            return reviews.Select(r => new ReviewDTO
-            {
-                OrderNumber = r.OrderNumber,
-                Name = r.Name,
-                ReviewText = r.ReviewText,
-                ReviewDate = r.ReviewDate
-            }).ToList();
-        }*/
+
         public List<ReviewDTO> GetReviews()
         {
-            Console.WriteLine("Getting reviews from repository");
             var reviews = _reviewRepository.GetReviews();
             var  reviewDTOs = new List<ReviewDTO>();
             foreach (var review in reviews)
             {
-                Console.WriteLine("Handling review: " + review.OrderNumber);
                 reviewDTOs.Add(new ReviewDTO
                 {
                     OrderNumber = review.OrderNumber,
@@ -52,6 +41,10 @@ namespace HejCamping.ApplicationServices
         public ReviewDTO GetReviewByOrderNr(string orderNumber)
         {
             var newReview = _reviewRepository.GetReviewByOrderNr(orderNumber);
+            if (newReview == null)
+            {
+                return null;
+            }
             return new ReviewDTO
             {
                 OrderNumber = newReview.OrderNumber,

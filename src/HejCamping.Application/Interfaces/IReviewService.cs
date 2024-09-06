@@ -1,6 +1,7 @@
 using HejCamping.Domain;
+using HejCamping.Application.DTOs;
 
-namespace HejCamping.ApplicationServices
+namespace HejCamping.Application.Interfaces
 
 {
     public interface IReviewService

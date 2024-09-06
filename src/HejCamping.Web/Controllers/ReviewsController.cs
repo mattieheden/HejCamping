@@ -1,10 +1,9 @@
-using HejCamping.ApplicationServices;
-using HejCamping.Domain.Entities;
-using HejCamping.Domain.Interfaces;
+using HejCamping.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using HejCamping.Web.Models;
+using HejCamping.Application.DTOs;
 
-namespace HejCamping.ReviewsController
+namespace HejCamping.Web.Controllers
 {
     public class ReviewsController : Controller
     {
@@ -27,30 +26,6 @@ namespace HejCamping.ReviewsController
             return View();
         }
 
-        [HttpPost]
-        public IActionResult MakeReview(ReviewViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var reviewDTO = new ReviewDTO
-                    {
-                        OrderNumber = "HEJ123", // Mock order number..
-                        Name = model.Name,
-                        ReviewText = model.ReviewText,
-                        ReviewDate = DateTime.UtcNow
-                        
-                    };
-                    _reviewService.AddReview(reviewDTO);
-                }
-                catch (Exception e)
-                {
-                    return BadRequest(e.Message);
-                }
-            }
-            return View("Index");
-        }
 
         public IActionResult UpdateReview(ReviewViewModel model)
         {

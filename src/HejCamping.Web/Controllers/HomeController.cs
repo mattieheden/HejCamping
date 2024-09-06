@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using HejCamping.ApplicationServices;
 using HejCamping.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using HejCamping.Application.Interfaces;
 
 namespace HejCamping.Web.Controllers
 {

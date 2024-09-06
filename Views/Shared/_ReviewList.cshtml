@@ -1,6 +1,5 @@
-@model List<HejCamping.ApplicationServices.ReviewDTO>
+@model List<HejCamping.Application.DTOs.ReviewDTO>
 
-@{ int count = 0; }
 <div class="row">
     @foreach (var review in Model)
     {
@@ -12,10 +11,5 @@
                 </div>
             </div>
         </div>
-        count++; 
-        @if (count % 3 == 0)
-        {
-            <div class="row"></div>
-        }
     }
 </div>
