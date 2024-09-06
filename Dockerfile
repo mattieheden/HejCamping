@@ -40,6 +40,7 @@ RUN apk add --no-cache icu-libs
 # Set environment variable to enable globalization support
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
+
 # Set the working directory
 WORKDIR /app
 
