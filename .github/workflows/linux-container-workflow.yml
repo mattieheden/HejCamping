@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Azure Container Registry
 on:
   push:
     branches:
-      - CAM-35-Try-running-app-in-Azure-Container-Apps  # Specify the branch to trigger the workflow
+      - dev  # Specify the branch to trigger the workflow
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
