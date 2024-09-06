@@ -34,8 +34,8 @@ jobs:
         with:
           push: true
           tags: |
-            hejcampingregistry.azurecr.io/hej-camping-app2:latest
-            hejcampingregistry.azurecr.io/hej-camping-app2:${{ github.sha }}
+            ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:latest
+            ${{ secrets.REGISTRY_LOGIN_SERVER }}/hej-camping-app2:${{ github.sha }}
           file: ./Dockerfile
           
       - name: 'Deploy to Azure Container Apps'
