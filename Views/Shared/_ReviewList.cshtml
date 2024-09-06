@@ -1,7 +1,7 @@
 @model List<HejCamping.Application.DTOs.ReviewDTO>
 
 <div class="row">
-    @foreach (var review in Model)
+    @foreach (var review in Model.OrderBy(r => Guid.NewGuid()).Take(3))
     {
         <div class="col-md-4">
             <div class="card">
