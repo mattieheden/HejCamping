@@ -1,7 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace HejCamping.Domain
+namespace HejCamping.Domain.Entities
 {
     public class Booking
     {

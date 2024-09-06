@@ -1,7 +1,7 @@
-using HejCamping.Models;
-using Microsoft.AspNetCore.Mvc;
+using HejCamping.Application.DTOs;
+using HejCamping.Web.Models;
 
-namespace HejCamping.ApplicationServices
+namespace HejCamping.Application.Interfaces
 {
     public interface IBookingService
     {
@@ -10,7 +10,7 @@ namespace HejCamping.ApplicationServices
         void CancelBooking(string orderNumber);
         Dictionary<int, bool> GetCabinAvailability(DateTime dateStart, DateTime dateEnd);
         // JsonResult GetCabinAvailability(DateTime dateStart, DateTime dateEnd);
-        List<Cabin> GetCabins();
+        List<CabinViewModel> GetCabins();
         Task BookingConfirmationEmail(BookingDTO booking);
         Task CancelBookingConfirmationEmail(string orderNumber);
         int GetCabinPrice(int cabinNr);

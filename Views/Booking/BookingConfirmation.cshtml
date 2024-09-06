@@ -1,0 +1,91 @@
+@model HejCamping.Web.Models.BookingViewModel
+
+@{
+    ViewData["Title"] = "Booking Confirmation";
+}
+
+<div class="container-fluid">
+    <!-- Modal Structure -->
+    <div class="modal" tabindex="-1" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center ">
+                    <p class="h4">Redirecting to booking page.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Booking confirmation -->
+    <div class="container-fluid p-5">
+        <h1 class="h1 text-center">Booking Confirmation</h1>
+        <p class="text-center">Cabin successfully booked!</p>
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">Order number:</dt>
+        <dd class="col-sm-9">@Model.OrderNumber</dd>
+
+        <dt class="col-sm-3">Order Date:</dt>
+        <dd class="col-sm-9">@Model.OrderDate.ToString("yyyy/MM/dd")</dd>
+
+        <dt class="col-sm-3">Name:</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Email:</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3">Cabin number:</dt>
+        <dd class="col-sm-9">@Model.CabinId</dd>
+
+        <dt class="col-sm-3">Dates booked:</dt>
+        <dd class="col-sm-9">
+            @Model.FromDate.ToString("yyyy/MM/dd"), Check-in time: <strong>15:00</strong> -
+            @Model.ToDate.ToString("yyyy/MM/dd"), Check-out time: <strong>12:00</strong>
+        </dd>
+
+        <dt class="col-sm-3">Total Price:</dt>
+        <dd class="col-sm-9">@Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("se-SE"))</dd>
+    </dl>
+
+    <p class="text-center p-4 h6">The information above has been sent to this email: @Model.Email</p>
+
+    <form method="post">
+        <button type="submit" class="btn btn-info" asp-controller="Booking" asp-action="Index">Return to booking</button>
+    </form>
+</div>
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function call to show the modal after the delay.
+            delayedRedirectMessage();
+
+            //Get the modal
+            var modal = document.getElementById('modal');
+
+            // Delay in milliseconds
+            var redirectMessageDelay = 57000;
+            var redirectDelay = 60000;
+
+            function delayedRedirectMessage() {
+                fetch('/Booking/DelayedRedirect')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success == true) {
+                            setTimeout(function() {
+                                modal.style.display = 'block';
+                            }, redirectMessageDelay);
+                        } else {
+                            console.log('Error: ' + data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            setTimeout(function() {
+                window.location.href = '/Booking/Index';
+            }, redirectDelay);
+
+        });
+    </script>
+}

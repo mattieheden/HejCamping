@@ -1,4 +1,4 @@
-namespace HejCamping.ApplicationServices
+namespace HejCamping.Application.DTOs
 {
     public class BookingDTO
     {

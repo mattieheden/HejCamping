@@ -1,8 +1,16 @@
-using HejCamping.Domain;
-using HejCamping.Models;
+using System.Threading.Tasks;
 
-namespace HejCamping.ApplicationServices
+using HejCamping.Application.DTOs;
+using HejCamping.Application.Interfaces;
+using HejCamping.Domain.Entities;
+using HejCamping.Domain.Repositories;
+using HejCamping.Domain.Services;
+using HejCamping.Web.Models;
+
+
+namespace HejCamping.Application.Services
 {
+
     public class BookingService : IBookingService
     {
         private readonly IBookingRepository _bookingRepository;
@@ -16,7 +24,8 @@ namespace HejCamping.ApplicationServices
         public BookingDTO GetBookingByOrderNr(string orderNumber)
         {
             var booking = _bookingRepository.GetBookingByOrderNr(orderNumber);
-            return new BookingDTO{
+            return new BookingDTO
+            {
                 OrderNumber = booking.OrderNumber,
                 IsCancelled = booking.IsCancelled,
                 OrderDate = booking.OrderDate,
@@ -27,7 +36,6 @@ namespace HejCamping.ApplicationServices
                 CabinNr = booking.CabinNr,
                 TotalPrice = booking.TotalPrice
             };
-            // return new BookingDTO();
         }
 
         public void AddBooking(BookingDTO booking)
@@ -41,14 +49,30 @@ namespace HejCamping.ApplicationServices
             await CancelBookingConfirmationEmail(orderNumber);
         }
 
-        public Dictionary<int, bool> GetCabinAvailability(DateTime dateStart, DateTime dateEnd)
+        public Dictionary<int, bool> GetCabinAvailability(System.DateTime dateStart, System.DateTime dateEnd)
         {
             return _bookingRepository.GetCabinAvailability(dateStart, dateEnd);
         }
 
-        public List<Cabin> GetCabins()
+        public List<CabinViewModel> GetCabins()
         {
-            return _bookingRepository.GetCabins();
+            //Temporary conversation from Cabin to CabinViewModel, Might keep Cabin as an entity in the domain layer
+            List<Cabin> cabins = _bookingRepository.GetCabins();
+            List<CabinViewModel> cabinmodel = new List<CabinViewModel>();
+            foreach (var cabin in cabins)
+            {
+                cabinmodel.Add(new CabinViewModel
+                {
+                    Id = cabin.Id,
+                    Number = cabin.Number,
+                    IsVacant = cabin.IsVacant,
+                    PositionX = cabin.PositionX,
+                    PositionY = cabin.PositionY,
+                    PricePerNight = cabin.PricePerNight
+                });
+            }
+
+            return cabinmodel;
         }
 
         public async Task BookingConfirmationEmail(BookingDTO booking)
@@ -57,27 +81,34 @@ namespace HejCamping.ApplicationServices
             string htmlBody = $"<h1>Dear {booking.Name},</h1>" + 
                             "<p>Thank you for booking a cabin at Hej Camping!</p><br />" + 
                             "<p>Your booking details:</p>" + 
-                            $"<p>Order number: {booking.OrderNumber}</p>" + 
-                            $"<p>Cabin number: {booking.CabinNr}</p>" + 
-                            $"<p>Check-in: {booking.DateStart.ToString().Substring(0,10)} at 15:00</p>" + 
-                            $"<p>Check-out: {booking.DateEnd.ToString().Substring(0,10)} at 12:00</p>" + 
-                            $"<p>Total price: {booking.TotalPrice}</p><br />" + 
+                            $"<p>Order number: {booking.OrderNumber}<br />" + 
+                            $"Cabin number: {booking.CabinNr}<br />" + 
+                            $"Check-in: {booking.DateStart.ToString()[..10]} at 15:00<br />" + 
+                            $"Check-out: {booking.DateEnd.ToString()[..10]} at 12:00<br />" + 
+                            $"Total price: {booking.TotalPrice}</p><br />" + 
                             "<p>We look forward to seeing you!</p><br />" + 
                             "<p>Best regards,<br />Hej Camping</p>";
-            
+            //Same as in CancelBooking. Do same error handling in separate function?
+            if (booking.Email == null) return;
+
             await _emailService.SendEmailAsync(booking.Email, subject, htmlBody);
         }
 
         public async Task CancelBookingConfirmationEmail(string orderNumber)
         {
-            var booking = _bookingRepository.GetBookingByOrderNr(orderNumber);
+            Booking booking = _bookingRepository.GetBookingByOrderNr(orderNumber);
+            if (booking == null) 
+            {
+                Console.WriteLine("Booking not found");
+                return;
+            }
             string subject = $"Booking cancellation for {booking.OrderNumber}";
             string htmlBody = $"<h1>Dear {booking.Name},</h1>" + 
                             "<p>We are sorry that you had to cancel your booking at Hej Camping and hope that it will work out better next time.</p><br />" +
                             "<p>Your booking details:</p>" +
                             $"<p>Order number: {booking.OrderNumber}</p>" +
                             $"<p>Cabin number: {booking.CabinNr}</p>" +
-                            $"<p>Order dates: {booking.DateStart.ToString().Substring(0,10)} - {booking.DateEnd.ToString().Substring(0,10)}</p>" +
+                            $"<p>Order dates: {booking.DateStart.ToString()[..10]} - {booking.DateEnd.ToString()[..10]}</p>" +
                             $"<p>Total price: {booking.TotalPrice}</p><br />" +
                             "<p>We hope to see you again soon!</p><br />" +
                             "<p>Best regards,<br />Hej Camping</p>";
@@ -92,6 +123,5 @@ namespace HejCamping.ApplicationServices
         {
             return _bookingRepository.GetCabinPrice(cabinNr);
         }
-
     }
 }

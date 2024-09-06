@@ -1,0 +1,50 @@
+@model HejCamping.Web.Models.BookingViewModel
+
+@{
+    ViewData["Title"] = "Booking Confirmation";
+}
+
+<div class="container-fluid">
+    <!-- Booking confirmation -->
+    <div class="container-fluid p-5">
+        <h1 class="h1 text-center">Booking Overview</h1>
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">Order number:</dt>
+        <dd class="col-sm-9">@Model.OrderNumber</dd>
+
+        <dt class="col-sm-3">Order Date:</dt>
+        <dd class="col-sm-9">@Model.OrderDate.ToString("yyyy/MM/dd")</dd>
+
+        <dt class="col-sm-3">Name:</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Email:</dt>
+        <dd class="col-sm-9">@Model.Email</dd>
+
+        <dt class="col-sm-3">Cabin number:</dt>
+        <dd class="col-sm-9">@Model.CabinId</dd>
+
+        <dt class="col-sm-3">Dates booked:</dt>
+        <dd class="col-sm-9">
+            @Model.FromDate.ToString("yyyy/MM/dd"), Check-in time: <strong>15:00</strong> -
+            @Model.ToDate.ToString("yyyy/MM/dd"), Check-out time: <strong>12:00</strong>
+        </dd>
+
+        <dt class="col-sm-3">Total Price:</dt>
+        <dd class="col-sm-9">@Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("se-SE"))</dd>
+    </dl>
+
+    <!-- Booking options like cancelling or leaving/Updating a review -->
+
+    <!-- TODO: Hide Cancel button if StartDate is within 1 day -->
+    <form method="post" asp-controller="Booking" asp-action="CancelBooking" asp-route-orderNumber="@Model.OrderNumber">
+        <button type="submit" class="btn btn-danger">Cancel booking</button>
+    </form>
+
+    <!-- MakeReview if Review can't be found, EditReview if a review can be found
+    Functions wants orderNumber, name, reviewText
+    Only shows if ToDate is in the past
+     -->
+</div>

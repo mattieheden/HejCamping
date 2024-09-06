@@ -1,6 +1,6 @@
-namespace HejCamping.Models
-{
-    public class BookingModel
+namespace HejCamping.Web.Models
+{    
+    public class BookingViewModel
     {
         public string? OrderNumber { get; set; }
         public DateTime FromDate { get; set; }

@@ -1,4 +1,5 @@
 using HejCamping.Domain;
+using HejCamping.Infrastructure.Persistence;
 
 namespace HejCamping.Infrastructure
 {
@@ -39,6 +40,17 @@ namespace HejCamping.Infrastructure
         public void UpdateReview(Review review)
         {
             _context.Reviews.Update(review);
+            _context.SaveChanges();
+        }
+
+        public void MockData()
+        {
+            var review1 = new Review("1234", "John Doe", "Great camping experience!", DateTime.Now);
+            var review2 = new Review("5678", "Jane Doe", "Not so great place!", DateTime.Now);
+            var review3 = new Review("91011", "John Doe", "Great place!", DateTime.Now);
+            _context.Reviews.Add(review1);
+            _context.Reviews.Add(review2);
+            _context.Reviews.Add(review3);
             _context.SaveChanges();
         }
     }

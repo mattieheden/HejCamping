@@ -1,11 +1,11 @@
 using Azure.Communication.Email;
-
-using HejCamping.Domain;
-using HejCamping.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 
+using HejCamping.Domain.Services;
+using HejCamping.Infrastructure.Options;
 
-namespace HejCamping.Infrastructure
+
+namespace HejCamping.Infrastructure.Services
 {
     public class AzureEmailService : IEmailService
     {

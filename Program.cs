@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 using HejCamping.ApplicationServices;
 using HejCamping.Domain;
 using HejCamping.Infrastructure;
 using HejCamping.Infrastructure.Options;
-using Microsoft.AspNetCore.Authentication.Cookies;
+
+using HejCamping.Application.Configuration;
+using HejCamping.Infrastructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 if (builder.Environment.IsDevelopment())
@@ -85,5 +89,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+    
 app.Run();

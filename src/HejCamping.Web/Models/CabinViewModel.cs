@@ -1,7 +1,6 @@
-namespace HejCamping.Models
-
+namespace HejCamping.Web.Models
 {
-    public class Cabin
+    public class CabinViewModel
     {
         public int Id { get; set; }
         public int Number { get; set; }
