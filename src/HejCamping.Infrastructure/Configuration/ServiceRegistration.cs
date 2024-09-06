@@ -17,17 +17,38 @@ namespace HejCamping.Infrastructure.Configuration
     {
         public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            // Bind AzureEmailSettings to the configuration section "AzureEmailSettings"
-            services.Configure<AzureEmailSettings>(configuration.GetSection("AzureEmailSettings"));
+            // Fetch Settings from environment variables
+            var emailSettings = new AzureEmailSettings
+            {
+                ConnectionString = Environment.GetEnvironmentVariable("AZURE_EMAIL_CONNECTION_STRING"),
+                SenderEmail = Environment.GetEnvironmentVariable("AZURE_EMAIL_SENDER"),
+                OwnerEmail = Environment.GetEnvironmentVariable("AZURE_EMAIL_OWNER")
+            };
+
+            var dbConnectionString = configuration.GetValue<string>("DATABASE_CONNECTION_STRING");
+
+            if (string.IsNullOrEmpty(dbConnectionString))
+            {
+                throw new InvalidOperationException("The database connection string has not been set.");
+            }
+
+            services.Configure<AzureEmailSettings>(options =>
+                {
+                    options.ConnectionString = emailSettings.ConnectionString;
+                    options.SenderEmail = emailSettings.SenderEmail;
+                    options.OwnerEmail = emailSettings.OwnerEmail;
+                });
 
             // Bind DatabaseOptions to the configuration section "ConnectionStrings"
             services.Configure<DatabaseOptions>(configuration.GetSection("ConnectionStrings"));
-            services.AddDbContext<AppDbContext>((serviceProvider, options) =>
-            {
-                // Get the connection string from the DatabaseOptions
-                var databaseOptions = serviceProvider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
-                options.UseSqlite(databaseOptions.DefaultConnection);
-            });
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(
+                    dbConnectionString,
+                    sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5, // Maximum number of retry attempts
+                        maxRetryDelay: TimeSpan.FromSeconds(30), // Maximum delay between retries
+                        errorNumbersToAdd: null // List of additional SQL error numbers to consider transient
+            )));
 
 
 
