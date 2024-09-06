@@ -2,7 +2,7 @@ using HejCamping.Domain.Entities;
 
 namespace HejCamping.Domain.Repositories
 {
-    public interface IBookingRepository
+    public interface IBookingRepositorys
     {
         Booking GetBookingByOrderNr(string orderNumber);
         void AddBooking(Booking booking);

@@ -1,5 +1,4 @@
 namespace HejCamping.Domain.Entities
-
 {
     public class Cabin
     {

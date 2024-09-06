@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HejCamping.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240821114730_review")]
-    partial class review
+    [Migration("20240906020007_MovedToCleanArchitecture")]
+    partial class MovedToCleanArchitecture
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace HejCamping.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
-            modelBuilder.Entity("HejCamping.Domain.Booking", b =>
+            modelBuilder.Entity("HejCamping.Domain.Entities.Booking", b =>
                 {
                     b.Property<string>("OrderNumber")
                         .HasColumnType("TEXT");
@@ -52,6 +52,25 @@ namespace HejCamping.Migrations
                     b.HasKey("OrderNumber");
 
                     b.ToTable("Bookings");
+                });
+
+            modelBuilder.Entity("HejCamping.Domain.Review", b =>
+                {
+                    b.Property<string>("OrderNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ReviewDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ReviewText")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("OrderNumber");
+
+                    b.ToTable("Reviews");
                 });
 #pragma warning restore 612, 618
         }

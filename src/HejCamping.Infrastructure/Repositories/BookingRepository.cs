@@ -1,6 +1,7 @@
 using System.Linq;
 using HejCamping.Domain.Entities;
 using HejCamping.Domain.Interfaces;
+using HejCamping.Infrastructure.Persistence;
 
 namespace HejCamping.Infrastructure.Repositories
 {

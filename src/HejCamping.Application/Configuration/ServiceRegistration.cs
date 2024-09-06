@@ -9,6 +9,7 @@ namespace HejCamping.Application.Configuration
         public static void AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IBookingService, BookingService>();
+            services.AddScoped<IContactService, ContactService>();
         }
     }
 }

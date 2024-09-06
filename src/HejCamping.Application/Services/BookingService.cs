@@ -3,11 +3,10 @@ using System.Threading.Tasks;
 using HejCamping.Application.DTOs;
 using HejCamping.Application.Interfaces;
 using HejCamping.Domain.Entities;
+using HejCamping.Domain.Repositories;
+using HejCamping.Domain.Services;
 using HejCamping.Web.Models;
 
-//Temporary usings, will be moved when the code is refactored
-using HejCamping.Domain;
-using HejCamping.Domain.Interfaces;
 
 namespace HejCamping.Application.Services
 {
@@ -58,7 +57,7 @@ namespace HejCamping.Application.Services
         public List<CabinViewModel> GetCabins()
         {
             //Temporary conversation from Cabin to CabinViewModel, Might keep Cabin as an entity in the domain layer
-            List<HejCamping.Domain.Entities.Cabin> cabins = _bookingRepository.GetCabins();
+            List<Cabin> cabins = _bookingRepository.GetCabins();
             List<CabinViewModel> cabinmodel = new List<CabinViewModel>();
             foreach (var cabin in cabins)
             {
@@ -97,7 +96,12 @@ namespace HejCamping.Application.Services
 
         public async Task CancelBookingConfirmationEmail(string orderNumber)
         {
-            var booking = _bookingRepository.GetBookingByOrderNr(orderNumber);
+            Booking booking = _bookingRepository.GetBookingByOrderNr(orderNumber);
+            if (booking == null) 
+            {
+                Console.WriteLine("Booking not found");
+                return;
+            }
             string subject = $"Booking cancellation for {booking.OrderNumber}";
             string htmlBody = $"<h1>Dear {booking.Name},</h1>" + 
                             "<p>We are sorry that you had to cancel your booking at Hej Camping and hope that it will work out better next time.</p><br />" +

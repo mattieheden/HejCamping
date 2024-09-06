@@ -1,6 +1,7 @@
 using HejCamping.Domain.Interfaces;
 using HejCamping.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using HejCamping.Infrastructure.Persistence;
 
 namespace HejCamping.Infrastructure
 {
