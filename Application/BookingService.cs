@@ -17,6 +17,7 @@ namespace HejCamping.ApplicationServices
         public List<BookingDTO> GetAllBookings()
         {
             var bookings = _bookingRepository.GetAllBookings();
+
             return bookings.Select(booking => new BookingDTO{
                 OrderNumber = booking.OrderNumber,
                 IsCancelled = booking.IsCancelled,
@@ -29,7 +30,7 @@ namespace HejCamping.ApplicationServices
                 TotalPrice = booking.TotalPrice
             }).ToList();
         }
-
+ 
         public BookingDTO GetBookingByOrderNr(string orderNumber)
         {
             var booking = _bookingRepository.GetBookingByOrderNr(orderNumber);
