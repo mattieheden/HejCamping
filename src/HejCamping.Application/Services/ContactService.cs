@@ -1,6 +1,9 @@
-using HejCamping.Domain;
+using HejCamping.Application.Interfaces;
+using HejCamping.Domain.Entities;
+using HejCamping.Domain.Services;
 
-namespace HejCamping.ApplicationServices
+
+namespace HejCamping.Application.Services
 {
     public class ContactService : IContactService
     {

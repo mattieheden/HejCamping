@@ -1,8 +1,9 @@
 using System.Linq;
-using HejCamping.Domain;
-using HejCamping.Models;
+using HejCamping.Domain.Repositories;
+using HejCamping.Domain.Entities;
+using HejCamping.Infrastructure.Persistence;
 
-namespace HejCamping.Infrastructure
+namespace HejCamping.Infrastructure.Repositories
 {
     public class BookingRepository : IBookingRepository
     {

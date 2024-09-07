@@ -1,0 +1,12 @@
+@model HejCamping.Application.DTOs.BookingDTO
+
+<h1>Dear @Model.Name,</h1>
+<p>Thank you for booking a cabin at Hej Camping!</p><br />
+<p>Your booking details:</p>
+<p>Order number: @Model.OrderNumber<br />
+Cabin number: @Model.CabinNr<br />
+Check-in: @Model.DateStart.ToString("yyyy-MM-dd") at 15:00<br />
+Check-out: @Model.DateEnd.ToString("yyyy-MM-dd") at 12:00<br />
+Total price: @Model.TotalPrice</p><br />
+<p>We look forward to seeing you!</p><br />
+<p>Best regards,<br />Hej Camping</p>

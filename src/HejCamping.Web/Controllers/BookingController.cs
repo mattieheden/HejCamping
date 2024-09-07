@@ -111,10 +111,35 @@ namespace HejCamping.Web.Controllers
             return View(model);
         }
 
+        public IActionResult ViewBooking(string orderNumber)
+        {
+            var booking = _bookingService.GetBookingByOrderNr(orderNumber);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            var model = new BookingViewModel
+            {
+                OrderNumber = booking.OrderNumber,
+                IsCancelled = booking.IsCancelled,
+                OrderDate = booking.OrderDate,
+                Email = booking.Email,
+                Name = booking.Name,
+                FromDate = booking.DateStart,
+                ToDate = booking.DateEnd,
+                CabinId = booking.CabinNr,
+                TotalPrice = booking.TotalPrice,
+                NumberOfNights = booking.NumberOfNights,
+            };
+            return View(model);
+        }
+
+        [HttpPost]
         public IActionResult CancelBooking(string orderNumber)
         {
             _bookingService.CancelBooking(orderNumber);
-            return RedirectToAction("Index");
+            return RedirectToAction("ViewBooking", new { orderNumber });
         }
 
         public JsonResult DelayedRedirect()

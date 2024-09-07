@@ -1,5 +1,6 @@
-using HejCamping.Models;
-namespace HejCamping.Domain
+using HejCamping.Domain.Entities;
+
+namespace HejCamping.Domain.Repositories
 {
     public interface IBookingRepository
     {
