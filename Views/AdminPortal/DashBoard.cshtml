@@ -1,12 +1,11 @@
- @model HejCamping.Web.Models.BookingViewModel 
-@* @model IEnumerable<HejCamping.Models.BookingModel> *@
+@model HejCamping.Web.Models.BookingViewModel 
+
 
 
 @{
     ViewData["Title"] = "Dash Board";
-    var bookings = ViewBag.Bookings as List<BookingModel>; 
-    //var productsJson = Newtonsoft.Json.JsonConvert.SerializeObject(Model);
-
+    var bookings = ViewBag.Bookings as List<BookingViewModel>; 
+   
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -17,13 +16,13 @@
         <h5 class="card-header">@booking.OrderNumber</h5> 
             <div class="card-body">
                 <h5 class="card-title">Client name: @booking.Name</h5>
-                <h5 class="card-title">Cabin number: @booking.CabinNr</h5>
+                <h5 class="card-title">Cabin number: @booking.CabinId</h5>
             </div>
     </div>
 }
 
 
-@*     
+  
 <div id='calendar'></div>
 
 @section Scripts {
@@ -39,42 +38,35 @@
                 initialView: 'dayGridMonth',
                 events: function(fetchInfo, successCallback, failureCallback) {
                     ////
-                    fetch('/AdminPortal/GetAllBookings')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok' + response.statusText);
-                        } else {
-                                console.log('Response status is ' + response.statusText);
-                        }
-                        return response.json();
-                    })        
-                    .then(bookings => {
-                        
-                        //console.log(bookings);
-
-                        const events = bookings.map(event => {
-                            return {
-                                title: event.Name,    // Event name
-                                //start: event.date,     // Event start date (e.g., "2024-09-15")
-                                //allDay: true           // Set as all-day event (if applicable)
-                            };
-                        });
-                        //calendar.render(); 
-                        successCallback(events);
-                    })
-                    .catch(error => {
-                        console.log('Error:', error.message);     
-                        failureCallback(error);             
-                    });  
+                      
                     //////          
                 }
                
             });
             calendar.render();
             
-            //function GetAllBookings () {
+            //function GetAllBookings () {}
             
-
+            fetch('/AdminPortal/GetAllBookings')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok' + response.statusText);
+                } else {
+                        console.log('Response status is ' + response.statusText);
+                }
+                return response.json();
+            })        
+            .then(bookings => {
+                
+                console.log(bookings);
+                
+                //calendar.render(); 
+                //successCallback(events);
+            })
+            .catch(error => {
+                console.log('Error:', error.message);     
+                //failureCallback(error);             
+            });
 
 
 
@@ -85,6 +77,6 @@
 
 
         });
-    </script>
+    </script> 
+
 }
-*@

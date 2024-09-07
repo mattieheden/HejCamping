@@ -1,16 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using HejCamping.Web.Models;
-//using HejCamping.ApplicationServices;
-//using Newtonsoft.Json;  // Include this if using Newtonsoft.Json
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System;
+using HejCamping.Application.Interfaces;
 
 
 namespace HejCamping.ApplicationServices;
 
-using HejCamping.Web.Controllers;
 
 public class AdminPortalController : Controller
 {
@@ -24,34 +19,44 @@ public class AdminPortalController : Controller
 
   [Authorize]
   public IActionResult Dashboard()
-  {
-    
+  {    
+
     var bookings = _bookingService.GetAllBookings();
+
+    List<BookingViewModel> bookingViewModel = new List<BookingViewModel>();
+    foreach (var booking in bookings)
+    {
+        bookingViewModel.Add(new BookingViewModel
+        {
+            OrderNumber = booking.OrderNumber,
+            IsCancelled = booking.IsCancelled,
+            FromDate = booking.DateStart,
+            ToDate = booking.DateEnd,
+            OrderDate = booking.OrderDate,
+            CabinId = booking.CabinNr,
+            Name = booking.Name,
+            Email = booking.Email,
+            PricePerNight = booking.PricePerNight,
+            NumberOfNights = booking.NumberOfNights,
+            TotalPrice = booking.TotalPrice
+        });
       
-    ViewBag.Bookings =  bookings;
+    }
+   
+    ViewBag.Bookings =  bookingViewModel;
 
     return View();
   }
 
-  /*
+  
   public JsonResult GetAllBookings()
   {
-    //var bookings = _bookingService.GetAllBookings();
-    //return Json(bookings);
- 
+    
     try
     {
         var bookings = _bookingService.GetAllBookings();
-        //Console.WriteLine(bookings.Name);
-        //ViewBag.Bookings = bookings;
-
-        //string jsonString = JsonSerializer.Serialize(bookings);
-        //string jsonString = JsonConvert.SerializeObject(bookings);
-        //Console.WriteLine(jsonString);
         
-        //return Json(jsonString);
         return Json(bookings);
-
     }
     catch (Exception)
     {
@@ -60,36 +65,5 @@ public class AdminPortalController : Controller
         return Json( new { message = "An error occurred while loading bookings."});
     }
   }
-}
-*/
 
-// Paste the follwing into BookingService.cs
-/* 
-  public List<BookingDTO> GetAllBookings()
-        {
-            var bookings = _bookingRepository.GetAllBookings();
-
-            return bookings.Select(booking => new BookingDTO{
-                OrderNumber = booking.OrderNumber,
-                IsCancelled = booking.IsCancelled,
-                OrderDate = booking.OrderDate,
-                Email = booking.Email,
-                Name = booking.Name,
-                DateStart = booking.DateStart,
-                DateEnd = booking.DateEnd,
-                CabinNr = booking.CabinNr,
-                TotalPrice = booking.TotalPrice
-            }).ToList();
-  }
-
-  // This one into IBookingService.cs
-  List<BookingDTO> GetAllBookings();
-
-  // This one into BookingRepository.cs
-  public List<Booking> GetAllBookings()
-        {
-            // Return some data (e.g., from a database or in-memory collection)
-            return new List<Booking>(); // dummy implementation for now
-  }
-  */
 }

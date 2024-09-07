@@ -25,6 +25,7 @@ namespace HejCamping.Application.Services
         public List<BookingDTO> GetAllBookings()
         {
             var bookings = _bookingRepository.GetAllBookings();
+            
             return bookings.Select(booking => new BookingDTO{
                 OrderNumber = booking.OrderNumber,
                 IsCancelled = booking.IsCancelled,
