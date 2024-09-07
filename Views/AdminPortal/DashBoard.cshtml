@@ -10,6 +10,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
+@*
 @foreach (var booking in ViewBag.Bookings)
 {
     <div class="card m-3">
@@ -20,6 +21,7 @@
             </div>
     </div>
 }
+*@
 
 
   
@@ -33,40 +35,63 @@
             
             //GetAllBookings();
 
-            var calendarEl = document.getElementById('calendar');                       
+            var calendarEl = document.getElementById('calendar');       
+
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
+                
+                timeZone: 'UTC',
+                //initialView: 'dayGridMonth',                
+                headerToolbar: {
+                    left: 'prev next today prevYear nextYear',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                },
+                themeSystem: 'bootstrap5',
+                dayMaxEvents: true,
+                //showNonCurrentDates: true,
+                //weekNumbers: true,
+                //editable: true,
+                //selectable: true
+                //height: 500,
+                //aspectRatio: 2,
+                contentHeight: 600, 
+                
                 events: function(fetchInfo, successCallback, failureCallback) {
-                    ////
-                      
-                    //////          
+                    fetch('/AdminPortal/GetAllBookings')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok' + response.statusText);
+                        } else {
+                                console.log('Response status is ' + response.statusText);
+                        }
+                        return response.json();
+                    })        
+                    .then(data => {
+                        
+                        //console.log(data);
+                       
+                        let bookings = data.map(booking => ({
+                            title: booking.orderNumber,
+                            start: booking.dateStart,
+                            end: booking.dateEnd,
+                            allDay: true,
+                            //display: 'background'
+                        }));
+                        successCallback(bookings);
+                    })
+                    .catch(error => {
+                        console.log('Error:', error.message);     
+                        failureCallback(error);             
+                    });          
                 }
-               
-            });
+                
+            });     
+            calendar.updateSize(),
             calendar.render();
             
             //function GetAllBookings () {}
             
-            fetch('/AdminPortal/GetAllBookings')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok' + response.statusText);
-                } else {
-                        console.log('Response status is ' + response.statusText);
-                }
-                return response.json();
-            })        
-            .then(bookings => {
-                
-                console.log(bookings);
-                
-                //calendar.render(); 
-                //successCallback(events);
-            })
-            .catch(error => {
-                console.log('Error:', error.message);     
-                //failureCallback(error);             
-            });
+            
 
 
 
