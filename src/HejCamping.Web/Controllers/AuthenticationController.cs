@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using HejCamping.Application.Interfaces;
 using HejCamping.Application.DTOs;
 using HejCamping.Web.Models;
-using HejCamping.Models;
+//using HejCamping.Models;
 
 namespace HejCamping.Controllers;
 

@@ -1,22 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using HejCamping.Application.Interfaces;
-using HejCamping.Application.DTOs;
 using HejCamping.Web.Models;
-using HejCamping.Models;
-
+//using HejCamping.ApplicationServices;
 //using Newtonsoft.Json;  // Include this if using Newtonsoft.Json
-//using System.Text.Json;
-//using System.Text.Json.Serialization;
-//using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System;
 
 
+namespace HejCamping.ApplicationServices;
 
-
-namespace HejCamping.Controllers;
-
-
-using HejCamping.Controllers;
+using HejCamping.Web.Controllers;
 
 public class AdminPortalController : Controller
 {
@@ -29,23 +23,22 @@ public class AdminPortalController : Controller
   }
 
   [Authorize]
-
   public IActionResult Dashboard()
   {
     
     var bookings = _bookingService.GetAllBookings();
       
-    ViewBag.Bookings = bookings;
-    return View();
+    ViewBag.Bookings =  bookings;
 
+    return View();
   }
 
-/*
+  /*
   public JsonResult GetAllBookings()
   {
     //var bookings = _bookingService.GetAllBookings();
     //return Json(bookings);
-
+ 
     try
     {
         var bookings = _bookingService.GetAllBookings();
@@ -67,5 +60,36 @@ public class AdminPortalController : Controller
         return Json( new { message = "An error occurred while loading bookings."});
     }
   }
+}
 */
+
+// Paste the follwing into BookingService.cs
+/* 
+  public List<BookingDTO> GetAllBookings()
+        {
+            var bookings = _bookingRepository.GetAllBookings();
+
+            return bookings.Select(booking => new BookingDTO{
+                OrderNumber = booking.OrderNumber,
+                IsCancelled = booking.IsCancelled,
+                OrderDate = booking.OrderDate,
+                Email = booking.Email,
+                Name = booking.Name,
+                DateStart = booking.DateStart,
+                DateEnd = booking.DateEnd,
+                CabinNr = booking.CabinNr,
+                TotalPrice = booking.TotalPrice
+            }).ToList();
+  }
+
+  // This one into IBookingService.cs
+  List<BookingDTO> GetAllBookings();
+
+  // This one into BookingRepository.cs
+  public List<Booking> GetAllBookings()
+        {
+            // Return some data (e.g., from a database or in-memory collection)
+            return new List<Booking>(); // dummy implementation for now
+  }
+  */
 }
