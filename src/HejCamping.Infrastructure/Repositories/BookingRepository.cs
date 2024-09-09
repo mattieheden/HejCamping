@@ -1,6 +1,6 @@
 using System.Linq;
-using HejCamping.Domain.Repositories;
 using HejCamping.Domain.Entities;
+using HejCamping.Domain.Repositories;
 using HejCamping.Infrastructure.Persistence;
 
 namespace HejCamping.Infrastructure.Repositories
@@ -87,7 +87,6 @@ namespace HejCamping.Infrastructure.Repositories
             var price = cabin?.PricePerNight ?? 0;
             return price;
         }
-            
     }
     
 }

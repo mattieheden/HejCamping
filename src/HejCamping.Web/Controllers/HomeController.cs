@@ -1,20 +1,22 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using HejCamping.ApplicationServices;
 using HejCamping.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using HejCamping.Application.Interfaces;
 
 namespace HejCamping.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IReviewService _reviewService;
         
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IReviewService reviewService)
         {
             _logger = logger;
-            
+            _reviewService = reviewService;
         }
+
         public JsonResult DelayedRedirect()
         {
         // Your action logic here
@@ -27,8 +29,8 @@ namespace HejCamping.Web.Controllers
         // Index action
         public IActionResult Index()
         {
-            
-            return View();
+            var reviews = _reviewService.GetReviews();
+            return View(reviews);
         }
 
         // Privacy action

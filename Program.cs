@@ -6,27 +6,26 @@ using HejCamping.Infrastructure.Configuration;
 using HejCamping.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
+
 if (builder.Environment.IsDevelopment())
 {
     builder.Configuration.AddUserSecrets<Program>();
 }
-
-
 // Load environment variables
 var configuration = builder.Configuration;
-configuration.AddEnvironmentVariables(); // Add environment variables to configuration
-
+// Add environment variables to configuration
+configuration.AddEnvironmentVariables(); 
 
 // Add services to the container
 builder.Services.AddControllersWithViews();
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices(configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 var app = builder.Build();
 
-// Automatically apply pending migrations on startup
+// Automatically apply pending migrations on startup 
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();

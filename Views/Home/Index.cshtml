@@ -1,4 +1,5 @@
-﻿
+@model List<HejCamping.Application.DTOs.ReviewDTO>
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -39,5 +40,28 @@
     </div>
 </div>
 <container>
+    <div class="row">
+    @if (Model.Count != null)
+    {
+        <h3>What Our Guests Say</h3>
+            @foreach (var review in Model.OrderBy(r => Guid.NewGuid()).Take(3))
+            {
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@review.ReviewText</h5><br>
+                            <p class="card-text"><strong>@review.Name</strong></p>
+                        </div>
+                    </div>
+                </div>
+            }
+    }
+    else
+    {
+        <h3>No Reviews Yet</h3>
+    }
 
+</div>
+</container>
+        
 

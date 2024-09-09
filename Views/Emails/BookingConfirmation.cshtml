@@ -2,8 +2,7 @@
 
 <h1>Dear @Model.Name,</h1>
 <p>Thank you for booking a cabin at Hej Camping!</p><br />
-<p>Your booking details:</p>
-<p>Order number: @Model.OrderNumber<br />
+<p>Your booking details:</p><p>Order number: <a href="@Url.Action("ViewBooking", "Booking", new { orderNumber = Model.OrderNumber}, Context.Request.Scheme)">@Model.OrderNumber</a><br />
 Cabin number: @Model.CabinNr<br />
 Check-in: @Model.DateStart.ToString("yyyy-MM-dd") at 15:00<br />
 Check-out: @Model.DateEnd.ToString("yyyy-MM-dd") at 12:00<br />

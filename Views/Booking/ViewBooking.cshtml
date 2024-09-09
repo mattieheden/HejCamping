@@ -1,4 +1,5 @@
 @model HejCamping.Web.Models.BookingViewModel
+@using HejCamping.Web.Models
 
 @{
     ViewData["Title"] = "Booking Confirmation";
@@ -57,9 +58,15 @@
         }
 
         <!-- If Booking time has passed and there is no reveiew, Show MakeReview options -->
-
+        @if (DateTime.Now > Model.ToDate && Model.HasReview == false)
+        {
+            @Html.Partial("CreateReview", new HejCamping.Web.Models.ReviewViewModel { OrderNumber = Model.OrderNumber, Name = Model.Name})
+        }
         <!-- If Booking time has passed and there is a review, Show EditReview options -->
-
+        @if (DateTime.Now > Model.ToDate && Model.HasReview == true)
+        {
+            @Html.Partial("EditReview", new HejCamping.Web.Models.ReviewViewModel { OrderNumber = Model.OrderNumber, Name = Model.Name, ReviewText = Model.ReviewText })
+        }
     }
     else 
     {

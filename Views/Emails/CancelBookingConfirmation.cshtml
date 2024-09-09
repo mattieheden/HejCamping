@@ -1,0 +1,10 @@
+@model HejCamping.Application.DTOs.BookingDTO
+<h1>Dear @Model.Name,</h1>
+<p>We are sorry that you had to cancel your booking at Hej Camping and hope that it will work out better next time.</p><br />
+<p>Your booking details:</p>
+<p>Order number: @Model.OrderNumber</p>
+<p>Cabin number: @Model.CabinNr</p>
+<p>Order dates: @Model.DateStart.ToString("yyyy-MM-dd") - @Model.DateEnd.ToString("yyyy-MM-dd")</p>
+<p>Total price: @Model.TotalPrice</p><br />
+<p>We hope to see you again soon!</p><br />
+<p>Best regards,<br />Hej Camping</p>

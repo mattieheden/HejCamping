@@ -1,0 +1,15 @@
+@model List<HejCamping.Application.DTOs.ReviewDTO>
+
+<div class="row">
+    @foreach (var review in Model.OrderBy(r => Guid.NewGuid()).Take(3))
+    {
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@review.ReviewText</h5><br>
+                    <p class="card-text"><strong>@review.Name</strong></p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

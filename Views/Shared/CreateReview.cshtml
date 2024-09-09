@@ -1,0 +1,16 @@
+@model HejCamping.Web.Models.ReviewViewModel
+
+
+<h5>Your Review</h5>
+
+<!-- Review form -->
+<form asp-action="CreateReview" method="post">
+    <div class="form-group">
+        <textarea asp-for="ReviewText" class="form-control form-control-sm" rows="5"></textarea>
+    </div>
+    <input asp-for="Name" type="hidden" />
+    <input asp-for="OrderNumber" type="hidden" />
+    <div>
+        <input type="submit" value="Submit Review" class="btn btn-primary btn-sm" />
+    </div>
+</form>

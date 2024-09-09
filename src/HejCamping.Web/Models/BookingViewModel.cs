@@ -13,5 +13,7 @@ namespace HejCamping.Web.Models
         public float PricePerNight { get; set; }  
         public int NumberOfNights { get; set; }     
         public float TotalPrice { get; set; } 
+        public bool HasReview { get; set; }
+        public string? ReviewText { get; set; }
     }
 }

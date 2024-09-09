@@ -3,16 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using HejCamping.Application.DTOs;
 using HejCamping.Application.Interfaces;
 using HejCamping.Web.Models;
+using HejCamping.Application.Services;
+using Microsoft.VisualBasic;
 
 namespace HejCamping.Web.Controllers
 {
     public class BookingController : Controller
     {
         private readonly IBookingService _bookingService;
+        private readonly IReviewService _reviewService;
 
-        public BookingController(IBookingService bookingService)
+        public BookingController(IBookingService bookingService, IReviewService reviewService)
         {
             _bookingService = bookingService;
+            _reviewService = reviewService;
         }
 
         public IActionResult Index()
@@ -118,6 +122,13 @@ namespace HejCamping.Web.Controllers
             {
                 return NotFound();
             }
+            var hasReview = false;
+            var reviewText = "";
+            if (_reviewService.GetReviewByOrderNr(orderNumber) != null)
+            {
+                hasReview = true;
+                reviewText = _reviewService.GetReviewByOrderNr(orderNumber).ReviewText;
+            }
 
             var model = new BookingViewModel
             {
@@ -131,6 +142,8 @@ namespace HejCamping.Web.Controllers
                 CabinId = booking.CabinNr,
                 TotalPrice = booking.TotalPrice,
                 NumberOfNights = booking.NumberOfNights,
+                HasReview = hasReview,
+                ReviewText = reviewText
             };
             return View(model);
         }
@@ -146,5 +159,54 @@ namespace HejCamping.Web.Controllers
         {
             return Json(new {success = true, message = "Action triggered sucesffully!" });
         }
+
+        [HttpPost]
+        public IActionResult CreateReview(ReviewViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var reviewDTO = new ReviewDTO
+                    {
+                        OrderNumber = model.OrderNumber,
+                        Name = model.Name,
+                        ReviewText = model.ReviewText,
+                        ReviewDate = DateTime.UtcNow
+                        
+                    };
+                    _reviewService.AddReview(reviewDTO);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return RedirectToAction("ViewBooking", new { orderNumber = model.OrderNumber });
+        }
+
+        [HttpPost]
+        public IActionResult EditReview(ReviewViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var reviewDTO = new ReviewDTO
+                    {
+                        OrderNumber = model.OrderNumber,
+                        Name = model.Name,
+                        ReviewText = model.ReviewText,
+                        ReviewDate = DateTime.UtcNow
+                    };
+                    _reviewService.UpdateReview(reviewDTO);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
+            }
+            return RedirectToAction("ViewBooking", new { orderNumber = model.OrderNumber });
     }
+}
 }
