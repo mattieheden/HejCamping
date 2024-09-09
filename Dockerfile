@@ -7,25 +7,29 @@
 # Use the .NET 8.0 SDK image for building the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-# Copy the entire source code to the container
-COPY . /source
-
 # Set the working directory
 WORKDIR /source
+# Set up Microsoft package source
+RUN dotnet nuget add source --name microsoft https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-public/nuget/v3/index.json
 
-# This is the architecture you’re building for, passed in by the builder
-ARG TARGETARCH
 
-# Install bash for advanced shell scripting
-RUN apt-get update && apt-get install -y bash
+# Copy the solution file and restore dependencies
+COPY HejCamping.sln ./
+COPY src/HejCamping.Application/HejCamping.Application.csproj src/HejCamping.Application/
+COPY src/HejCamping.Domain/HejCamping.Domain.csproj src/HejCamping.Domain/
+COPY src/HejCamping.Infrastructure/HejCamping.Infrastructure.csproj src/HejCamping.Infrastructure/
+COPY src/HejCamping.Web/HejCamping.Web.csproj src/HejCamping.Web/
 
-# Set the shell to use bash instead of the default shell
-SHELL ["/bin/bash", "-c"]
+RUN dotnet nuget locals all --clear
+# Restore the dependencies for all projects
+RUN dotnet restore
 
-# Build the application
-# Replace 'amd64' with 'x64' since 'x64' is the canonical name in .NET
+# Copy the entire source code to the container
+COPY . .
+
+# Publish the application (HejCamping.Web) to the /app directory
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet publish -a ${TARGETARCH/amd64/x64} --use-current-runtime --self-contained false -o /app
+    dotnet publish src/HejCamping.Web/HejCamping.Web.csproj -c Release -o /app
 
 ################################################################################
 # Stage 2: Run the application
@@ -40,18 +44,17 @@ RUN apk add --no-cache icu-libs
 # Set environment variable to enable globalization support
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
-
 # Set the working directory
 WORKDIR /app
-
 
 # Copy everything needed to run the app from the build stage
 COPY --from=build /app .
 
 EXPOSE 80
 EXPOSE 443
-# Switch to a non-privileged user (defined in the base image)
+
+# Use the non-privileged user defined in the base image
 USER $APP_UID
 
 # Set the entry point to run the application
-ENTRYPOINT ["dotnet", "HejCamping.dll"]
+ENTRYPOINT ["dotnet", "HejCamping.Web.dll"]
