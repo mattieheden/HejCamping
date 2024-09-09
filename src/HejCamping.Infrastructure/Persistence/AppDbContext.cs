@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using HejCamping.Domain.Entities;
+﻿using HejCamping.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HejCamping.Infrastructure.Persistence
@@ -18,9 +16,6 @@ namespace HejCamping.Infrastructure.Persistence
             : base(options)
         {
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseSqlite("Data Source=SQLite.db");
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
