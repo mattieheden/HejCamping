@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
-using HejCamping.Models;
-
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 
-namespace HejCamping.Controllers;
+using HejCamping.Application.Interfaces;
+using HejCamping.Application.DTOs;
+using HejCamping.Web.Models;
+
+
+namespace HejCamping.Web.Controllers;
 
 public class AuthenticationController : Controller
 {
@@ -43,8 +46,8 @@ public class AuthenticationController : Controller
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
             //return RedirectToAction("Index", "Home"); // Redirect to a secure area of your application.
-            return RedirectToAction("AdminPortal", "Home"); // Redirect to a secure area of your application.
-        
+            return RedirectToAction("DashBoard", "AdminPortal"); // Redirect to a secure area of your application.
+            
         }
 
         ModelState.AddModelError(string.Empty, "Invalid login attempt."); // Generic error message for security reasons.

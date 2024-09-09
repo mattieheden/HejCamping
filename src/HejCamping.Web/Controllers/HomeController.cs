@@ -9,12 +9,11 @@ namespace HejCamping.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IReviewService _reviewService;
-
-        public HomeController(ILogger<HomeController> logger, IReviewService reviewService)
+        
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _reviewService = reviewService;
+            
         }
         public JsonResult DelayedRedirect()
         {
@@ -28,8 +27,8 @@ namespace HejCamping.Web.Controllers
         // Index action
         public IActionResult Index()
         {
-            var reviews = _reviewService.GetReviews();
-            return View(reviews);
+            
+            return View();
         }
 
         // Privacy action

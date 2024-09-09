@@ -1,0 +1,82 @@
+@model HejCamping.Web.Models.BookingViewModel 
+
+
+
+@{
+    ViewData["Title"] = "Dash Board";
+    var bookings = ViewBag.Bookings as List<BookingViewModel>; 
+   
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@foreach (var booking in ViewBag.Bookings)
+{
+    <div class="card m-3">
+        <h5 class="card-header">@booking.OrderNumber</h5> 
+            <div class="card-body">
+                <h5 class="card-title">Client name: @booking.Name</h5>
+                <h5 class="card-title">Cabin number: @booking.CabinId</h5>
+            </div>
+    </div>
+}
+
+
+  
+<div id='calendar'></div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+    <script>  
+        document.addEventListener('DOMContentLoaded', function() {           
+            
+            //GetAllBookings();
+
+            var calendarEl = document.getElementById('calendar');                       
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: function(fetchInfo, successCallback, failureCallback) {
+                    ////
+                      
+                    //////          
+                }
+               
+            });
+            calendar.render();
+            
+            //function GetAllBookings () {}
+            
+            fetch('/AdminPortal/GetAllBookings')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok' + response.statusText);
+                } else {
+                        console.log('Response status is ' + response.statusText);
+                }
+                return response.json();
+            })        
+            .then(bookings => {
+                
+                console.log(bookings);
+                
+                //calendar.render(); 
+                //successCallback(events);
+            })
+            .catch(error => {
+                console.log('Error:', error.message);     
+                //failureCallback(error);             
+            });
+
+
+
+
+
+
+
+
+
+        });
+    </script> 
+
+}

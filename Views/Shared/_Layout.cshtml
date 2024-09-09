@@ -30,10 +30,10 @@
                         <li class="nav-item">
                             <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Booking" asp-action="Index">Book</a>
                         </li>
-                        @if (Context.User.Identity.IsAuthenticated)
+                        @if (Context.User?.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AdminPortal">Admin Portal</a>
+                                <a class="nav-link" asp-area="" asp-controller="AdminPortal" asp-action="DashBoard">Admin Portal</a>
                             </li>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
                         }

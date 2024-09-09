@@ -4,6 +4,7 @@ namespace HejCamping.Domain.Repositories
 {
     public interface IBookingRepository
     {
+        List<Booking> GetAllBookings();
         Booking GetBookingByOrderNr(string orderNumber);
         void AddBooking(Booking booking);
         void CancelBooking(string orderNumber);

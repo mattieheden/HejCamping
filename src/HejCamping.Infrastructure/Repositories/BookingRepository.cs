@@ -10,14 +10,20 @@ namespace HejCamping.Infrastructure.Repositories
         private readonly AppDbContext _context;
         private readonly int cabinAmount = 5;
 
+        public List<Booking> GetAllBookings()
+        {
+            List<Booking> bookings = _context.Bookings.ToList();
+
+            return bookings; 
+        }
         public BookingRepository(AppDbContext context)
         {
             _context = context;
         }
         public Booking GetBookingByOrderNr(string orderNumber)
         {
-                Booking booking = _context.Bookings.FirstOrDefault(b => b.OrderNumber == orderNumber);
-                return booking;
+            Booking booking = _context.Bookings.FirstOrDefault(b => b.OrderNumber == orderNumber);
+            return booking;
         }
 
         public void AddBooking(Booking booking)
@@ -28,7 +34,7 @@ namespace HejCamping.Infrastructure.Repositories
 
         public void CancelBooking(string orderNumber)
         {
-            Booking booking = GetBookingByOrderNr(orderNumber);
+            Booking? booking = GetBookingByOrderNr(orderNumber); // Check this with Kim
             if (booking != null)  {
                 booking.IsCancelled = true;
                 _context.SaveChanges();
