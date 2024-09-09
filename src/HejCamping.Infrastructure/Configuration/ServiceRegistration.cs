@@ -1,14 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 using HejCamping.Domain.Repositories;
 using HejCamping.Domain.Services;
-
 using HejCamping.Infrastructure.Options;
 using HejCamping.Infrastructure.Persistence;
 using HejCamping.Infrastructure.Repositories;
 using HejCamping.Infrastructure.Services;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
-
 
 namespace HejCamping.Infrastructure.Configuration
 {

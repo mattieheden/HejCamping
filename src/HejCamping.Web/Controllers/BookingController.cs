@@ -21,7 +21,17 @@ namespace HejCamping.Web.Controllers
 
         public IActionResult Index()
         {
-            var cabins = _bookingService.GetCabins();
+            var cabinObj = _bookingService.GetCabins();
+            var cabins = cabinObj.Select(cabin => new CabinViewModel
+            {
+                Id = cabin.Id,
+                Number = cabin.Number,
+                IsVacant = cabin.IsVacant,
+                PositionX = cabin.PositionX,
+                PositionY = cabin.PositionY,
+                PricePerNight = cabin.PricePerNight
+            }).ToList();
+            
             ViewBag.Cabins = cabins;
             var cabinAvailability = _bookingService.GetCabinAvailability(DateTime.Today, DateTime.Today.AddDays(1));
             foreach (var cabin in cabins)

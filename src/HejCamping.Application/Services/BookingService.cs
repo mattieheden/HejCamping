@@ -3,8 +3,6 @@ using HejCamping.Application.Interfaces;
 using HejCamping.Domain.Entities;
 using HejCamping.Domain.Repositories;
 using HejCamping.Domain.Services;
-using HejCamping.Web.Models;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 
 namespace HejCamping.Application.Services
@@ -72,25 +70,10 @@ namespace HejCamping.Application.Services
             return _bookingRepository.GetCabinAvailability(dateStart, dateEnd);
         }
 
-        public List<CabinViewModel> GetCabins()
+        public List<Cabin> GetCabins()
         {
-            //Temporary conversation from Cabin to CabinViewModel, Might keep Cabin as an entity in the domain layer
             List<Cabin> cabins = _bookingRepository.GetCabins();
-            List<CabinViewModel> cabinmodel = new List<CabinViewModel>();
-            foreach (var cabin in cabins)
-            {
-                cabinmodel.Add(new CabinViewModel
-                {
-                    Id = cabin.Id,
-                    Number = cabin.Number,
-                    IsVacant = cabin.IsVacant,
-                    PositionX = cabin.PositionX,
-                    PositionY = cabin.PositionY,
-                    PricePerNight = cabin.PricePerNight
-                });
-            }
-
-            return cabinmodel;
+            return cabins;
         }
 
         public async Task BookingConfirmationEmail(BookingDTO booking)

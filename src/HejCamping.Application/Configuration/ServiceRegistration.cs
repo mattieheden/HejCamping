@@ -1,6 +1,6 @@
-using Microsoft.Extensions.DependencyInjection;
 using HejCamping.Application.Interfaces;
 using HejCamping.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HejCamping.Application.Configuration
 {
