@@ -16,14 +16,9 @@ namespace HejCamping.Application.Services
 
         public async Task SendContactEmailAsync(string fromEmail, string orderNumber, string subject, string body)
         {
-            if (orderNumber == null)
-            {
-                orderNumber = "N/A";
-            }
-            if (subject == null)
-            {
-                subject = "Website Inquiry";
-            }
+            if (orderNumber == null) orderNumber = "N/A";
+            if (subject == null) subject = "Website Inquiry";
+
             var message = $"<p>From: {fromEmail}</p>" +
                           $"<p>Order number: {orderNumber}</p>" +
                           $"<p>{body}</p>";

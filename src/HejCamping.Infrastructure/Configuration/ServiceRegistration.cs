@@ -7,6 +7,7 @@ using HejCamping.Infrastructure.Options;
 using HejCamping.Infrastructure.Persistence;
 using HejCamping.Infrastructure.Repositories;
 using HejCamping.Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 
 
 namespace HejCamping.Infrastructure.Configuration
@@ -52,6 +53,7 @@ namespace HejCamping.Infrastructure.Configuration
 
 
             // Add services to the container
+            services.AddScoped<IViewRenderer, ViewRendererService>();
             services.AddScoped<IEmailService, AzureEmailService>();
             services.AddScoped<IBookingRepository, BookingRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
