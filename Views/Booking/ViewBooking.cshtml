@@ -38,7 +38,7 @@
     </dl>
 
     <!-- Booking options like cancelling or leaving/Updating a review -->
-    @if (Model.isCancelled == false)
+    @if (Model.IsCancelled == false)
     {
         <!-- Show Canel Booking button if FromDate is more than 1 day in the future -->
         @if (DateTime.Now.AddDays(1) < Model.FromDate)

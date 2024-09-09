@@ -133,7 +133,7 @@ namespace HejCamping.Web.Controllers
             var model = new BookingViewModel
             {
                 OrderNumber = booking.OrderNumber,
-                isCancelled = booking.IsCancelled,
+                IsCancelled = booking.IsCancelled,
                 OrderDate = booking.OrderDate,
                 Email = booking.Email,
                 Name = booking.Name,

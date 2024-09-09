@@ -3,7 +3,7 @@ namespace HejCamping.Web.Models
     public class BookingViewModel
     {
         public string? OrderNumber { get; set; }
-        public bool isCancelled { get; set; }
+        public bool IsCancelled { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
         public DateTime OrderDate { get; set; }
