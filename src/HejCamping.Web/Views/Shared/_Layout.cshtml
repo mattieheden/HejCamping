@@ -18,17 +18,26 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HejCamping</a>
-                
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <div class="container-xxl">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <span class="fw-bold">
+                    HejCamping
+                </span>
+                </a>
+                <!-- toggle button for mobile view -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navigation links -->
+                <div class="collapse navbar-collapse justify-content-end align-center" id="navbarNav">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg0">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Booking" asp-action="Index">Book</a>
+                            <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="Index">Book</a>
                         </li>
                         @if (Context.User?.Identity?.IsAuthenticated == true)
                         {
@@ -49,9 +58,26 @@
                 </div>
             </div>
         </nav>
-        <div>
+    <!-- Different banner for landing page -->
+    <div class="banner-container">
+        @if (ViewContext.RouteData.Values["Action"].ToString() == "Index" && ViewContext.RouteData.Values["Controller"].ToString() == "Home")
+        {
+            <img src="~/images/hejlandingpage2.jpg" alt="Landing Page Banner" style="width: 100%; height: 500px; object-fit: cover;" />
+            <div class="banner-text">
+                <h1 class="display-4">Welcome to {hejcamping}</h1>
+                <p>Your unlocal worldclass cabins by the sea.</p>
+            </div>
+
+            <!-- Book Now Button -->
+            <div class="banner-button">
+                <a class="btn btn-primary btn-lg" asp-controller="Booking" asp-action="Index">Book now!</a>
+            </div>
+        }
+        else
+        {
             <img src="~/images/banner2.png" alt="Campsite Banner" style="width: 100%; height: 200px; object-fit: cover;" />
-        </div>
+        }
+    </div>
     </header>
     <div class="container pb-5">
         <main role="main" class="pb-3">
