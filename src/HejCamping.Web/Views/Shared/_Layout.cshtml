@@ -18,17 +18,26 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HejCamping</a>
-                
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <div class="container-xxl">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <span class="fw-bold">
+                    HejCamping
+                </span>
+                </a>
+                <!-- toggle button for mobile view -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div class="collapse navbar-collapse justify-content-end align-center" id="navbarNav">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg0">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary text-white" asp-area="" asp-controller="Booking" asp-action="Index">Book</a>
+                            <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="Index">Book</a>
                         </li>
                         @if (Context.User?.Identity?.IsAuthenticated == true)
                         {
