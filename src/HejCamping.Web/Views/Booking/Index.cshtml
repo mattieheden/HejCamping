@@ -8,7 +8,7 @@
 
 <h2 style="margin-top: 100px; text-align: center;">Choose your cabin and date</h2>
 
-<div class="d-flex justify-content-between align-items-start mt-4" style="gap: 20px;">
+<div class="d-flex justify-content-between align-items-start mt-4 flex wrap" style="gap: 20px;">
     
     <!-- Date Picker -->
     <div style="max-width: 300px;">
@@ -21,7 +21,7 @@
     </div>
 
     <!-- Cabin Map -->
-    <div style="flex: 2; position: relative;">
+    <div style="flex: 2; position: relative; max-width: 100%;">
         <img src="~/images/campsite_map.png" alt="cabin Map" style="width: 100%; max-width: 500px; border-radius: 15px;" id="cabinMapImage"/>
         @foreach (var cabin in ViewBag.Cabins as List<HejCamping.Web.Models.CabinViewModel>)
         {
@@ -29,8 +29,8 @@
             var color = cabin.IsVacant ? "blue" : "red";
             <div id="cabin-@cabin.Id" 
                 style="position: absolute; 
-                        top: @(cabin.PositionY)px; 
-                        left: @(cabin.PositionX)px; 
+                        top: @(cabin.PositionY)% !important; 
+                        left: @(cabin.PositionX)% !important;
                         width: 30px; height: 30px; 
                         background-color: @color; 
                         color: white; 
