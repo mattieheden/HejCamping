@@ -1,7 +1,5 @@
 @model HejCamping.Web.Models.LoginViewModel
-<container>
-    <div class="container d-flex justify-content align-items-center">
-        <div class="col-4">
+
             <h2>Login</h2>
 
             <form asp-action="Login" asp-controller="Authentication" method="post" asp-antiforgery="true">
@@ -23,9 +21,6 @@
                     <button type="submit">Login</button>
                 </div>
             </form>
-        </div>
-    </div>
-</container>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

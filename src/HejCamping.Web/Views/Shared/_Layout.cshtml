@@ -96,24 +96,24 @@
         </main>
     </div>
 
-    <footer class="border-top footer py-2" style="position: absolute; bottom: 0; width: 100%;">
+    <footer class="border-top footer py-2 text-muted" style="position: absolute; bottom: 0; width: 100%;">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     &copy; 2024 - HejCamping -                     
-                    <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> - 
-                    <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-dark">Privacy</a> - 
+                    <a asp-area="" asp-controller="Home" asp-action="Contact" class="text-dark">Contact</a>
                 </div>
                 <div class="col-md-6 text-end">
                      @if (Context.User?.Identity?.IsAuthenticated == true)
                         {
-                                <a class="nav-link" asp-area="" asp-controller="AdminPortal" asp-action="DashBoard">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AdminPortal" asp-action="DashBoard">
                                 <i class="fa-solid fa-user-secret"></i>
                                 </a>
                         }
                         else
                         {
-                                <a class="nav-link" asp-area="" asp-controller="Authentication" asp-action="Login">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">
                                 <i class="fa-solid fa-user-secret"></i>
                                 </a>
                         }
