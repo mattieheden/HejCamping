@@ -45,34 +45,47 @@
                     url: '@Url.Action("GetAllBookings", "AdminPortal")',
                     method: 'GET',
                     success: function(data) {
-                        //console.log(data);
+                        console.log(data);
 
                         let bookings = data.map(booking => ({
+                            // Down here goes Event Object properties follow the link for more info ==>  https://fullcalendar.io/docs/event-object
                             title: booking.cabinNr + ' ' + ' ' + booking.name + ' ' + booking.totalPrice + 'kr',
                             start: booking.dateStart,
                             end: booking.dateEnd,
                             allDay: true,
                             // Proper routing to the booking details page http://localhost:5190/Booking/ViewBooking?orderNumber=<orderNumber>
-                            // 
                             url: `/Booking/ViewBooking/?orderNumber=${booking.orderNumber}`, 
                             extendedProps: {
                                 price: booking.totalPrice,
                                 orderNumber: booking.orderNumber,
-                            }
-                        }));
+                                status: booking.isCancelled
+                            }                       
+                      
+
+                        }));                        
+                       
 
                         return bookings;
                     },
                     failure: function() {
                         alert('There was an error while fetching events!');
                     },
-                    color: 'blue',   // a non-ajax option
-                    textColor: 'white' // a non-ajax option                   
+                                        
                 
                 },
                 eventDidMount: function(info) {							
                     //console.log(info.event.extendedProps.price);
-                    document.getElementsByClassName('fc-event-title-container').innerText = info.event.extendedProps.price;
+                    var bookingStatus = info.event.extendedProps.status;
+
+                    // Booking timepassed status check
+                    //var timepassed = ( new Date(info.event.end) < new Date() ) ? console.log('Time passed' + info.event.end ) : console.log('Time not passed');
+                    var timePassed = ( new Date(info.event.end) < new Date() ) ? info.el.style.backgroundColor = 'grey' : info.el.style.textColor = 'auto';
+                                        
+                    // IsCancelled status check
+                    var status = (bookingStatus === true) ? info.el.style.backgroundColor = 'red' : info.el.style.backgroundColor = 'auto';
+                   
+                    //console.log(event);
+                  
                 }, 
                 eventClick: function(info) {
                    
@@ -83,9 +96,15 @@
                         window.open(info.event.url, '_self');
                     }
                     
-                }                
+                },
+                
+                                
 
             });
+
+            
+
+           
 
             calendar.updateSize(),
             calendar.render();
