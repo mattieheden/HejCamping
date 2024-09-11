@@ -58,7 +58,7 @@
                 </div>
             </div>
         </nav>
-    <div>
+    <div class="banner-container">
         @if (ViewContext.RouteData.Values["Action"].ToString() == "Index" && ViewContext.RouteData.Values["Controller"].ToString() == "Home")
         {
             <img src="~/images/hejlandingpage2.jpg" alt="Landing Page Banner" style="width: 100%; height: 500px; object-fit: cover;" />
@@ -66,7 +66,11 @@
                 <h1 class="display-4">Welcome to {hejcamping}</h1>
                 <p>Your unlocal worldclass cabins by the sea.</p>
             </div>
-            
+
+                        <!-- Book Now Button -->
+            <div class="banner-button">
+                <a class="btn btn-primary btn-lg" asp-controller="Booking" asp-action="Index">Book now</a>
+            </div>
         }
         else
         {
