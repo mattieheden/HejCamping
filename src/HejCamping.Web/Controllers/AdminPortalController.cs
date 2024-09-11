@@ -5,9 +5,7 @@ using HejCamping.Application.Interfaces;
 using HejCamping.Web.Controllers;
 using System.Text.Json;
 using System;
-using Newtonsoft.Json;
-using HejCamping.Application.DTOs;
-using HejCamping.Domain.Repositories;
+
 
 namespace HejCamping.ApplicationServices;
 
@@ -15,12 +13,11 @@ public class AdminPortalController : Controller
 {
   private readonly IBookingService _bookingService;
 
-  private readonly IBookingRepository _bookingRepository;
 
-  public AdminPortalController(IBookingService bookingService, IBookingRepository bookingRepository)
+  public AdminPortalController(IBookingService bookingService)
   {
     _bookingService = bookingService;
-    _bookingRepository = bookingRepository;
+    
   }
 
   [Authorize]
