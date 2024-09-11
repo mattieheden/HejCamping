@@ -21,32 +21,39 @@
     </div>
 
     <!-- Cabin Map -->
-    <div style="flex: 2; position: relative; max-width: 100%;">
-        <img src="~/images/campsite_map.png" alt="cabin Map" style="width: 100%; max-width: 500px; border-radius: 15px;" id="cabinMapImage"/>
-        @foreach (var cabin in ViewBag.Cabins as List<HejCamping.Web.Models.CabinViewModel>)
-        {
-            var isAvailable = cabinAvailability.ContainsKey(cabin.Id) ? cabinAvailability[cabin.Id] : false;
-            var color = cabin.IsVacant ? "blue" : "red";
-            <div id="cabin-@cabin.Id" 
-                style="position: absolute; 
-                        top: @(cabin.PositionY)% !important; 
-                        left: @(cabin.PositionX)% !important;
-                        width: 1.5vw; height: 1.5vw; 
-                        background-color: @color; 
-                        color: white; 
-                        display: flex; 
-                        justify-content: center; 
-                        align-items: center; 
-                        font-weight: bold; 
-                        cursor: pointer; 
-                        border-radius: 8px;"
-                data-price="@cabin.PricePerNight" 
-                data-toggle="tooltip" title=""  
-                onclick="selectCabin(@cabin.Id, @cabin.IsVacant.ToString().ToLower())">
-                @cabin.Id
-            </div>
-        }
-    </div>
+    <div style="position: relative; width: 100%; max-width: 500px; aspect-ratio: 969 / 823; overflow: hidden; border-radius: 15px; margin: 0 auto; display: block;">
+    <!-- Image as a background for the div -->
+    <img src="~/images/campsite_map.png" alt="cabin Map" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;" />
+
+    <!-- Cabin Markers Positioned Absolutely -->
+    @foreach (var cabin in ViewBag.Cabins as List<HejCamping.Web.Models.CabinViewModel>)
+    {
+        var isAvailable = cabinAvailability.ContainsKey(cabin.Id) ? cabinAvailability[cabin.Id] : false;
+        var color = cabin.IsVacant ? "blue" : "red";
+        <div id="cabin-@cabin.Id" 
+            style="position: absolute; 
+                   top: @(cabin.PositionY)% !important; 
+                   left: @(cabin.PositionX)% !important; 
+                   width: 5%; height: 5%; /* Size relative to the image */
+                   background-color: @color; 
+                   color: white; 
+                   display: flex; 
+                   justify-content: center; 
+                   align-items: center; 
+                   font-weight: bold; 
+                   cursor: pointer; 
+                   border-radius: 20%; 
+                   font-size: 1vw; 
+                   line-height: 1; 
+                   text-align: center;
+                   transform: translate(-50%, -50%);" /* Centers the button */
+            data-price="@cabin.PricePerNight" 
+            data-toggle="tooltip" title=""  
+            onclick="selectCabin(@cabin.Id, @cabin.IsVacant.ToString().ToLower())">
+            @cabin.Id
+        </div>
+    }
+</div>
 </div>
 
 <!-- Booking Form -->
@@ -63,7 +70,7 @@
         <label for="Email">Email</label>
         <input type="email" class="form-control narrow-input" id="Email" name="Email" required />
     </div>
-    <button type="submit" class="btn btn-primary">Book</button>
+     <button type="submit" id="bookButton" class="btn btn-secondary" disabled>Book</button>
 
     
 </form>
@@ -218,19 +225,42 @@
                 var selectedToDate = $('#datepicker2Input').val();
                 var name = $('#Name').val();
                 var email = $('#Email').val();
+                
+                // Check if the 'From' and 'To' dates are selected
                 if (!selectedFromDate || !selectedToDate) {
                     alert("Please select both From and To dates.");
                     return false;
                 }      
+
+                // Check if a cabin is selected
                 if (!selectedCabinId) {
                     alert("Please select a cabin.");
                     return false;
                 }
 
-                return true;
-                
+                // Check if Name and Email fields are filled
+                if (!name || !email) {
+                    return false;
+                }
 
-            };
+                // If all checks pass, return true
+                return true;
+            }
+
+            // Function to toggle the Book button based on form validity
+            function toggleBookButton() {
+                if (validateBookingForm()) {
+                    $('#bookButton').removeClass('btn-secondary').addClass('btn-primary').prop('disabled', false); // Enable button and make it blue
+                } else {
+                    $('#bookButton').removeClass('btn-primary').addClass('btn-secondary').prop('disabled', true); // Disable button and keep it gray
+                }
+            }
+
+            // Event listeners for form field changes
+            $('#Name, #Email, #datepicker1Input, #datepicker2Input').on('input change', function() {
+                toggleBookButton();
+            });
+
             function calculateTotalPrice() {
                 const selectedFromDate = $('#datepicker1Input').val();
                 const selectedToDate = $('#datepicker2Input').val();

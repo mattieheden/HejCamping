@@ -52,3 +52,50 @@ body {
   width: 80%; /* Could be more or less, depending on screen size 
 }
 */
+
+/* Container to hold the image and text */
+.banner-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Style the text overlay */
+.banner-text {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 2em;
+  background-color: rgba(0, 0, 0, 0.3); /* optional: adds a semi-transparent background */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Style the booking button at the bottom of the banner */
+.banner-button {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.banner-button a {
+  padding: 10px 40px; /* Makes the button wider */
+  font-size: 1.5em;
+  border-radius: 5px;
+}
+
+/* Customize for smaller devices if needed */
+@media (max-width: 768px) {
+  .banner-text {
+      font-size: 1.5em;
+      padding: 10px;
+  }
+
+  .banner-button a {
+      font-size: 1.2em;
+      padding: 8px 30px;
+  }
+}

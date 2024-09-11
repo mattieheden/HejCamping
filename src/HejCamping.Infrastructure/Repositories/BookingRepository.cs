@@ -72,11 +72,11 @@ namespace HejCamping.Infrastructure.Repositories
         {
             return new List<Cabin>
             {
-                new Cabin { Id = 1, Number = 1, IsVacant = true, PositionX = 13.00, PositionY = 59.00, PricePerNight = 179 }, 
-                new Cabin { Id = 2, Number = 2, IsVacant = true, PositionX = 19.00, PositionY = 66.00, PricePerNight = 179 }, 
-                new Cabin { Id = 3, Number = 3, IsVacant = true, PositionX = 25.00, PositionY = 70.00, PricePerNight = 179 }, 
-                new Cabin { Id = 4, Number = 4, IsVacant = false, PositionX = 32.00, PositionY = 74.00, PricePerNight = 179 }, 
-                new Cabin { Id = 5, Number = 5, IsVacant = true, PositionX = 38.50, PositionY = 77.00, PricePerNight = 179 }, 
+                new Cabin { Id = 1, Number = 1, IsVacant = true, PositionX = 22.00, PositionY = 57.00, PricePerNight = 179 }, 
+                new Cabin { Id = 2, Number = 2, IsVacant = true, PositionX = 32.00, PositionY = 64.00, PricePerNight = 179 }, 
+                new Cabin { Id = 3, Number = 3, IsVacant = true, PositionX = 42.00, PositionY = 71.00, PricePerNight = 179 }, 
+                new Cabin { Id = 4, Number = 4, IsVacant = false, PositionX = 52.00, PositionY = 74.00, PricePerNight = 179 }, 
+                new Cabin { Id = 5, Number = 5, IsVacant = true, PositionX = 62.00, PositionY = 77.00, PricePerNight = 179 }, 
             };
         }
 
