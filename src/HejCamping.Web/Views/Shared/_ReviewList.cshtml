@@ -7,9 +7,9 @@
         <h3>What Our Guests Say</h3>
             @foreach (var review in Model.OrderBy(r => Guid.NewGuid()).Take(3))
             {
-                <div class="col-md-4">
+                <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h5 class="card-title">@review.ReviewText</h5><br>
                             <p class="card-text"><strong>@review.Name</strong></p>
                         </div>

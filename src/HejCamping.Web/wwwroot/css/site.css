@@ -87,6 +87,12 @@ body {
   border-radius: 5px;
 }
 
+.footer {
+  font-size: medium;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
 /* Customize for smaller devices if needed */
 @media (max-width: 768px) {
   .banner-text {
