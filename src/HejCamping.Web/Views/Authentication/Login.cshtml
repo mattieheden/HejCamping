@@ -1,26 +1,45 @@
 @model HejCamping.Web.Models.LoginViewModel
 
-<h2>Login</h2>
 
-<form asp-action="Login" asp-controller="Authentication" method="post" asp-antiforgery="true">
+
+<div class="container">
+  
+  <div class="display-1 p-3 text-center">Login</div>
+  
+  
+  
+  <form class="row justify-content-center px-xl-5" asp-action="Login" asp-controller="Authentication" method="post" asp-antiforgery="true">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div>
-        <label asp-for="Username">Username:</label>
-        <input type="text" id="Username" asp-for="Username" required />
+    
+      <div class="col-sm col-md-8 col-lg-6 mb-2 mx-2 ">
+        <label class="form-label " asp-for="Username">Username:</label>
+        <input class="form-control" type="text" id="Username" asp-for="Username" required />
         <span asp-validation-for="Username" class="text-danger"></span>
-    </div>
+      </div>
 
-    <div>
-        <label asp-for="Password">Password:</label>
-        <input type="password" id="Password" asp-for="Password" required />
+      <div class="col-sm col-md-8 col-lg-6 mb-2 mx-2 ">
+        <label class="form-label" asp-for="Password">Password:</label>
+        <input class="form-control" type="password" id="Password" asp-for="Password" required />
         <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
+      </div>
 
-    <div>
-        <button type="submit">Login</button>
-    </div>
-</form>
+      <div class="col-sm d-grid col-md-8 col-lg-6 mx-2 ">
+        <button type="submit" class="btn btn-primary mt-3 ">Login</button>
+      </div>
+    
+
+  </form>
+
+  
+    
+
+ 
+  
+
+
+
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
