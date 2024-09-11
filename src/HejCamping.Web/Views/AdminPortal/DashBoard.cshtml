@@ -1,107 +1,97 @@
-@model HejCamping.Web.Models.BookingViewModel 
-
-
+@model HejCamping.Web.Models.BookingViewModel
 
 @{
     ViewData["Title"] = "Dash Board";
-    var bookings = ViewBag.Bookings as List<BookingViewModel>; 
-   
+    var bookings = ViewBag.Bookings as List<BookingViewModel>;
+
 }
 
 <h1>@ViewData["Title"]</h1>
 
-@*
-@foreach (var booking in ViewBag.Bookings)
-{
-    <div class="card m-3">
-        <h5 class="card-header">@booking.OrderNumber</h5> 
-            <div class="card-body">
-                <h5 class="card-title">Client name: @booking.Name</h5>
-                <h5 class="card-title">Cabin number: @booking.CabinId</h5>
-            </div>
-    </div>
-}
-*@
 
-
-  
 <div id='calendar'></div>
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 
-    <script>  
-        document.addEventListener('DOMContentLoaded', function() {           
-            
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
             //GetAllBookings();
 
-            var calendarEl = document.getElementById('calendar');       
+            var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                
+
                 timeZone: 'UTC',
-                //initialView: 'dayGridMonth',                
+                initialView: 'dayGridMonth',
                 headerToolbar: {
-                    left: 'prev next today prevYear nextYear',
+                    left: 'prev,next today prevYear,nextYear',
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
                 },
                 themeSystem: 'bootstrap5',
-                dayMaxEvents: true,
+                //dayMaxEvents: true,
                 //showNonCurrentDates: true,
                 //weekNumbers: true,
                 //editable: true,
                 //selectable: true
                 //height: 500,
                 //aspectRatio: 2,
-                contentHeight: 600, 
-                
-                events: function(fetchInfo, successCallback, failureCallback) {
-                    fetch('/AdminPortal/GetAllBookings')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok' + response.statusText);
-                        } else {
-                                console.log('Response status is ' + response.statusText);
-                        }
-                        return response.json();
-                    })        
-                    .then(data => {
-                        
+                //contentHeight: 600,
+
+                events: {
+                    //url: '/AdminPortal/GetAllBookings',
+                    url: '@Url.Action("GetAllBookings", "AdminPortal")',
+                    method: 'GET',
+                    success: function(data) {
                         //console.log(data);
-                       
+
                         let bookings = data.map(booking => ({
-                            title: booking.orderNumber,
+                            title: booking.cabinNr + ' ' + ' ' + booking.name + ' ' + booking.totalPrice + 'kr',
                             start: booking.dateStart,
                             end: booking.dateEnd,
                             allDay: true,
-                            //display: 'background'
+                            // Proper routing to the booking details page http://localhost:5190/Booking/ViewBooking?orderNumber=<orderNumber>
+                            // 
+                            url: `/Booking/ViewBooking/?orderNumber=${booking.orderNumber}`, 
+                            extendedProps: {
+                                price: booking.totalPrice,
+                                orderNumber: booking.orderNumber,
+                            }
                         }));
-                        successCallback(bookings);
-                    })
-                    .catch(error => {
-                        console.log('Error:', error.message);     
-                        failureCallback(error);             
-                    });          
-                }
+
+                        return bookings;
+                    },
+                    failure: function() {
+                        alert('There was an error while fetching events!');
+                    },
+                    color: 'blue',   // a non-ajax option
+                    textColor: 'white' // a non-ajax option                   
                 
-            });     
+                },
+                eventDidMount: function(info) {							
+                    //console.log(info.event.extendedProps.price);
+                    document.getElementsByClassName('fc-event-title-container').innerText = info.event.extendedProps.price;
+                }, 
+                eventClick: function(info) {
+                   
+                    let orderNr = info.event.extendedProps.orderNumber; // Data type string
+                    //console.log(orderNr);
+
+                    if (info.event.url) {
+                        window.open(info.event.url, '_self');
+                    }
+                    
+                }                
+
+            });
+
             calendar.updateSize(),
             calendar.render();
-            
-            //function GetAllBookings () {}
-            
-            
-
-
-
-
-
-
-
 
 
         });
-    </script> 
+    </script>
 
 }
