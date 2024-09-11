@@ -30,7 +30,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-
+                <!-- Navigation links -->
                 <div class="collapse navbar-collapse justify-content-end align-center" id="navbarNav">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg0">
                         <li class="nav-item">
@@ -58,6 +58,7 @@
                 </div>
             </div>
         </nav>
+    <!-- Different banner for landing page -->
     <div class="banner-container">
         @if (ViewContext.RouteData.Values["Action"].ToString() == "Index" && ViewContext.RouteData.Values["Controller"].ToString() == "Home")
         {
@@ -67,9 +68,9 @@
                 <p>Your unlocal worldclass cabins by the sea.</p>
             </div>
 
-                        <!-- Book Now Button -->
+            <!-- Book Now Button -->
             <div class="banner-button">
-                <a class="btn btn-primary btn-lg" asp-controller="Booking" asp-action="Index">Book now</a>
+                <a class="btn btn-primary btn-lg" asp-controller="Booking" asp-action="Index">Book now!</a>
             </div>
         }
         else
