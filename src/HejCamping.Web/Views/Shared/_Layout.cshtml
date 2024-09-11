@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HejCamping.styles.css" asp-append-version="true" />
     
+    <script src="https://kit.fontawesome.com/0b123247f5.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -39,21 +40,27 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Booking" asp-action="Index">Book</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Contact" asp-action="Index">Contact</a>
+                        </li>
                         @if (Context.User?.Identity?.IsAuthenticated == true)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="AdminPortal" asp-action="DashBoard">Admin Portal</a>
+                                <a class="nav-link" asp-area="" asp-controller="AdminPortal" asp-action="DashBoard">
+                                <i class="fa-solid fa-user-secret"></i>
+                                </a>
                             </li>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Authentication" asp-action="Login">Admin Portal</a>
+                                <a class="nav-link" asp-area="" asp-controller="Authentication" asp-action="Login">
+                                <i class="fa-solid fa-user-secret"></i>
+                                </a>
                             </li>
                             <!-- a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a -->
                         }
-                       
                     </ul>
                 </div>
             </div>
@@ -70,7 +77,9 @@
 
             <!-- Book Now Button -->
             <div class="banner-button">
-                <a class="btn btn-primary btn-lg" asp-controller="Booking" asp-action="Index">Book now!</a>
+                <a class="btn btn-primary btn-lg" asp-controller="Booking" asp-action="Index">Book now!
+                    <i class="fa-solid fa-house"></i>
+                </a>
             </div>
         }
         else
@@ -87,7 +96,13 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - HejCamping - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> - <a asp-area="" asp-controller="Contact" asp-action="Index">Contact Us</a>
+            <div class="row">
+                <div class="col-md-6">
+                    &copy; 2024 - HejCamping -                     
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> - 
+                    <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
