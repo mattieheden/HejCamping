@@ -58,5 +58,10 @@ namespace HejCamping.Application.Services
         {
             _reviewRepository.UpdateReview(new Review (review.OrderNumber, review.Name, review.ReviewText, review.ReviewDate));
         }
+
+        public void DeleteReview(string orderNumber)
+        {
+            _reviewRepository.DeleteReview(orderNumber);
+        }
     }
 }

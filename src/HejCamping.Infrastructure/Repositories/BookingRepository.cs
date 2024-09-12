@@ -41,6 +41,15 @@ namespace HejCamping.Infrastructure.Repositories
             }
         }
 
+        public void RestoreBooking(string orderNumber)
+        {
+            Booking? booking = GetBookingByOrderNr(orderNumber);
+            if (booking != null) {
+                booking.IsCancelled = false;
+                _context.SaveChanges();
+            }
+        }
+
         public Dictionary<int, bool> GetCabinAvailability(DateTime dateStart, DateTime dateEnd)
         {
             // Find all bookings that overlap with the given date range that aren't cancelled.

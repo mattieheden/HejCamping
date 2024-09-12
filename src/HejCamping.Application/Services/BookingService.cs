@@ -65,6 +65,11 @@ namespace HejCamping.Application.Services
             await CancelBookingConfirmationEmail(orderNumber);
         }
 
+        public void RestoreBooking(string orderNumber)
+        {
+            _bookingRepository.RestoreBooking(orderNumber);
+        }
+
         public Dictionary<int, bool> GetCabinAvailability(System.DateTime dateStart, System.DateTime dateEnd)
         {
             return _bookingRepository.GetCabinAvailability(dateStart, dateEnd);
@@ -95,9 +100,21 @@ namespace HejCamping.Application.Services
                 return;
             }
             if (booking.Email == null) return; //Should probably add some error handling here
+            BookingDTO bookingDTO = new BookingDTO
+            {
+                OrderNumber = booking.OrderNumber,
+                IsCancelled = booking.IsCancelled,
+                OrderDate = booking.OrderDate,
+                Email = booking.Email,
+                Name = booking.Name,
+                DateStart = booking.DateStart,
+                DateEnd = booking.DateEnd,
+                CabinNr = booking.CabinNr,
+                TotalPrice = booking.TotalPrice
+            };
 
             string subject = $"Booking cancellation for {booking.OrderNumber}";
-            string htmlBody = await _viewRenderer.RenderViewToStringAsync("Emails/CancelBookingConfirmation", booking);
+            string htmlBody = await _viewRenderer.RenderViewToStringAsync("Emails/CancelBookingConfirmation", bookingDTO);
 
             await _emailService.SendEmailAsync(booking.Email, subject, htmlBody);
         }

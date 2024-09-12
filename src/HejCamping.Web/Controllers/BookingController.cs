@@ -165,6 +165,13 @@ namespace HejCamping.Web.Controllers
             return RedirectToAction("ViewBooking", new { orderNumber });
         }
 
+        [HttpPost]
+        public IActionResult RestoreBooking(string orderNumber)
+        {
+            _bookingService.RestoreBooking(orderNumber);
+            return RedirectToAction("ViewBooking", new { orderNumber });
+        }
+
         public JsonResult DelayedRedirect()
         {
             return Json(new {success = true, message = "Action triggered sucesffully!" });
@@ -217,6 +224,13 @@ namespace HejCamping.Web.Controllers
                 }
             }
             return RedirectToAction("ViewBooking", new { orderNumber = model.OrderNumber });
+        }
+
+        [HttpPost]
+        public IActionResult DeleteReview(string orderNumber)
+        {
+            _reviewService.DeleteReview(orderNumber);
+            return RedirectToAction("ViewBooking", new { orderNumber });
+        }
     }
-}
 }

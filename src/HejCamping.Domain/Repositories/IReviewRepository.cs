@@ -11,5 +11,6 @@ namespace HejCamping.Domain.Repositories
         Task <IEnumerable<Review>> GetAllReviews();
         void AddReview(Review review);
         void UpdateReview(Review review);
+        void DeleteReview(string orderNumber);
     }
 }

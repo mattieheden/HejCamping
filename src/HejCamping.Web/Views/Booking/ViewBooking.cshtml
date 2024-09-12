@@ -37,6 +37,27 @@
         <dd class="col-sm-9">@Model.TotalPrice.ToString("C", new System.Globalization.CultureInfo("se-SE"))</dd>
     </dl>
 
+    <!-- Admin functionality for bookings -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="container-fluid">
+            <!-- Show button to restore booking if booking is cancelled -->
+            @if (Model.IsCancelled == true && DateTime.Now < Model.FromDate)
+            {
+                <form method="post" asp-controller="Booking" asp-action="RestoreBooking" asp-route-orderNumber="@Model.OrderNumber">
+                    <button type="submit" class="btn btn-success">Restore booking</button>
+                </form>
+            }
+            <!-- Show button to delete review if booking has a review -->
+            @if (Model.HasReview == true)
+            {
+                <form method="post" asp-controller="Booking" asp-action="DeleteReview" asp-route-orderNumber="@Model.OrderNumber">
+                    <button type="submit" class="btn btn-danger">Delete review</button>
+                </form>
+            }
+        </div>
+    }
+    
     <!-- Booking options like cancelling or leaving/Updating a review -->
     @if (Model.IsCancelled == false)
     {
@@ -48,7 +69,6 @@
                 <button type="submit" class="btn btn-danger">Cancel booking</button>
             </form>
         }
-
         <!-- Show message if booking is too close to check-in date -->
         @if (DateTime.Now.AddDays(1) >= Model.FromDate && DateTime.Now < Model.ToDate)
         {

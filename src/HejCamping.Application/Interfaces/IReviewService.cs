@@ -10,5 +10,6 @@ namespace HejCamping.Application.Interfaces
         ReviewDTO GetReviewByOrderNr(string orderNumber);
         void UpdateReview(ReviewDTO review);
         List<ReviewDTO> GetReviews();
+        void DeleteReview(string orderNumber);
     }
 }
