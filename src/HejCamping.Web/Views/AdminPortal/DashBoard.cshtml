@@ -6,110 +6,123 @@
 
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 id="dashboard">@ViewData["Title"]</h1>
 
 
-<div id='calendar'></div>
+<div id='toAdmin'></div>  
+<div id='calendar'></div>  
+<a href="http://webmail.hejcamping.tech/">Manage clients email.</a>
+
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            //GetAllBookings();
+          var calendarEl = document.getElementById('calendar');
 
-            var calendarEl = document.getElementById('calendar');
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
 
-                timeZone: 'UTC',
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today prevYear,nextYear',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-                },
-                themeSystem: 'bootstrap5',
-                //dayMaxEvents: true,
-                //showNonCurrentDates: true,
-                //weekNumbers: true,
-                //editable: true,
-                //selectable: true
-                //height: 500,
-                //aspectRatio: 2,
-                //contentHeight: 600,
+          var calendar = new FullCalendar.Calendar(calendarEl, {
+            timeZone: 'UTC',
+            initialView: 'dayGridMonth', //window.outerWidth < 768 ? 'dayGridMonth' : 'timeGridDay',
+            //height: 500, 
+            headerToolbar: {
+                left: 'prev,next today prevYear,nextYear',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+            },
+            themeSystem: 'bootstrap5',
+            //dayMaxEvents: true,
+            //showNonCurrentDates: true,
+            //weekNumbers: true,
+            //editable: true,
+            //selectable: true,                
+            //aspectRatio: 10,
+            //contentHeight: window.innerWidth < 768 ? '20' : 'auto ',
 
-                events: {
-                    //url: '/AdminPortal/GetAllBookings',
-                    url: '@Url.Action("GetAllBookings", "AdminPortal")',
-                    method: 'GET',
-                    success: function(data) {
-                        console.log(data);
+            events: {
+              //url: '/AdminPortal/GetAllBookings',
+              url: '@Url.Action("GetAllBookings", "AdminPortal")',
+              method: 'GET',
+              success: function(data) {
+                console.log(data);
 
-                        let bookings = data.map(booking => ({
-                            // Down here goes Event Object properties follow the link for more info ==>  https://fullcalendar.io/docs/event-object
-                            title: booking.cabinNr + ' ' + ' ' + booking.name + ' ' + booking.totalPrice + 'kr',
-                            start: booking.dateStart,
-                            end: booking.dateEnd,
-                            allDay: true,
-                            // Proper routing to the booking details page http://localhost:5190/Booking/ViewBooking?orderNumber=<orderNumber>
-                            url: `/Booking/ViewBooking/?orderNumber=${booking.orderNumber}`, 
-                            extendedProps: {
-                                price: booking.totalPrice,
-                                orderNumber: booking.orderNumber,
-                                status: booking.isCancelled
-                            }                       
-                      
-
-                        }));                        
-                       
-
-                        return bookings;
-                    },
-                    failure: function() {
-                        alert('There was an error while fetching events!');
-                    },
-                                        
+                let bookings = data.map(booking => ({
+                  // Down here goes Event Object properties follow the link for more info ==>  https://fullcalendar.io/docs/event-object
+                  title: booking.cabinNr + ' ' + ' ' + booking.name + ' ' + booking.totalPrice + 'kr',
+                  start: booking.dateStart,
+                  end: booking.dateEnd,
+                  allDay: true,
+                  // Proper routing to the booking details page http://localhost:5190/Booking/ViewBooking?orderNumber=<orderNumber>
+                  url: `/Booking/ViewBooking/?orderNumber=${booking.orderNumber}`, 
+                  extendedProps: {
+                      price: booking.totalPrice,
+                      orderNumber: booking.orderNumber,
+                      status: booking.isCancelled
+                  }   
+                }));                        
                 
-                },
-                eventDidMount: function(info) {							
-                    //console.log(info.event.extendedProps.price);
-                    var bookingStatus = info.event.extendedProps.status;
-
-                    // Booking timepassed status check
-                    //var timepassed = ( new Date(info.event.end) < new Date() ) ? console.log('Time passed' + info.event.end ) : console.log('Time not passed');
-                    var timePassed = ( new Date(info.event.end) < new Date() ) ? info.el.style.backgroundColor = 'grey' : info.el.style.textColor = 'auto';
-                                        
-                    // IsCancelled status check
-                    var status = (bookingStatus === true) ? info.el.style.backgroundColor = 'red' : info.el.style.backgroundColor = 'auto';
-                   
-                    //console.log(event);
-                  
-                }, 
-                eventClick: function(info) {
-                   
-                    let orderNr = info.event.extendedProps.orderNumber; // Data type string
-                    //console.log(orderNr);
-
-                    if (info.event.url) {
-                        window.open(info.event.url, '_self');
-                    }
-                    
-                },
-                
-                                
-
-            });
-
+                return bookings;
+              },
+              failure: function() {
+                alert('There was an error while fetching events!');
+              },                                      
             
+            },
+            eventDidMount: function(info) {							
+              //console.log(info.event.extendedProps.price);
+              var bookingStatus = info.event.extendedProps.status;
 
-           
+              // Booking timepassed status check
+              //var timepassed = ( new Date(info.event.end) < new Date() ) ? console.log('Time passed' + info.event.end ) : console.log('Time not passed');
+              var timePassed = ( new Date(info.event.end) < new Date() ) ? info.el.style.backgroundColor = 'grey' : info.el.style.textColor = 'auto';
+                                  
+              // IsCancelled status check
+              var status = (bookingStatus === true) ? info.el.style.backgroundColor = 'red' : info.el.style.backgroundColor = 'auto';
+              
+              //console.log(event);
+              
+            }, 
+            eventClick: function(info) {
+                
+              let orderNr = info.event.extendedProps.orderNumber; // Data type string
+              //console.log(orderNr);
+              if (info.event.url) {
+                window.open(info.event.url, '_self');
+              }
+                
+            }                   
 
-            calendar.updateSize(),
-            calendar.render();
+          });        
 
+          function hideElementOnSmallScreens() {
+            const mediaQuery = window.matchMedia("(max-width: 768px)");
 
+            if (mediaQuery.matches) {
+              calendarEl.style.display = "none";
+              document.getElementById('dashboard').style.display = "none";
+
+              const toAdmin = document.getElementById('toAdmin');
+              toAdmin.className = 'h2 text-center m-5';
+              toAdmin.innerHTML = 'You need a bigger screen to view and manage the calendar';            
+
+            } else {
+              calendarEl.style.display ="block";
+              //calendarEl.initialView: 'dayGridMonth',
+            }
+          }
+
+          // Run the function when the page loads
+          hideElementOnSmallScreens();
+
+          // Run the function again when the window is resized
+          window.addEventListener('resize', hideElementOnSmallScreens);
+          
+          
+
+          calendar.render();
         });
     </script>
 
