@@ -2,25 +2,44 @@
 
 <container>
     <div class="row my-5 align-items-center justify-content-center g-2">
-    @if (Model.Count != null)
+    @if (Model.Count > 0)
     {
         <h3>What Our Guests Say</h3>
         <div id="reviewCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
-                
-            @foreach (var review in Model.OrderBy(r => Guid.NewGuid()).Take(5))
+            @{
+                int reviewIndex = 0;
+            }
+            @for (int i = 0; i < Model.Count; i += 3)
             {
-                <div class="carousel-item @(Model.IndexOf(review) == 0 ? "active" : "")">
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">@review.ReviewText</h5><br>
-                                <p class="card-text"><strong>@review.Name</strong></p>
-                            </div>
-                        </div>
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <div class="card-wrapper d-flex flex-wrap">
+                        @for (int j = 0; j < 3; j++)
+                        {
+                            if (i + j < Model.Count)
+                            {
+                                <div class="col-md-4 mb-4">
+                                    <div class="card mx-2">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <i class="fa fa-quote-left" aria-hidden="true"></i>
+                                            </h5>
+                                            <blockquote class="blockquote">
+                                            <p class="card-text">@Model[i + j].ReviewText
+                                            <footer class="blockquote-footer">
+                                                @Model[i + j].Name
+                                                <i class="fa fa-quote-right" aria-hidden="true"></i>
+                                            </footer>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
                     </div>
                 </div>
             }
+
                 <!-- Carousel controls -->
                 <button class="carousel-control-prev" type="button" data-bs-target="#reviewCarousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>

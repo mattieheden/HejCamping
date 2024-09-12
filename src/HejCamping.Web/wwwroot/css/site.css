@@ -105,3 +105,43 @@ body {
       padding: 8px 30px;
   }
 }
+
+/* Carousel styling */
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  margin: 0 0.5em;
+  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+  border: 2;
+  border-radius: 2;
+  size-adjust: auto;
+}
+.carousel-inner {
+  padding: 1em;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: #333333;
+  width: 5%;
+  height: 40px;
+  opacity: 0.5;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(20%);
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #333333;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+/* Add this to your CSS file */
+@media only screen and (max-width: 768px) { /* adjust the max-width value to your desired breakpoint */
+  #reviewCarousel .carousel-inner .carousel-item .col-md-4 {
+    flex: 0 0 100%; /* make each column take full width on small screens */
+  }
+}
