@@ -168,6 +168,7 @@ namespace HejCamping.Web.Controllers
         [HttpPost]
         public IActionResult RestoreBooking(string orderNumber)
         {
+            // WARNING: There is no check to see if the booking overlaps with other bookings
             _bookingService.RestoreBooking(orderNumber);
             return RedirectToAction("ViewBooking", new { orderNumber });
         }
