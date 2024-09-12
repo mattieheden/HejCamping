@@ -5,17 +5,33 @@
     @if (Model.Count != null)
     {
         <h3>What Our Guests Say</h3>
-            @foreach (var review in Model.OrderBy(r => Guid.NewGuid()).Take(3))
+        <div id="reviewCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                
+            @foreach (var review in Model.OrderBy(r => Guid.NewGuid()).Take(5))
             {
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">@review.ReviewText</h5><br>
-                            <p class="card-text"><strong>@review.Name</strong></p>
+                <div class="carousel-item @(Model.IndexOf(review) == 0 ? "active" : "")">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">@review.ReviewText</h5><br>
+                                <p class="card-text"><strong>@review.Name</strong></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             }
+                <!-- Carousel controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#reviewCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#reviewCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
     }
     else
     {
