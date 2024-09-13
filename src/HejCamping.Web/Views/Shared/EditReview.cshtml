@@ -2,13 +2,39 @@
 
 <h5>Your Review</h5>
 
-<form asp-action="EditReview" method="post">
-    <div class="form-group">
-        <textarea asp-for="ReviewText" class="form-control form-control-sm" rows="5" ></textarea>
+<div id="review-preview">
+    <div class="card">
+        <div class="card-body text-center">
+            <h5 class="card-title">@Model.ReviewText</h5>
+            <p class="card-text"><strong>@Model.Name</strong></p>
+        </div>
     </div>
-        <input asp-for="Name" type="hidden" />
-        <input asp-for="OrderNumber" type="hidden" />
-    <div>
-        <input type="submit" value="Update Review" class="btn btn-primary btn-sm" />
+
+    <div class="mt-2">
+        <button id="edit-review-btn" class="btn btn-primary">Edit Review</button>
     </div>
-</form>
+
+</div>
+
+<!-- Hidden form for editing the review -->
+<div id="edit-review-form" style="display:none;">
+    <form asp-action="EditReview" method="post">
+        <div class="form-group">
+            <textarea asp-for="ReviewText" class="form-control form-control-sm" rows="5" ></textarea>
+        </div>
+            <input asp-for="Name" type="hidden" />
+            <input asp-for="OrderNumber" type="hidden" />
+        <div>
+            <input type="submit" value="Update Review" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("edit-review-btn").addEventListener("click", function () {
+            document.getElementById("review-preview").style.display = "none";
+            document.getElementById("edit-review-form").style.display = "block";
+        });
+    });
+</script>

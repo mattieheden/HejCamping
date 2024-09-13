@@ -25,9 +25,15 @@ namespace HejCamping.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _contactService.SendContactEmailAsync(contactForm.FromEmail, contactForm.OrderNumber, contactForm.Subject, contactForm.Message);
-
-                ViewBag.Message = "Your message has been sent successfully!";
+                var result = _contactService.SendContactEmailAsync(contactForm.FromEmail, contactForm.OrderNumber, contactForm.Subject, contactForm.Message);
+                if (result.IsCanceled || result.IsFaulted)
+                {
+                    ViewBag.Message = "An error occurred while sending your message. Please try again later.";
+                    return View();
+                }
+                else {
+                    ViewBag.Message = "Your message has been sent successfully!";
+                }
 
                 return View();
             }
